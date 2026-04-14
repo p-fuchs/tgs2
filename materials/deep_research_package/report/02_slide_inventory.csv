@@ -1,0 +1,24 @@
+slide_number,title,planned_time,primary_visual
+1,Title,0:30,Title only
+2,Motivation: who is central in extreme networks?,2:00,Question box
+3,Paper roadmap,1:00,Custom flowchart
+4,Degree vs betweenness centrality,2:30,Hub vs bridge cartoon
+5,Data sets at a glance,2:00,Comparison table
+6,Online network construction pipeline,2:00,Pipeline flowchart
+7,Online daily snapshots,1:30,Figure 1A
+8,Online betweenness result,2:00,Figure 1B
+9,Online degree + null model,2:00,Figure 1C
+10,Avoid stars, retain brokerage,2:00,Figure 1D
+11,Offline PIRA network construction,2:00,Figure 2A
+12,PIRA productivity rises,1:30,Figure 2B
+13,Women’s betweenness rises above men’s,1:45,Figure 2C
+14,Women’s degree declines faster,1:45,Figure 2D
+15,Model interlude: fission–fusion + team ethic,2:30,Figure 2E + assumptions diagram
+16,Online longevity,1:30,Figure 3A
+17,Offline longevity,1:30,Figure 3B
+18,Alternative explanations,2:15,Checklist
+19,Limitations and validity boundaries,2:15,Three blocks
+20,Implications: rethinking importance,1:30,Contrast diagram
+21,Ethics and responsible communication,1:30,Alert block
+22,Conclusions and open questions,0:45,Three takeaways
+23,Q&A,7:00,Plain Q&A slide

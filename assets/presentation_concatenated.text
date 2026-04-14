@@ -1,0 +1,985 @@
+CONCATENATED PRES2 TEX SOURCES
+Generated: 2026-04-09 18:12:49 CEST
+
+===== BEGIN FILE: pres2/main.tex =====
+
+\documentclass[aspectratio=169,professionalfonts]{beamer}
+
+\input{config/packages}
+\input{config/metadata}
+\input{theme/pres2-colors}
+\input{theme/pres2-fonts}
+\input{config/macros}
+
+\makeatletter
+\def\input@path{{theme/}}
+\makeatother
+\usetheme{pres2}
+
+\title[\TalkShortTitle]{\TalkTitle}
+\subtitle{\TalkSubtitle}
+\author{\TalkAuthor}
+\institute{\TalkInstitute}
+\date{\TalkDate}
+
+\begin{document}
+
+\input{sections/00-frontmatter}
+\input{sections/01-motivation}
+\input{sections/02-paper-setup}
+\input{sections/03-findings}
+\input{sections/04-implications}
+\input{sections/99-appendix}
+\input{sections/90-references}
+
+\end{document}
+
+
+===== END FILE: pres2/main.tex =====
+
+===== BEGIN FILE: pres2/config/packages.tex =====
+
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{ragged2e}
+\usepackage{csquotes}
+\usepackage{pgfpages}
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  maxcitenames=2,
+  maxbibnames=99
+]{biblatex}
+
+\usetikzlibrary{arrows.meta,calc,positioning}
+\graphicspath{{assets/figures/original/}{assets/figures/processed/}}
+\addbibresource{references/library.bib}
+\setbeameroption{hide notes}
+
+
+===== END FILE: pres2/config/packages.tex =====
+
+===== BEGIN FILE: pres2/config/metadata.tex =====
+
+\newcommand{\TalkTitle}{Women's Connectivity in Extreme Networks}
+\newcommand{\TalkShortTitle}{Women's Connectivity}
+\newcommand{\TalkSubtitle}{Findings from Manrique et al. (Science Advances, 2016)}
+\newcommand{\TalkAuthor}{Your Name}
+\newcommand{\TalkInstitute}{Your Institute}
+\newcommand{\TalkDate}{\today}
+
+
+===== END FILE: pres2/config/metadata.tex =====
+
+===== BEGIN FILE: pres2/config/macros.tex =====
+
+\NewDocumentCommand{\SectionCard}{m}{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    {\usebeamerfont{section title}\color{PresTwoPrimary}#1\par}
+    \vspace{0.28cm}
+    {\color{PresTwoMuted}\rule{0.32\linewidth}{0.6pt}\par}
+    \vspace{0.18cm}
+    {\usebeamerfont{section subtitle}\color{PresTwoMuted}Section\par}
+    \vfill
+  \end{frame}
+}
+
+\NewDocumentCommand{\StatementFrame}{m +m}{%
+  \begin{frame}{#1}
+    \justifying
+    #2
+  \end{frame}
+}
+
+\NewDocumentCommand{\PaperFigurePlaceholder}{O{0.41\textheight} m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.65em]{takeaway box}
+    \begin{minipage}[c][#1][c]{0.96\linewidth}
+      \centering
+      \vspace*{\fill}
+      {\color{PresTwoMuted}\rule{0.86\linewidth}{0.5pt}\par}
+      \vspace*{\fill}
+    \end{minipage}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\FigureFrame}{m m m}{%
+  \begin{frame}{#1}
+    \centering
+    \IfFileExists{#2}{%
+      \includegraphics[width=\linewidth,height=0.6\textheight,keepaspectratio]{#2}
+    }{%
+      \begin{tikzpicture}
+        \fill[PresTwoSurface] (0,0) rectangle (10.4,5.0);
+        \draw[PresTwoMuted,line width=0.8pt] (0,0) rectangle (10.4,5.0);
+        \node[text=PresTwoMuted,align=center] at (5.2,2.5)
+          {Reserved figure slot\\\texttt{#2}};
+      \end{tikzpicture}
+    }
+
+    \vspace{0.3cm}
+
+    {\usebeamerfont{caption}\color{PresTwoMuted}#3\par}
+  \end{frame}
+}
+
+\NewDocumentCommand{\TakeawayFrame}{m +m}{%
+  \begin{frame}{#1}
+    \begin{beamercolorbox}[wd=\linewidth,sep=1.1em,rounded=true]{takeaway box}
+      \justifying
+      #2
+    \end{beamercolorbox}
+  \end{frame}
+}
+
+
+===== END FILE: pres2/config/macros.tex =====
+
+===== BEGIN FILE: pres2/theme/pres2-colors.tex =====
+
+\definecolor{PresTwoBackground}{HTML}{FFFFFF}
+\definecolor{PresTwoSurface}{HTML}{F2F2F2}
+\definecolor{PresTwoText}{HTML}{111111}
+\definecolor{PresTwoMuted}{HTML}{666666}
+\definecolor{PresTwoPrimary}{HTML}{111111}
+\definecolor{PresTwoSecondary}{HTML}{444444}
+\definecolor{PresTwoSuccess}{HTML}{2B2B2B}
+
+
+===== END FILE: pres2/theme/pres2-colors.tex =====
+
+===== BEGIN FILE: pres2/theme/pres2-fonts.tex =====
+
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{Latin Modern Mono}
+
+
+===== END FILE: pres2/theme/pres2-fonts.tex =====
+
+===== BEGIN FILE: pres2/sections/00-frontmatter.tex =====
+
+\section{Introduction}
+
+\begin{frame}[plain]
+  \titlepage
+  \vspace{-0.5em}
+  \hfill{\tiny Manrique et al., \textit{Science Advances} 2:e1501742 (2016)}
+
+  \note{
+    \textbf{Time: 0:30}\par
+    This talk is based almost entirely on one paper.\par
+    Signal the topic is sensitive and that the presentation treats extremist networks academically, not operationally.\par
+    Preview: two case studies and two notions of centrality.
+  }
+\end{frame}
+
+\begin{frame}{Motivation: who is central in extreme networks?}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Research question}
+        \begin{itemize}
+          \item Common stereotype: women are peripheral in dangerous settings.
+          \item The paper asks whether \alert{network position} tells a different story.
+          \item Two cases: online pro-ISIS support and offline PIRA operations.
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Analytical focus}
+        Contrast local hub-like visibility with \alert{betweenness-based brokerage}.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Key claim}
+        Even in male-dominated networks, women can occupy connectivity positions that support robustness and survival.
+      \end{block}
+
+      \vspace{0.35em}
+
+      \centering
+      \begin{tikzpicture}
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=8pt,text width=0.78\linewidth]
+        {Guiding question\\[0.25em]\textbf{Who holds the network together}\\under pressure?};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Contrast local visibility with collective importance.\par
+    Say explicitly this is about network roles, not notoriety.\par
+    Preview degree versus betweenness as the core comparison.
+  }
+\end{frame}
+
+\begin{frame}{Study roadmap}
+  \small
+  \centering
+  \begin{tikzpicture}[node distance=0.62cm,scale=0.76,every node/.style={transform shape}]
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt] (intro) {Introduction\\\small stereotype $\rightarrow$ test};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of intro] (data) {Two data sets\\\small VKontakte + PIRA};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below left=0.75cm and 1.0cm of data] (online) {Online results\\\small Fig. 1};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below right=0.75cm and 1.0cm of data] (offline) {Offline results\\\small Fig. 2};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=0.78cm of data] (life) {Longevity\\\small Fig. 3};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=0.76cm of life] (disc) {Discussion\\\small limits + implications};
+
+    \draw[-Latex,thick] (intro) -- (data);
+    \draw[-Latex,thick] (data) -- (online);
+    \draw[-Latex,thick] (data) -- (offline);
+    \draw[-Latex,thick] (online) -- (life);
+    \draw[-Latex,thick] (offline) -- (life);
+    \draw[-Latex,thick] (life) -- (disc);
+  \end{tikzpicture}
+
+  \note{
+    \textbf{Time: 1:00}\par
+    Promise the audience that the talk follows the paper closely.\par
+    Point to each box as the map for the next 38 minutes.
+  }
+\end{frame}
+
+
+===== END FILE: pres2/sections/00-frontmatter.tex =====
+
+===== BEGIN FILE: pres2/sections/01-motivation.tex =====
+
+\section{Centrality}
+
+\begin{frame}{Key definitions: degree and betweenness centrality}
+  \footnotesize
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+      \begin{block}{Degree centrality}
+        \begin{itemize}
+          \item Local visibility: number of direct neighbours.
+          \item Intuition: visible and potentially costly in covert settings.
+        \end{itemize}
+      \end{block}
+
+      \begin{block}{Betweenness centrality}
+        \[
+        c_B(n)=\sum_{s\neq t\neq n}\frac{\sigma_{st}(n)}{\sigma_{st}}
+        \qquad
+        \hat c_B(n)=\frac{c_B(n)}{(N-1)(N-2)}
+        \]
+
+        \begin{itemize}
+          \item $\sigma_{st}$: shortest paths from $s$ to $t$; $\sigma_{st}(n)$: those through $n$; $N$: nodes in the connected component.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      \begin{block}{Visual intuition}
+        \centering
+        \begin{tikzpicture}[scale=0.74]
+          \node[circle,fill=PresTwoPrimary,inner sep=2.5pt,label=above:{\scriptsize hub}] (h) at (0,1.5) {};
+          \foreach \a in {20,60,...,340} {
+            \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (p\a) at ({1.12*cos(\a)},{1.5+1.12*sin(\a)}) {};
+            \draw[thin] (h) -- (p\a);
+          }
+          \node[font=\scriptsize] at (0,0.1) {High degree};
+
+          \node[circle,fill=PresTwoPrimary,inner sep=2.5pt,label=above:{\scriptsize bridge}] (b) at (0,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l1) at (-1.3,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l2) at (-2.0,-0.8) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l3) at (-2.0,-1.6) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r1) at (1.3,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r2) at (2.0,-0.8) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r3) at (2.0,-1.6) {};
+          \draw[thin] (b)--(l1) (b)--(r1) (l1)--(l2) (l1)--(l3) (r1)--(r2) (r1)--(r3);
+          \node[font=\scriptsize] at (0,-2.25) {Low degree, high betweenness};
+        \end{tikzpicture}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:30}\par
+    Explain degree first, then betweenness exactly as the paper defines it.\par
+    State why shortest paths matter in covert networks: extra steps mean extra risk and cost.\par
+    Make sure the audience understands why low degree and high betweenness can coexist.
+  }
+\end{frame}
+
+
+===== END FILE: pres2/sections/01-motivation.tex =====
+
+===== BEGIN FILE: pres2/sections/02-paper-setup.tex =====
+
+\section{Paper Setup}
+
+\begin{frame}{Data sets at a glance}
+  \begin{block}{Operational networks and link definitions}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}p{0.2\textwidth}p{0.36\textwidth}p{0.36\textwidth}@{}}
+      \toprule
+       & Online pro-ISIS (VKontakte) & Offline PIRA (IED collaboration) \\
+      \midrule
+      Nodes & Individuals following pro-ISIS groups & Individuals collaborating on IED events or assaults \\
+      Links & Same group-page membership on a given day & Same IED event within a given year \\
+      Time resolution & Daily snapshots (early 2015) & Yearly networks (1970--1998) \\
+      Scale & 41,880 total; 24,883 men; 16,931 women & 926 individuals over time; women about 5\% \\
+      \bottomrule
+    \end{tabular}
+  \end{block}
+
+  \vspace{0.3em}
+
+  \centering
+  \begin{tikzpicture}
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,inner sep=6pt] (t1) {1970};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,right=1.0cm of t1] (t2) {late 1970s\\reorganisation};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,right=1.0cm of t2] (t3) {1980s onward\\core PIRA analysis};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,inner sep=6pt,right=1.0cm of t3] (t4) {1998};
+    \draw[-Latex,thick] (t1) -- (t2) -- (t3) -- (t4);
+  \end{tikzpicture}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Stress that these are operational ties, not friendship ties.\par
+    Explain the difference in time resolution: daily online versus yearly offline.\par
+    Use the timeline only as a chronology anchor.
+  }
+\end{frame}
+
+\begin{frame}{Online network construction: VKontakte pipeline}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Online network construction}
+        \begin{enumerate}
+          \item Manual hashtag and narrative tracing
+          \item Seed group-page discovery
+          \item API-based snowball expansion
+          \item Cross-checking and false-positive removal
+          \item Iterate until \alert{closure}
+        \end{enumerate}
+      \end{block}
+
+      \vspace{0.3em}
+      {\color{PresTwoSecondary}\textbf{Daily edge rule:}}
+      connect two users on day $d$ if they follow the same pro-ISIS group page.
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[node distance=0.58cm,scale=0.92,every node/.style={transform shape}]
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt] (hash) {Hashtags / narratives\\\small multi-language};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of hash] (seed) {Seed group pages};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of seed] (api) {API snowballing};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of api] (clean) {Validated pages\\\small followers + daily edges};
+        \draw[-Latex,thick] (hash)--(seed)--(api)--(clean);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Follow the exact steps from the paper's methods.\par
+    Mention closure and daily resolution explicitly.\par
+    Transition: the next slides show the resulting online network and its centrality patterns.
+  }
+\end{frame}
+
+
+===== END FILE: pres2/sections/02-paper-setup.tex =====
+
+===== BEGIN FILE: pres2/sections/03-findings.tex =====
+
+\section{Findings}
+
+\begin{frame}{Online pro-ISIS network: daily snapshots (Fig. 1A)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{block}{What you are looking at}
+        \begin{itemize}
+          \item Nodes: users
+          \item Edges: same group-page membership on that day
+          \item Colours: gender as encoded in the paper
+        \end{itemize}
+      \end{block}
+
+      {\color{PresTwoSecondary}\textbf{Interpretation anchor:}}
+      the network is \alert{not static}; centrality is computed day by day.
+    \end{column}
+
+    \begin{column}{0.62\textwidth}
+      \PaperFigurePlaceholder[0.4\textheight]{Insert Fig. 1A here}{
+        Expected file: \texttt{fig1A.png}\\
+        Show the three daily online-network snapshots.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain how to read the nodes, edges, and colours.\par
+    Use this slide to establish the time-resolved nature of the online network before moving to centrality plots.
+  }
+\end{frame}
+
+\begin{frame}{Result (online): women show higher betweenness peaks (Fig. 1B)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{block}{How to read the plot}
+        \begin{itemize}
+          \item X-axis: day
+          \item Y-axis: average betweenness centrality
+          \item Red vs blue in the paper: women vs men
+        \end{itemize}
+      \end{block}
+
+      {\color{PresTwoSecondary}\textbf{Interpretation:}}
+      high BC implies brokerage across distant parts of the network.
+    \end{column}
+
+    \begin{column}{0.62\textwidth}
+      \PaperFigurePlaceholder[0.4\textheight]{Insert Fig. 1B here}{
+        Expected file: \texttt{fig1B.png}\\
+        Show the daily betweenness series for women vs men.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Walk through axes and colours first.\par
+    State the main empirical fact: women's average BC peaks much higher than men's.\par
+    Transition to whether this is just a degree effect.
+  }
+\end{frame}
+
+\begin{frame}{Result (online): degree centrality + gender-shuffle null (Fig. 1C)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Null model}
+        Randomly shuffle node genders in the time-averaged network; recompute the degree statistics.
+      \end{block}
+
+      \begin{exampleblock}{Reported effect size}
+        Women's average degree is more than 4 SD above the null expectation. Reported Z-scores are about $\pm 4.7$.
+      \end{exampleblock}
+
+      {\color{PresTwoSecondary}\textbf{Z-score reminder:}}
+      $Z=(x-\mu_{\text{null}})/\sigma_{\text{null}}$.
+    \end{column}
+
+    \begin{column}{0.58\textwidth}
+      \PaperFigurePlaceholder[0.37\textheight]{Insert Fig. 1C here}{
+        Expected file: \texttt{fig1C.png}\\
+        Show the degree distribution and the gender-shuffle null.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Explain what the gender shuffle tests and what it does not test.\par
+    Emphasise the reported Z-scores.\par
+    Set up the next slide: degree and betweenness need not move together.
+  }
+\end{frame}
+
+\begin{frame}{Mechanism intuition (online): avoid stars, retain brokerage (Fig. 1D)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Left panel}
+        \PaperFigurePlaceholder[0.3\textheight]{Insert Fig. 1D left here}{
+          Expected file: \texttt{fig1D\_left.png}\\
+          Visible hub: high BC plus high degree.
+        }
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Right panel}
+        \PaperFigurePlaceholder[0.3\textheight]{Insert Fig. 1D right here}{
+          Expected file: \texttt{fig1D\_right.png}\\
+          Broker: high BC plus low degree.
+        }
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.15em}
+  \begin{center}
+    \small\textbf{Takeaway:} women can broker shortest paths without looking like visible hubs.
+  \end{center}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    This is the interpretation hinge for the online case.\par
+    Contrast local visibility with global brokerage.\par
+    Transition to whether the same pattern appears offline when risk is more direct.
+  }
+\end{frame}
+
+\begin{frame}{Offline PIRA network: how edges are formed}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Offline definition}
+        \begin{itemize}
+          \item Nodes: PIRA actors
+          \item Link in year $y$ if two actors collaborated on an IED event or assault in that year
+          \item Data assembled from archival sources and cross-checked
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Reported scale}
+        926 individuals over time, with women comprising about 5\% of the network.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.58\textwidth}
+      \PaperFigurePlaceholder[0.42\textheight]{Insert Fig. 2A here}{
+        Expected file: \texttt{fig2A\_snapshots.png}\\
+        Show the three PIRA snapshots after reorganisation.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Stress that this is an offline operational network with direct risks.\par
+    Explain the yearly resolution and transition into Fig. 2's sequence of results.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): PIRA activity rises while actor count does not (Fig. 2B)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.4\textwidth}
+      \begin{block}{Key result}
+        \begin{itemize}
+          \item IED event count rises in the post-reorganisation period.
+          \item The rise is not explained by a larger actor pool.
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Interpretation}
+        This motivates attention to \alert{network structure and roles}, not just network size.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \PaperFigurePlaceholder[0.4\textheight]{Insert Fig. 2B here}{
+        Expected file: \texttt{fig2B\_attacks.png}\\
+        Show the attacks-over-time trend.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Read the axes and the trend.\par
+    Use the figure as a bridge from productivity to centrality.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): women's betweenness rises above men's (Fig. 2C)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.35\textwidth}
+      \begin{block}{Reading Fig. 2C}
+        \begin{itemize}
+          \item Y-axis: average betweenness
+          \item Women's curve climbs well above men's
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Paper's caution}
+        The authors do not claim intent; they offer a risk-based interpretation.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.65\textwidth}
+      \PaperFigurePlaceholder[0.4\textheight]{Insert Fig. 2C here}{
+        Expected file: \texttt{fig2C\_bc.png}\\
+        Show women's vs men's betweenness over time.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:45}\par
+    Highlight the divergence and reconnect it to brokerage.\par
+    Transition directly to the degree centrality trend.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): women's degree centrality declines faster (Fig. 2D)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Reading Fig. 2D}
+        \begin{itemize}
+          \item Degree declines for both groups over time
+          \item Women's degree drops faster than men's
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Interpretive hypothesis}
+        Direct on-street risk may incentivise reducing conspicuous degree while retaining brokerage.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.62\textwidth}
+      \PaperFigurePlaceholder[0.4\textheight]{Insert Fig. 2D here}{
+        Expected file: \texttt{fig2D\_degree.png}\\
+        Show the degree-centrality trend over time.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:45}\par
+    Connect the offline degree result back to the earlier hub-versus-broker idea.\par
+    Then move into the paper's modelling interlude.
+  }
+\end{frame}
+
+\begin{frame}{Model interlude: fission--fusion + “team ethic” spreading (Fig. 2E)}
+  \small
+  \begin{block}{Model assumptions}
+    \centering
+    \begin{tikzpicture}[node distance=0.45cm,scale=0.92,every node/.style={transform shape}]
+      \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=5pt,text width=0.23\textwidth] (a1) {High-BC actors\\more “team-player” inclined};
+      \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=5pt,text width=0.29\textwidth,right=of a1] (a2) {Team ethic spreads\\within clusters containing women};
+      \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=5pt,text width=0.18\textwidth,right=of a2] (a3) {Run atop a\\fission--fusion model};
+      \draw[-Latex,thick] (a1)--(a2)--(a3);
+    \end{tikzpicture}
+  \end{block}
+
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.6\textwidth}
+      \PaperFigurePlaceholder[0.24\textheight]{Insert Fig. 2E here}{
+        Expected file: \texttt{fig2E\_model.png}\\
+        Show both model-vs-data panels together.
+      }
+    \end{column}
+
+    \begin{column}{0.4\textwidth}
+      \begin{exampleblock}{Why a simulation?}
+        PIRA observations are yearly, while the spreading dynamics are presumed to operate over shorter periods. Present the model as a \alert{notional mechanism}, not causal proof.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:30}\par
+    Be explicit that the authors call this setup oversimplified.\par
+    Explain fission--fusion only at a high level.\par
+    Then transition to the longevity associations.
+  }
+\end{frame}
+
+\begin{frame}{Longevity (online): more women in groups, longer lifetimes (Fig. 3A)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      \PaperFigurePlaceholder[0.38\textheight]{Insert Fig. 3A here}{
+        Expected file: \texttt{fig3A\_online\_lifetime.png}\\
+        Show the online lifetime scatter and fitted tendency.
+      }
+    \end{column}
+
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Reported association}
+        Pearson's $r = 0.28$, $P < 0.1$.
+      \end{block}
+
+      \begin{exampleblock}{Interpretation constraint}
+        Association is not causation: group shutdown is also shaped by platform moderation and external enforcement.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain the axes slowly.\par
+    State the reported correlation and p-value.\par
+    Keep the causal claim disciplined.
+  }
+\end{frame}
+
+\begin{frame}{Longevity (offline): neighbours of women persist longer (Fig. 3B)}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.4\textwidth}
+      \begin{block}{What Fig. 3B claims}
+        Actors directly connected to women have longer average lifetimes than actors connected to men and longer than a gender-shuffled null model.
+      \end{block}
+
+      \begin{exampleblock}{Network intuition}
+        This is consistent with women occupying more resilient bridging positions.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \PaperFigurePlaceholder[0.38\textheight]{Insert Fig. 3B here}{
+        Expected file: \texttt{fig3B\_pira\_lifetime.png}\\
+        Show women, men, and random/null model lifetimes.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain “lifetime” in the units of the plot.\par
+    Repeat the gender-shuffle null model idea.\par
+    Transition into interpretation and alternatives.
+  }
+\end{frame}
+
+
+===== END FILE: pres2/sections/03-findings.tex =====
+
+===== BEGIN FILE: pres2/sections/04-implications.tex =====
+
+\section{Interpretation}
+
+\begin{frame}{Ruling out simple alternatives}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Alternatives discussed in the paper}
+        \begin{itemize}
+          \item Incomplete or unrepresentative networks
+          \item “Exceptional women” rather than a broad pattern
+          \item Role monopolisation by women
+          \item Over-reading a small set of centrality measures
+          \item Online attention effects in male-dominated spaces
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.45\textwidth}
+      \begin{exampleblock}{Discussion points}
+        \begin{itemize}
+          \item ISIS groups can approach 50\% women, so rarity alone is weak.
+          \item In PIRA, expert reputation lists did not align with top-BC women.
+          \item No clear evidence ties BC to a single operational role.
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:15}\par
+    Treat this as a credibility slide.\par
+    Move quickly but explicitly through the alternatives the authors themselves consider.
+  }
+\end{frame}
+
+\begin{frame}{Limitations and validity boundaries}
+  \small
+  \begin{block}{Data limitations}
+    \begin{itemize}
+      \item The authors cannot prove completeness; they argue the networks are representative enough to reveal real effects.
+      \item External events shape network evolution and platform behaviour.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Measurement limitations}
+    \begin{itemize}
+      \item Online gender declarations may contain noise, though the paper argues misdeclaration incentives are limited.
+      \item Higher-order network statistics need more data and are more sensitive to noise.
+    \end{itemize}
+  \end{block}
+
+  {\footnotesize\color{PresTwoSecondary}\textbf{Inference discipline:}
+  claims are about \alert{topological roles}, not intent or psychology.}
+
+  \note{
+    \textbf{Time: 2:15}\par
+    Say clearly what the paper does not claim.\par
+    Keep this slide as a boundary marker before discussing implications.
+  }
+\end{frame}
+
+\begin{frame}{Implications: rethinking “importance” in networked systems}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Interpretive implication}
+        Traditional approaches often focus on high-degree hubs; the paper argues that women's interconnectivity and \alert{collective measures like betweenness} also matter.
+      \end{block}
+
+      \begin{exampleblock}{Ethical constraint from the paper}
+        The authors do \alert{not} recommend targeting women; they frame the implication as rethinking evaluation and engagement.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[node distance=0.9cm]
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=8pt] (hub) {Hub-centric\\\small degree};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=8pt,below=of hub] (broker) {Broker-centric\\\small betweenness};
+        \draw[-Latex,thick] (hub) -- (broker);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Keep the implication conceptual, not tactical.\par
+    This slide should sound like “how to evaluate importance,” not “how to exploit a network.”
+  }
+\end{frame}
+
+\begin{frame}{Ethical scope and interpretive guardrails}
+  \begin{alertblock}{Scope}
+    The analysis concerns \textbf{network-science measurement} rather than operational guidance.
+  \end{alertblock}
+
+  \begin{block}{Interpretive guardrails}
+    \begin{itemize}
+      \item Avoid reproducing extremist media; keep visuals at the level of abstracted network figures.
+      \item Use descriptive, non-sensational language.
+      \item Separate empirical findings from causal or normative overreach.
+    \end{itemize}
+  \end{block}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain why this slide is present: the topic is sensitive, and the framing should remain responsible.\par
+    Then move directly to the takeaways.
+  }
+\end{frame}
+
+\begin{frame}{Conclusions and open questions}
+  \begin{block}{Three take-home messages}
+    \begin{enumerate}
+      \item In both the online and offline cases, women show higher \alert{betweenness centrality} despite being fewer in number.
+      \item Degree and betweenness can diverge: women can avoid visible “star” status while providing brokerage.
+      \item Longevity patterns are consistent with women's embeddedness having system-level consequences.
+    \end{enumerate}
+  \end{block}
+
+  \begin{exampleblock}{Open questions}
+    How stable is this pattern across other extreme networks? Which pressures change centrality patterns? How should contributions be evaluated: locally or collectively?
+  \end{exampleblock}
+
+  \note{
+    \textbf{Time: 0:45}\par
+    Deliver these as compact sentences.\par
+    This is the memory slide immediately before Q\&A.
+  }
+\end{frame}
+
+\begin{frame}[plain]
+  \vspace{1.1cm}
+  \begin{center}
+    {\fontsize{34}{38}\selectfont \textbf{Questions}}
+  \end{center}
+
+  \note{
+    \textbf{Time: 7:00}\par
+    If questions are short, use the backup slides for definitions, null model logic, or data scales.\par
+    If questions are long, stop on time and offer to share the deck afterward.
+  }
+\end{frame}
+
+
+===== END FILE: pres2/sections/04-implications.tex =====
+
+===== BEGIN FILE: pres2/sections/99-appendix.tex =====
+
+\appendix
+\section{Appendix}
+
+\begin{frame}{Why betweenness matters}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Classic intuition}
+        Betweenness-based centrality formalises the idea that a node is central if it lies on shortest paths between others, giving it relay or control potential.
+      \end{block}
+
+      \begin{exampleblock}{Interpretive link}
+        This supports the article's emphasis on shortest-path brokerage in covert networks.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \node[circle,fill=PresTwoMuted!70,inner sep=2pt] (a) at (0,0) {};
+        \node[circle,fill=PresTwoPrimary,inner sep=2.6pt] (b) at (1.2,0) {};
+        \node[circle,fill=PresTwoMuted!70,inner sep=2pt] (c) at (2.4,0) {};
+        \draw[thick] (a)--(b)--(c);
+        \node[font=\scriptsize] at (1.2,-0.6) {bridge on a shortest path};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{\textbf{Time: as needed}\par Use this if someone asks why BC is the paper's key measure.}
+\end{frame}
+
+\begin{frame}{Null model: gender-shuffling logic}
+  \begin{block}{Why shuffle genders?}
+    To test whether the observed gender-based centrality differences exceed what we would expect if gender labels were randomly assigned on the same underlying topology.
+  \end{block}
+
+  \begin{block}{What is held fixed}
+    The network structure is fixed; only the mapping from node to gender label is permuted.
+  \end{block}
+
+  \begin{exampleblock}{What it does not control}
+    The null model does not remove sampling bias or external confounders. It only measures deviation from random labelling given the observed graph.
+  \end{exampleblock}
+
+  \note{\textbf{Time: as needed}\par Use this for statistical questions about significance or effect size.}
+\end{frame}
+
+\begin{frame}{Reported data-set magnitudes}
+  \begin{block}{Online VKontakte network}
+    41,880 individuals total: 24,883 men, 16,931 women, 66 undeclared; 170 groups; more than 1,000,000 aggregated links.
+  \end{block}
+
+  \begin{block}{Offline PIRA network}
+    926 individuals in the IED network over time; total registered members 1,382 (1,312 men, 70 women); 5,461 IED events in the broader data set.
+  \end{block}
+
+  \note{\textbf{Time: as needed}\par Use this slide for methods or credibility questions about the underlying scale.}
+\end{frame}
+
+\begin{frame}{Supplementary figures referenced in the article}
+  \begin{block}{Supplementary material referenced by the article}
+    The article refers to five supplementary figures: S1 on BC interpretation, S2 on actor count versus productivity, S3 on the multiagent model, S4 on the exceptional-women alternative, and S5 on operational roles.
+  \end{block}
+
+  \note{\textbf{Time: as needed}\par Only use this if someone pushes on robustness checks or the model details.}
+\end{frame}
+
+
+===== END FILE: pres2/sections/99-appendix.tex =====
+
+===== BEGIN FILE: pres2/sections/90-references.tex =====
+
+\section{References}
+
+\begin{frame}[allowframebreaks]{References}
+  \nocite{*}
+  \printbibliography
+
+  \note{\textbf{Time: 0}\par Keep this for PDF completeness and for post-talk sharing, not for narration.}
+\end{frame}
+
+
+===== END FILE: pres2/sections/90-references.tex =====
+

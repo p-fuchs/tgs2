@@ -1,0 +1,90 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{theme/beamerthemepres2}[2026/04/09 Editorial Beamer theme for pres2]
+
+\mode<presentation>
+
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{professionalfonts}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+
+\setbeamercolor{normal text}{fg=PresTwoText,bg=PresTwoBackground}
+\setbeamercolor{structure}{fg=PresTwoPrimary}
+\setbeamercolor{alerted text}{fg=PresTwoSecondary}
+\setbeamercolor{title}{fg=PresTwoText}
+\setbeamercolor{subtitle}{fg=PresTwoMuted}
+\setbeamercolor{frametitle}{fg=PresTwoText}
+\setbeamercolor{titlelike}{fg=PresTwoText}
+\setbeamercolor{author}{fg=PresTwoMuted}
+\setbeamercolor{date}{fg=PresTwoMuted}
+\setbeamercolor{institute}{fg=PresTwoMuted}
+\setbeamercolor{section in toc}{fg=PresTwoText}
+\setbeamercolor{subsection in toc}{fg=PresTwoMuted}
+\setbeamercolor{block title}{fg=PresTwoBackground,bg=PresTwoPrimary}
+\setbeamercolor{block body}{fg=PresTwoText,bg=PresTwoSurface}
+\setbeamercolor{takeaway box}{fg=PresTwoText,bg=PresTwoSurface}
+
+\setbeamerfont{title}{family=\sffamily,size=\fontsize{23}{27}\selectfont,series=\bfseries}
+\setbeamerfont{subtitle}{family=\sffamily,size=\fontsize{13}{16}\selectfont}
+\setbeamerfont{frametitle}{family=\sffamily,size=\fontsize{17}{20}\selectfont,series=\bfseries}
+\setbeamerfont{author}{family=\sffamily,size=\fontsize{11}{14}\selectfont}
+\setbeamerfont{date}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{institute}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{section title}{family=\sffamily,size=\fontsize{26}{30}\selectfont,series=\bfseries}
+\setbeamerfont{section subtitle}{family=\sffamily,size=\fontsize{11}{13}\selectfont}
+\setbeamerfont{caption}{family=\sffamily,size=\fontsize{9}{11}\selectfont}
+\setbeamerfont{footline}{family=\sffamily,size=\fontsize{8}{10}\selectfont}
+\setbeamerfont{block title}{family=\sffamily,size=\fontsize{11}{13}\selectfont,series=\bfseries}
+\setbeamerfont{block body}{family=\sffamily,size=\small}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.15cm}%
+  {\usebeamerfont{frametitle}\insertframetitle\par}%
+  \vspace{0.15cm}%
+  {\color{PresTwoMuted}\rule{\linewidth}{0.4pt}\par}%
+}
+
+\defbeamertemplate*{title page}{pres2}{%
+  \vspace*{0.12\paperheight}
+  {\usebeamerfont{title}\inserttitle\par}
+  \vspace{0.3cm}
+  {\usebeamerfont{subtitle}\insertsubtitle\par}
+  \vspace{0.45cm}
+  {\color{PresTwoPrimary}\rule{0.38\linewidth}{0.7pt}\par}
+  \vspace{0.55cm}
+  {\usebeamerfont{author}\insertauthor\par}
+  \vspace{0.12cm}
+  {\usebeamerfont{institute}\insertinstitute\par}
+  \vfill
+  {\usebeamerfont{date}\insertdate\par}
+}
+
+\setbeamertemplate{items}[circle]
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \vskip0.2ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.4ex,dp=1.5ex,sep=0pt]{normal text}%
+    \hspace*{10mm}%
+    \makebox[\dimexpr\paperwidth-20mm\relax][l]{%
+      \usebeamerfont{footline}\color{PresTwoMuted}%
+      \insertshorttitle\hfill\insertframenumber{} / \inserttotalframenumber%
+    }%
+  \end{beamercolorbox}%
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PresTwoPrimary,
+  urlcolor=PresTwoPrimary,
+  citecolor=PresTwoSecondary
+}
+
+\pdfstringdefDisableCommands{%
+  \def\translate#1{#1}%
+}

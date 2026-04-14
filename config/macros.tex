@@ -1,0 +1,82 @@
+\NewDocumentCommand{\SectionCard}{m}{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    {\usebeamerfont{section title}\color{PresTwoPrimary}#1\par}
+    \vspace{0.28cm}
+    {\color{PresTwoMuted}\rule{0.32\linewidth}{0.6pt}\par}
+    \vspace{0.18cm}
+    {\usebeamerfont{section subtitle}\color{PresTwoMuted}Section\par}
+    \vfill
+  \end{frame}
+}
+
+\NewDocumentCommand{\StatementFrame}{m +m}{%
+  \begin{frame}{#1}
+    \justifying
+    #2
+  \end{frame}
+}
+
+\NewDocumentCommand{\PaperFigurePlaceholder}{O{0.41\textheight} m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.65em]{takeaway box}
+    \begin{minipage}[c][#1][c]{0.96\linewidth}
+      \centering
+      {{\fontsize{16}{18}\selectfont\bfseries\color{PresTwoPrimary}#2}\par}
+      \vspace{0.2em}
+      {\color{PresTwoMuted}\rule{0.42\linewidth}{0.5pt}\par}
+      \vspace{0.35em}
+      {\scriptsize\color{PresTwoMuted}#3\par}
+    \end{minipage}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\PaperFigureSlot}{O{0.41\textheight} m m}{%
+  \IfFileExists{assets/figures/processed/#2}{%
+    \begin{minipage}[c][#1][c]{\linewidth}
+      \vspace*{\fill}
+      \centering
+      \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}\par
+      \vspace*{\fill}
+    \end{minipage}
+  }{%
+    \IfFileExists{assets/figures/original/#2}{%
+      \begin{minipage}[c][#1][c]{\linewidth}
+        \vspace*{\fill}
+        \centering
+        \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}\par
+        \vspace*{\fill}
+      \end{minipage}
+    }{%
+      \PaperFigurePlaceholder[#1]{Figure omitted}{#3}%
+    }%
+  }%
+}
+
+\NewDocumentCommand{\FigureFrame}{m m m}{%
+  \begin{frame}{#1}
+    \centering
+    \IfFileExists{#2}{%
+      \includegraphics[width=\linewidth,height=0.6\textheight,keepaspectratio]{#2}
+    }{%
+      \begin{tikzpicture}
+        \fill[PresTwoSurface] (0,0) rectangle (10.4,5.0);
+        \draw[PresTwoMuted,line width=0.8pt] (0,0) rectangle (10.4,5.0);
+        \node[text=PresTwoMuted,align=center] at (5.2,2.5)
+          {Reserved figure slot\\\texttt{#2}};
+      \end{tikzpicture}
+    }
+
+    \vspace{0.3cm}
+
+    {\usebeamerfont{caption}\color{PresTwoMuted}#3\par}
+  \end{frame}
+}
+
+\NewDocumentCommand{\TakeawayFrame}{m +m}{%
+  \begin{frame}{#1}
+    \begin{beamercolorbox}[wd=\linewidth,sep=1.1em,rounded=true]{takeaway box}
+      \justifying
+      #2
+    \end{beamercolorbox}
+  \end{frame}
+}

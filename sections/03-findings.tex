@@ -1,0 +1,302 @@
+\section{Findings}
+
+\begin{frame}{Online pro-ISIS network: daily snapshots}
+  \small
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.34\textwidth}
+      \begin{block}{What you are looking at}
+        \begin{itemize}
+          \item Nodes: users
+          \item Edges: same group-page membership on that day
+          \item Colours: gender as encoded in the paper
+        \end{itemize}
+      \end{block}
+
+      {\color{PresTwoSecondary}\textbf{Interpretation anchor:}}
+      the network is \alert{not static}; centrality is computed day by day.
+    \end{column}
+
+    \begin{column}{0.66\textwidth}
+      \PaperFigureSlot[0.68\textheight]{1A.png}{
+        Show the three daily online-network snapshots.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain how to read the nodes, edges, and colours.\par
+    Use this slide to establish the time-resolved nature of the online network before moving to centrality plots.
+  }
+\end{frame}
+
+\begin{frame}{Result (online): women show higher betweenness peaks}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{block}{How to read the plot}
+        \begin{itemize}
+          \item X-axis: day
+          \item Y-axis: average betweenness centrality
+          \item Red vs blue in the paper: women vs men
+        \end{itemize}
+      \end{block}
+
+      {\color{PresTwoSecondary}\textbf{Interpretation:}}
+      high BC implies brokerage across distant parts of the network.
+    \end{column}
+
+    \begin{column}{0.62\textwidth}
+      \PaperFigureSlot[0.4\textheight]{1B.png}{
+        Show the daily betweenness series for women vs men.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Walk through axes and colours first.\par
+    State the main empirical fact: women's average BC peaks much higher than men's.\par
+    Transition to whether this is just a degree effect.
+  }
+\end{frame}
+
+\begin{frame}{Result (online): women exceed the degree null expectation}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Null model}
+        Randomly shuffle node genders in the time-averaged network; recompute the degree statistics.
+      \end{block}
+
+      \begin{exampleblock}{Reported effect size}
+        Women's average degree is more than 4 SD above the null expectation. Reported Z-scores are about $\pm 4.7$.
+      \end{exampleblock}
+
+      {\color{PresTwoSecondary}\textbf{Z-score reminder:}}
+      $Z=(x-\mu_{\text{null}})/\sigma_{\text{null}}$.
+    \end{column}
+
+    \begin{column}{0.58\textwidth}
+      \PaperFigureSlot[0.37\textheight]{1C.png}{
+        Show the degree distribution and the gender-shuffle null.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Explain what the gender shuffle tests and what it does not test.\par
+    Emphasise the reported Z-scores.\par
+    Set up the next slide: degree and betweenness need not move together.
+  }
+\end{frame}
+
+\begin{frame}{Interpretation (online): brokerage without hub visibility}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Visible hub}
+        \PaperFigureSlot[0.3\textheight]{1D-left.png}{
+          Visible hub: high BC plus high degree.
+        }
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Low-visibility broker}
+        \PaperFigureSlot[0.3\textheight]{1D-right.png}{
+          Broker: high BC plus low degree.
+        }
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.15em}
+  \begin{center}
+    \small\textbf{Takeaway:} women can broker shortest paths without looking like visible hubs.
+  \end{center}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    This is the interpretation hinge for the online case.\par
+    Contrast local visibility with global brokerage.\par
+    Transition to whether the same pattern appears offline when risk is more direct.
+  }
+\end{frame}
+
+\begin{frame}{Offline PIRA network: how edges are formed}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Offline definition}
+        \begin{itemize}
+          \item Nodes: PIRA actors
+          \item Link in year $y$ if two actors collaborated on the same operation in that year
+          \item Data assembled from archival sources and cross-checked
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Reported scale}
+        926 individuals over time, with women comprising about 5\% of the network.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.58\textwidth}
+      \PaperFigureSlot[0.6\textheight]{2A.png}{
+        Show the three PIRA snapshots after reorganisation.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Stress that this is an offline operational network with direct risks.\par
+    Explain the yearly resolution and transition into the offline result sequence.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): PIRA activity rises while actor count does not}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.4\textwidth}
+      \begin{block}{Key result}
+        \begin{itemize}
+          \item IED event count rises in the post-reorganisation period.
+          \item The rise is not explained by a larger actor pool.
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Interpretation}
+        This motivates attention to \alert{network structure and roles}, not just network size.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \PaperFigureSlot[0.4\textheight]{2B.png}{
+        Show the attacks-over-time trend.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Read the axes and the trend.\par
+    Use the figure as a bridge from productivity to centrality.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): women's betweenness rises above men's}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.35\textwidth}
+      \begin{block}{What the trend shows}
+        \begin{itemize}
+          \item Y-axis: average betweenness
+          \item Women's curve climbs well above men's
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Paper's caution}
+        The authors do not claim intent; they offer a risk-based interpretation.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.65\textwidth}
+      \PaperFigureSlot[0.4\textheight]{2C.png}{
+        Show women's vs men's betweenness over time.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:45}\par
+    Highlight the divergence and reconnect it to brokerage.\par
+    Transition directly to the degree centrality trend.
+  }
+\end{frame}
+
+\begin{frame}{Result (offline): women's degree centrality declines faster}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{block}{What the trend shows}
+        \begin{itemize}
+          \item Degree declines for both groups over time
+          \item Women's degree drops faster than men's
+        \end{itemize}
+      \end{block}
+
+      \begin{exampleblock}{Interpretive hypothesis}
+        Direct on-street risk may incentivise reducing conspicuous degree while retaining brokerage.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.62\textwidth}
+      \PaperFigureSlot[0.4\textheight]{2D.png}{
+        Show the degree-centrality trend over time.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:45}\par
+    Connect the offline degree result back to the earlier hub-versus-broker idea.\par
+    Then move into the longevity associations.
+  }
+\end{frame}
+\begin{frame}{Longevity (online): more women in groups, longer lifetimes}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      \PaperFigureSlot[0.38\textheight]{3A.png}{
+        Show the online lifetime scatter and fitted tendency.
+      }
+    \end{column}
+
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Reported association}
+        Pearson's $r = 0.28$, $P < 0.1$.
+      \end{block}
+
+      \begin{exampleblock}{Interpretation constraint}
+        Association is not causation: group shutdown is also shaped by platform moderation and external enforcement.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain the axes slowly.\par
+    State the reported correlation and p-value.\par
+    Keep the causal claim disciplined.
+  }
+\end{frame}
+
+\begin{frame}{Longevity (offline): neighbours of women persist longer}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.4\textwidth}
+      \begin{block}{Longer-lived ties around women}
+        Actors directly connected to women have longer average lifetimes than actors connected to men, and they also exceed the gender-shuffled null model.
+      \end{block}
+
+      \begin{exampleblock}{Network intuition}
+        This is consistent with women occupying more resilient bridging positions.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \PaperFigureSlot[0.38\textheight]{3B.png}{
+        Show women, men, and random/null model lifetimes.
+      }
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 1:30}\par
+    Explain “lifetime” in the units of the plot.\par
+    Repeat the gender-shuffle null model idea.\par
+    Transition into interpretation and alternatives.
+  }
+\end{frame}

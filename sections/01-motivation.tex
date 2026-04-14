@@ -1,0 +1,59 @@
+\section{Centrality}
+
+\begin{frame}{Key definitions: degree and betweenness centrality}
+  \footnotesize
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.53\textwidth}
+      \begin{block}{Degree centrality}
+        Local visibility: number of direct neighbours.\par
+        \vspace{0.35em}
+        Intuition: visible and potentially costly in covert settings.
+      \end{block}
+
+      \begin{block}{Betweenness centrality}
+        \[
+        c_B(n)=\sum_{s\neq t\neq n}\frac{\sigma_{st}(n)}{\sigma_{st}}
+        \quad
+        \hat c_B(n)=\frac{c_B(n)}{(N-1)(N-2)}
+        \]
+
+        {\scriptsize $\sigma_{st}$ counts shortest paths from $s$ to $t$;
+        $\sigma_{st}(n)$ counts those through $n$;
+        $\hat c_B$ normalizes by component size $N$.}
+      \end{block}
+    \end{column}
+
+    \hfill
+
+    \begin{column}{0.39\textwidth}
+      \begin{block}{Visual intuition}
+        \centering
+        \begin{tikzpicture}[scale=0.62]
+          \node[circle,fill=PresTwoPrimary,inner sep=2.5pt,label=above:{\scriptsize hub}] (h) at (0,1.5) {};
+          \foreach \a in {20,60,...,340} {
+            \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (p\a) at ({1.12*cos(\a)},{1.5+1.12*sin(\a)}) {};
+            \draw[thin] (h) -- (p\a);
+          }
+          \node[font=\scriptsize] at (0,0.1) {High degree};
+
+          \node[circle,fill=PresTwoPrimary,inner sep=2.5pt,label=above:{\scriptsize bridge}] (b) at (0,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l1) at (-1.3,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l2) at (-2.0,-0.8) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (l3) at (-2.0,-1.6) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r1) at (1.3,-1.2) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r2) at (2.0,-0.8) {};
+          \node[circle,fill=PresTwoMuted!70,inner sep=1.8pt] (r3) at (2.0,-1.6) {};
+          \draw[thin] (b)--(l1) (b)--(r1) (l1)--(l2) (l1)--(l3) (r1)--(r2) (r1)--(r3);
+          \node[font=\scriptsize] at (0,-2.25) {Low degree, high betweenness};
+        \end{tikzpicture}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:30}\par
+    Explain degree first, then betweenness exactly as the paper defines it.\par
+    State why shortest paths matter in covert networks: extra steps mean extra risk and cost.\par
+    Make sure the audience understands why low degree and high betweenness can coexist.
+  }
+\end{frame}

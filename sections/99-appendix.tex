@@ -1,0 +1,65 @@
+\appendix
+\section{Appendix}
+
+\begin{frame}{Why betweenness matters}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Classic intuition}
+        Betweenness-based centrality formalises the idea that a node is central if it lies on shortest paths between others, giving it relay or control potential.
+      \end{block}
+
+      \begin{exampleblock}{Interpretive link}
+        This supports the article's emphasis on shortest-path brokerage in covert networks.
+      \end{exampleblock}
+    \end{column}
+
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \node[circle,fill=PresTwoMuted!70,inner sep=2pt] (a) at (0,0) {};
+        \node[circle,fill=PresTwoPrimary,inner sep=2.6pt] (b) at (1.2,0) {};
+        \node[circle,fill=PresTwoMuted!70,inner sep=2pt] (c) at (2.4,0) {};
+        \draw[thick] (a)--(b)--(c);
+        \node[font=\scriptsize] at (1.2,-0.6) {bridge on a shortest path};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{\textbf{Time: as needed}\par Use this if someone asks why BC is the paper's key measure.}
+\end{frame}
+
+\begin{frame}{Null model: gender-shuffling logic}
+  \begin{block}{Why shuffle genders?}
+    To test whether the observed gender-based centrality differences exceed what we would expect if gender labels were randomly assigned on the same underlying topology.
+  \end{block}
+
+  \begin{block}{What is held fixed}
+    The network structure is fixed; only the mapping from node to gender label is permuted.
+  \end{block}
+
+  \begin{exampleblock}{What it does not control}
+    The null model does not remove sampling bias or external confounders. It only measures deviation from random labelling given the observed graph.
+  \end{exampleblock}
+
+  \note{\textbf{Time: as needed}\par Use this for statistical questions about significance or effect size.}
+\end{frame}
+
+\begin{frame}{Reported data-set magnitudes}
+  \begin{block}{Online VKontakte network}
+    41,880 individuals total: 24,883 men, 16,931 women, 66 undeclared; 170 groups; more than 1,000,000 aggregated links.
+  \end{block}
+
+  \begin{block}{Offline PIRA network}
+    926 individuals in the IED network over time; total registered members 1,382 (1,312 men, 70 women); 5,461 IED events in the broader data set.
+  \end{block}
+
+  \note{\textbf{Time: as needed}\par Use this slide for methods or credibility questions about the underlying scale.}
+\end{frame}
+
+\begin{frame}{Supplementary analyses mentioned in the article}
+  \begin{block}{Supplementary material referenced by the article}
+    The paper points readers to extra analyses on betweenness interpretation, actor count versus productivity, the generative model, the ``exceptional women'' alternative, and operational roles.
+  \end{block}
+
+  \note{\textbf{Time: as needed}\par Only use this if someone pushes on robustness checks or the model details.}
+\end{frame}

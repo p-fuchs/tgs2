@@ -1,0 +1,75 @@
+\section{Paper Setup}
+
+\begin{frame}{Data sets at a glance}
+  \begin{block}{Operational networks and link definitions}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}p{0.2\textwidth}p{0.36\textwidth}p{0.36\textwidth}@{}}
+      \toprule
+       & Online pro-ISIS (VKontakte) & Offline PIRA (operational collaboration) \\
+      \midrule
+      Nodes & Individuals following pro-ISIS groups & Individuals collaborating on IED events or assaults \\
+      Links & Same group-page membership on a given day & Same operation within a given year \\
+      Time resolution & Daily snapshots (early 2015) & Yearly networks (1970--1998) \\
+      Scale & 41,880 total; 24,883 men; 16,931 women & 926 individuals over time; women about 5\% \\
+      \bottomrule
+    \end{tabular}
+  \end{block}
+
+  \vspace{0.3em}
+
+  \centering
+  \begin{tikzpicture}
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,inner sep=6pt] (t1) {1970};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,right=1.0cm of t1] (t2) {late 1970s\\reorganisation};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,right=1.0cm of t2] (t3) {1980s onward\\core PIRA analysis};
+    \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,inner sep=6pt,right=1.0cm of t3] (t4) {1998};
+    \draw[-Latex,thick] (t1) -- (t2) -- (t3) -- (t4);
+  \end{tikzpicture}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Stress that these are operational ties, not friendship ties.\par
+    Explain the difference in time resolution: daily online versus yearly offline.\par
+    Use the timeline only as a chronology anchor.
+  }
+\end{frame}
+
+\begin{frame}{Online network construction: VKontakte pipeline}
+  \small
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Online network construction}
+        \begin{enumerate}
+          \item Manual hashtag and narrative tracing
+          \item Seed group-page discovery
+          \item API-based snowball expansion
+          \item Cross-checking and false-positive removal
+          \item Iterate until \alert{closure}
+        \end{enumerate}
+      \end{block}
+
+      \vspace{0.3em}
+      {\color{PresTwoSecondary}\textbf{Daily edge rule:}}
+      connect two users on day $d$ if they follow the same pro-ISIS group page.
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[node distance=0.58cm,scale=0.92,every node/.style={transform shape}]
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt] (hash) {Hashtags / narratives\\\small multi-language};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of hash] (seed) {Seed group pages};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of seed] (api) {API snowballing};
+        \node[draw=PresTwoMuted,rounded corners,fill=PresTwoSurface,align=center,inner sep=6pt,below=of api] (clean) {Validated pages\\\small followers + daily edges};
+        \draw[-Latex,thick] (hash)--(seed)--(api)--(clean);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \note{
+    \textbf{Time: 2:00}\par
+    Follow the exact steps from the paper's methods.\par
+    Mention closure and daily resolution explicitly.\par
+    Transition: the next slides show the resulting online network and its centrality patterns.
+  }
+\end{frame}
