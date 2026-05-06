@@ -1,0 +1,330 @@
+
+\section{Defense}
+\label{defense}
+The proposed attack methods have made researchers realize the importance of the robustness of deep learning models. Relatively, some defense methods have also been proposed. In this section, we will give some general definitions of defense models against adversarial attack methods on graph data and its related concepts. In addition, this section systematically classifies existing defense methods and details some typical defense algorithms.
+
+\subsection{Definition}
+\label{defenseDefinition}
+Simply put, the purpose of defense is to make the performance of the model still maintain a certain stability on the data that is maliciously disturbed. Although some defense models have been proposed, there is no clear and unified definition of the defense problem. To facilitate the discussion of the following, we propose a unified formulation of the defense problem.
+\nosection{Defense on Graph Data} Most symbols are the same as mentioned in Section \ref{attack}, and we define $\Tilde{f}$ as a deep learning function with the loss function $\mathcal{\Tilde{L}}$ designed for defense, it receives a graph either perturbed or not. Then the defense problem can be defined as:
+
+\begin{equation}
+	\begin{split}
+		& \underset{\hat{G} \in {\Psi(G)}\cup{\mathcal{G}}}{\text{minimize}} \sum_{t_i \in \mathcal{T}} \mathcal{\Tilde{L}}(\Tilde{f}_{\theta^{\ast}}(\hat{G}^{t_i}, X, t_i), y_i)  \\
+		& s.t. \ \theta^{\ast} = \mathop{\arg \min}_{\theta} \sum_{v_j \in \mathcal{S}_L}\mathcal{\Tilde{L}}(\Tilde{f}_{\theta}(\tilde{G}^{v_j}, X, v_j), y_j)
+	\end{split}
+\end{equation}
+
+where $\tilde{G} \in {\Psi(\mathcal{G})}\cup{\mathcal{G}}$ can be a well-designed graph $\hat{G}$ for the purpose of defense, or a clean graph $G$, which depends on whether the model have been attacked.
+
+\subsection{Taxonomies of Defenses}
+In this section, we divide the existing defense methods into several categories according to the used algorithms and describe them by examples. To the best of our knowledge, it's the first time for those defense methods to be clearly classified and the first time for those types to be clearly defined. All taxonomies are listed  below:
+
+\nosection{\textbf{Preprocessing-based Defense}} As the most intuitive way, directly manipulating the raw data has a great impact on the model performance. Additionally, preprocessing raw data is independent to model structures and training methods, which gives considerable scalability and transferability. Some existing works\cite{wu2019adversarial} improve model robustness by conducting certain preprocessing steps before training, and we define this type of defense methods as \emph{Preprocessing-based Defense}. In addition, Wu et al. \cite{wu2019adversarial} try to drop edges that connect nodes with low similarity score, which could reduce the risk for those edges of being attack and nearly does no harm to the model performance.
+
+\nosection{\textbf{Structure-based Defense}} In addition to raw data, model structure is also crucial to the model performance. Some existing works modify the model structure, such as GCN, to gain more robustness, and we define this type of defense methods as \emph{Structure-based Defense}. Instead of GCN's graph convolutional layers, Zhu et al. \cite{zhu2019robust} use Gaussian-based graph convolutional layers, which learns node embeddings from Gaussian distributions and assign attention weight according to their variances. Wang et al. \cite{wang2019adversarial} propose dual-stage aggregation as a Graph Neural Network (GNN) encoder layer to learn the information of neighborhoods, and adopt GAN \cite{goodfellow2014generative} to conduct contrastive learning. Tang et al. \cite{tang2019robust} initialize the model by meta-optimization and penalize the aggregation process of GNN. And Ioannidis et al. \cite{ioannidis2019edge} propose a novel GCN architecture, named Adaptive Graph Convolutional Network (AGCN), to conduct robust semi-supervised learning.
+
+\nosection{\textbf{Adversarial-based Defense}} Adversarial training has been widely used in deep learning due to its excellent performance. Some researchers successfully adopt adversarial training from other fields into graph domain to improve model robustness, and we define the defense methods which use adversarial training as \emph{Adversarial-based Defense}. There are two types of adversarial training: i) \emph{Training with adversarial goals}. Some adversarial training methods gradually optimize the model in a continuous min-max way, under the guide of two opposite (minimize and maximize) objective functions \cite{xu2019topology, sun2019virtual, feng2019graph}; ii) \emph{Training with adversarial examples}. Other adversarial-based models are fed with adversarial samples during training, which helps the model learn to adjust to adversarial samples and thus reduces the negative impacts of those potential attack samples \cite{chen2019can, wang2019graphdefense, deng2019batch, he2018adversarial}.
+
+
+\nosection{\textbf{Objective-based Defense}} As a simple and effective method, modifying objective function plays an important role in improving the model robustness. Many existing works attempt to train a robust model against adversarial attacks by optimizing the objective function, and we define this type of defense methods as \emph{Objective-based Defense}. However, there is a little intersection between the definition of \emph{Objective-based Defense} and \emph{Adversarial-based Defense} mentioned above, because the min-max adversarial training (the first type of \emph{Adversarial-based Defense}) is also in the range of objective optimization. Therefore, to accurately distinguish the definition boundary between \emph{Adversarial-based Defense} and \emph{Objective-based Defense}, we only consider those methods which are objective-based but not adversarial-based as the instances of \emph{Objective-based Defense}. Z\"ugner et al. \cite{zugner2019certifiable} and Bojchevski et al. \cite{bojchevski2019certifiable} combine hinge loss and cross entropy loss to perform a robust optimization. Jin et al. \cite{jin2019power} and Chen et al. \cite{chen2019can} regularize the training process by studying the characteristics of graph powering and smoothing the cross-entropy loss function, respectively.
+
+\nosection{\textbf{Detection-based Defense}} Some existing works focus on the detection of adversarial attacks, or the certification of model/node robustness, which we define as \emph{Detection-based Defense}. Although those detection-based methods are unable to improve the model robustness directly, they can serve as supervisors who keep monitoring the model security and alarm for awareness when an attack is detected. Z\"ugner et al. \cite{zugner2019certifiable} and Bojchevski et al. \cite{bojchevski2019certifiable} propose novel methods to certificate whether a node is robust, and a robust node means it won't be affected even under the worse-case/strongest attack. Pezeshkpour et al. \cite{pezeshkpour2019investigating} study the impacts of adding/removing edges by performing adversarial modifications on the graph. Xu et al. \cite{xu2018characterizing} adopt link prediction and its variants to detect the potential risks, and for example, link with low score could be a maliciously added edge. Zhang et al. \cite{zhang2019comparing} utilize perturbations to explore the model structure and propose a method to detect adversarial attack. Hou et al. \cite{hou2019alphacyber} detect the target node by uncovering the poisoning nodes injected in the heterogeneous graph \cite{sun2011pathsim}. Ioannidis et al. \cite{ioannidis2019graphsac} effectively detect anomalous nodes in large-scale graphs by applying a graph-based random sampling and consensus strategies.
+
+\nosection{\textbf{Hybrid Defense}} As the name suggested, we define \emph{Hybrid Defense} to denote the defense method which consists of two or more types of different defense algorithms mentioned above. Many researches flexibly combine several types of defense algorithms to achieve better performance, thus alleviate the limitations of only using a single method. As mentioned above, Z\"ugner et al. \cite{zugner2019certifiable} and Bojchevski et al. \cite{bojchevski2019certifiable} address the certification problem of node robustness and conduct robust training with objective-based optimization. Wang et al. \cite{wang2019adversarial} focus on improving the model structure and adversarially train the model by GAN. Chen et al. \cite{chen2019can} adopt adversarial training and other regularization mechanisms (e.g., gradient smoothing, loss smoothing). Xu et al. \cite{xu2018characterizing} propose a novel graph generation method together with other detection mechanisms (e.g., link prediction, subgraph sampling, outlier detect) as preprocessing to detect potential malicious edges. Miller et al. \cite{miller2019improving} consider a combination of the features come from graph structure and origin node attributes and use well-designed training data selection methods to do a classification task. These are instances of the hybrid defense.
+
+\nosection{\textbf{Others}} Currently, the amount of researches for defense is far less than that of attack on the graph domain. To the best of our knowledge, most existing works for defense only focus on node classification tasks, and there are a lot of opportunities to study defense methods with different tasks on graph, which will enrich our defense types. For example, Pezeshkpour et al. \cite{pezeshkpour2019investigating} evaluate the robustness of several link prediction models and Zhou et al. \cite{zhou2019adversarial} adopt the heuristic approach to reduce the damage of attacks.
+
+
+\begin{table*}[]
+
+	\centering
+	\caption{Related works on defense in details. The type is divided according to the algorithm.}
+	\label{defense_table}
+	\scalebox{0.8}{
+		\begin{tabular}{c|cccccccccc}
+			\hline
+			\hline
+			Reference                   &
+			Model                       &
+			Algorithm                   &
+			Type                        &
+			Target Task                 &
+			Target Model                &
+			Baseline                    &
+			Metric                      &
+			Dataset                       \\
+
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{zugner2019certifiable} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN (trained with\\RH-U) \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Robustness certification,\\Objective based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN,\\GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN\\(trained with\\CE, RCE, RH) \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy,\\Averaged\\Worst-case\\Margin \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora-ML,\\Pubmed \end{tabular}   \\
+			\hline
+
+			\begin{tabular}[c]{@{}c@{}} \cite{xu2019topology} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} - \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy, \\Misclassification rate \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora \end{tabular}   \\
+			\hline
+
+			\begin{tabular}[c]{@{}c@{}} \cite{jin2019power} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} r-GCN,\\VPN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Graph\\powering \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Objective\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} ManiReg,\\ICA,\\Vanilla GCN,\\... \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy, Robustness merit,\\Attack deterioration \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\Pubmed \end{tabular}   \\
+			\hline
+
+			\begin{tabular}[c]{@{}c@{}} \cite{wu2019adversarial} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} - \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Drop edges \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Preprocessing \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy, \\Classification margin \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora-ML,\\Polblogs \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{wang2019adversarial} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} DefNet \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GAN,\\GER,\\ACL \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN,\\GraphSAGE \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN,\\GraphSAGE \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Classification\\margin \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\Polblogs \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{pezeshkpour2019investigating} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} CRIAGE \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\modification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Robustness\\evaluation \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Link\\prediction \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Knowledge\\graph\\embeddings \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} - \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hits@K,\\MRR \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Nations,\\Kinship,\\WN18,\\YAGO3-10 \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{zhu2019robust} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} RGCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Gaussian-based\\GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Structure\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN,\\GAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\Pubmed \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{chen2019can} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Global-AT,\\Target-AT,\\SD, SCEL \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training,\\Smooth defense \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} AT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} ADR,\\ACD \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\PolBlogs \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{sun2019virtual} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} SVAT,\\DVAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} VAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\Pubmed \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{zhang2019comparing} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} - \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} KL\\divergence \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Detection\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN,\\GAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} - \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Classification margin,\\Accuracy, ROC, AUC \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\PolBlogs \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{feng2019graph} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN-GATV \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GAT,\\VAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} DeepWalk,\\GCN,\\GraphSGAN,\\... \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\NELL \end{tabular}   \\
+
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{deng2019batch} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} S-BVAT,\\O-BVAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} BVAT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} ManiReg,\\GAT,\\GPNN,\\GCN,\\VAT,\\... \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora,\\Pubmed,\\NELL \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{tang2019robust} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} PA-GNN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Penalized aggregation,\\Meta learning \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Structure\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN,\\GAT,\\PreProcess,\\RGCN,\\VPN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Pubmed,\\Reddit,\\Yelp-Small,\\Yelp-Large \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{wang2019graphdefense} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GraphDefense \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node/Graph\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Drop edges,\\Discrete AT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Cora,\\Citeseer,\\Reddit \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{hou2019alphacyber} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} HG-HGC \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} HG-Defense \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Detection\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Malware detection \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Malware\\detection\\system \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Other malware\\detection systems \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Detection rate \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Tencent Security \\Lab Dataset \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{ioannidis2019edge} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} AGCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adaptive GCN with\\edge dithering\end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Structure\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer, \\PolBlogs, \\Cora, Pubmed \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}}	\cite{ioannidis2019graphsac} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GraphSAC \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Random sampling, \\Consensus \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Detection\\based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Anomaly \\detection \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Anomaly \\model\end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GAE,\\Degree,\\Cut ratio,\\... \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} AUC \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\PolBlogs,\\Cora, Pubmed \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}}	\cite{bojchevski2019certifiable} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN (train with \\ $L_{RCE}$, $L_{CEM}$) \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Robustness certification,\\Objective based \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Accuracy,\\Worst-case\\Margin \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Cora-ML,\\Citeseer,\\Pubmed \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{zhou2019adversarial} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} IDOpt,\\IDRank \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Integer Program,\\Edge Ranking \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Heuristic\\algorithm \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Link\\prediction \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Similarity-based \\link prediction\\ models \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} PPN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} DPR \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} PA,\\PLD,\\TVShow,\\Gov \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{miller2019improving} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} SVM with\\a radial basis\\function kernel \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Augmented feature,\\Edge selecting \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} SVM \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Classification\\marigin \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Cora,\\Citeseer \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{he2018adversarial} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} APR,\\AMF \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} MF-BPR\\based AT \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Adversarial\\training \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Recommendation \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} MF-BPR \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} ItemPop,\\MF-BPR,\\CDAE,\\NeuMF,\\IRGAN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} HR,\\NDCG \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Yelp,\\Pinterest,\\Gowalla \end{tabular}   \\
+			\hline
+			\begin{tabular}[c]{@{}c@{}} \cite{xu2018characterizing} \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} SL, OD,\\P+GGD,\\ENS,GGD \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Link prediction,\\Subsampling,\\Neighbour analysis \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Hybrid \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Node\\classification \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} GNN, GCN \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} LP \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} AUC \end{tabular} &
+			\begin{tabular}[c]{@{}c@{}} Citeseer,\\Cora \end{tabular}   \\
+			\hline
+			\hline
+		\end{tabular}
+	}
+\end{table*}
+
+\subsection{Summary: Defense on Graph}
+In this section, we will introduce the contributions and limitations of current works about defense. Then, we will discuss the potential research opportunities in this area. The details and comparisons of various methods are placed in Table \ref{defense_table}.
+
+\subsubsection{Major Contributions}
+%In this part, we will discuss the main contributions of current graph defense works based on three main perspectives: adversarial learning, attention mechanism and other.
+Currently, most of the methods to improve the robustness of GNNs start from two aspects: a robust training method or a robust model structure. Among them, the training methods are mostly adversarial training, and many of the model structure improvements are made using the attention mechanism. In addition, there are some studies that do not directly improve the robustness of GNNs but try to verify the robustness or try to detect the data that is disturbed. In this part, considering the different ways in which existing methods contribute to the adversarial defense of graphs, we summarize the contributions of graph defense from the following three perspectives: adversarial learning, model improvement and others.
+%We summarize the unique contributions of current defense methods in this part.\\
+\nosection{\textbf{Adversarial Learning}}
+As a successful method that has shown to be effective in defending the adversarial attacks of image data and test data, adversarial learning \cite{goodfellow2014explaining} augments the training data with adversarial examples during the training stage. Some researchers have also tried to apply this kind of idea to graph defense methods. Wang et al.
+\cite{wang2019adversarial} think the vulnerabilities of graph neural networks are related to the aggregation layer and the perceptron layer. To address these two disadvantages, they propose an adversarial training framework with a modified GNN model to improve the robustness of GNNs.
+Chen et al. \cite{chen2019can} propose different defense strategies based on adversarial training for target and global adversarial attack with smoothing distillation and smoothing cross-entropy loss function.
+Feng et al. \cite{feng2019graph} propose a method of adversarial training for the attack on node features with a graph adversarial regularizer which encourages the model to generate similar predictions on the perturbed target node and its connected nodes.
+Sun et al. \cite{sun2019virtual} successfully transfer the efficiency of Virtual Adversarial Training (VAT) to the semi-supervised node classification task on graphs and applies some regularization mechanisms on original GCN to refine its generalization performance.
+Wang et al. \cite{wang2019graphdefense} point out that the values of perturbation in adversarial training could be continuous or even negative. And they propose an adversarial training method to improve the robustness of GCN.
+He et al. \cite{he2018adversarial} adopt adversarial training to Bayesian Personalized Ranking (BPR) \cite{rendle2009bpr} on recommendation by adding adversarial perturbations on embedding vectors of the user and item.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nosection{\textbf{Model Improvement}}
+In addition to improvements in training methods, many studies have focused on improving the model itself. In recent years, the attention mechanism \cite{vaswani2017attention} has shown extraordinary performance in the field of natural language processing. Some studies of graph defense have borrowed the way that they can automatically give weight to different features to reduce the influence of perturbed edges on features.
+Zhu et al. \cite{zhu2019robust} use Gaussian distributions to absorb the effects of adversarial attacks and introduce a variance-based attention mechanism to prevent the propagation of adversarial attacks.
+Tang et al. \cite{tang2019robust} propose a novel framework base on a penalized aggregation mechanism which restrict the negative impact of adversarial edges.
+Hou et al. \cite{hou2019alphacyber} enhance the robustness of malware detection system in Android by their well-designed defense mechanism to uncover the possible injected poisoning nodes.
+Jin et al. \cite{jin2019power} point out the basic flaws of the Laplacian operator in origin GCN and propose a variable power operator to alleviate the issues.
+Miller et al. \cite{miller2019improving} propose to use unsupervised methods to extract the features of the graph structure and use support vector machines to complete the task of node classification. In addition, they also propose two new training data partitioning strategies.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nosection{\textbf{Others}}
+In addition to improving the robustness of the model, there are also some studies that have made other contributions around robustness, such as detecting disturbed edges, certificating node robustness, analyses of current attack methods and so on.
+Z\"ugner et al. \cite{zugner2019certifiable} propose the first work on certifying the robustness of GNNs. The method can give robustness certification which states whether a node is robust under a certain space of perturbations.
+Zhang et al. \cite{zhang2019comparing} study the defense methods' performance under random attacks and Nettack concluded that graph defense models which use structure exploration are more robust in general. Otherwise, this paper proposes a method to detect the perturbed edges by calculating the mean of the KL divergences \cite{kullback1951information} between the softmax probabilities of the node and it's neighbors.
+Pezeshkpour et al. \cite{pezeshkpour2019investigating} introduce a novel method to automatically detect the error for knowledge graphs by conducting adversarial modifications on knowledge graphs. In addition, the method can study the interpretability of knowledge graph representations by summarizing the most influential facts for each relation.
+Wu et al. \cite{wu2019adversarial} argue that the robustness issue is rooted in the local aggregation in GCN by analyzing attacks on GCN and propose an effective defense method based on preprocessing.
+% 新五篇
+Bojchevski et al. \cite{bojchevski2019certifiable} propose a robustness certificate method that can certificate the robustness of GNNs regarding perturbations of the graph structure and the label propagation. In addition, they also propose a new robust training method guided by their own certificate  method.
+Zhou et al. \cite{zhou2019adversarial} model the problem of robust link prediction as a Bayesian Stackelberg game \cite{von2010market} and propose two defense strategies to choose which link should be protected.
+Ioannidis et al. \cite{ioannidis2019edge} propose a novel edge-dithering (ED) approach reconstructs the original neighborhood structure with high probability as the number of sampled graphs increases.
+Ioannidis et al. \cite{ioannidis2019graphsac} introduce a graph-based random sampling and consensus approach to effectively detect anomalous nodes in large-scale graphs.
+
+\subsubsection{Current Limitations}
+As a new-rising branch that has not been sufficiently studied, current defense methods have several major limitations as follows:
+\begin{itemize}
+	\item \textbf{Diversity}. At present, most works of defense mainly focus on node classification tasks only. From the perspective of defender, they need to improve their model robustness on different tasks.
+	\item \textbf{Scalability}. Whether a defense model can be widely used in practice largely depends on the cost of model training. Most existing works lack the consideration of training costs.
+	\item \textbf{Theoretical Proof}. Most of current methods only illustrate their effectiveness by showing experimental results and textual descriptions. It will be great if a new robust method's effectiveness can be proved theoretically.
+\end{itemize}

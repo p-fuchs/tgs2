@@ -1,0 +1,175 @@
+\begin{frame}{Why adversarial learning on graphs matters}
+  \SectionPill{Motivation}{PresThreePrelim}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.61\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \node[modelbox] (clean) at (0,0) {\ToyGraph[clean][0.82]\\[-0.2em] clean graph\\[-0.05em]{\scriptsize\color{PresThreeDefense}prediction: Class 2}};
+        \node[modelbox] (pert) at (4.7,0) {\ToyGraph[perturbed][0.82]\\[-0.2em] perturbed graph\\[-0.05em]{\scriptsize\color{PresThreeAttack}prediction: Class 3}};
+        \draw[-Latex,line width=0.9pt,color=PresThreeAttack] (clean) -- (pert);
+        \node[
+          fill=PresThreeAttack,
+          text=white,
+          rounded corners=2pt,
+          inner xsep=4pt,
+          inner ysep=1.5pt,
+          font=\scriptsize\bfseries\sffamily,
+          align=center
+        ] at (2.35,0.88) {small edge /\\feature changes};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \begin{alertblock}{Deep graph learning is powerful and vulnerable}
+        Small changes to edges or features can flip a prediction.
+      \end{alertblock}
+      \vspace{0.25em}
+      {\small\color{PresThreePrelim}\textbf{Typical tasks}}\par
+      \begin{itemize}
+        \item node classification
+        \item link prediction
+        \item graph classification
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{The graph-specific point is that the attack surface is not just pixels or continuous features. On graphs, the attacker can change structure, features, or both. The paper starts from this intuition, so the talk should too.}
+\end{frame}
+
+\begin{frame}{What this survey is trying to do}
+  \SectionPill{Paper roadmap}{PresThreePrelim}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeAttack}{Unified formulations}{Put many paper-specific definitions into shared optimisation language.}
+      \vspace{0.28em}
+      \MiniCard{PresThreeAttack}{Attack taxonomies}{Separate knowledge, goal, capability, strategy, manipulation, algorithm, and target task.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeDefense}{Defense taxonomies}{Organise defenses by where they intervene: data, model, objective, training, or monitoring.}
+      \vspace{0.28em}
+      \MiniCard{PresThreeMetric}{Metrics and open problems}{Treat evaluation and research gaps as first-class survey content.}
+    \end{column}
+  \end{columns}
+  \vfill
+  \ProgressRibbon{survey order}
+  \SlideNote{1:30}{The survey argues that the field had inconsistent formulations and fragmented evaluation. Its main move is to standardise the language before comparing methods.}
+\end{frame}
+
+\begin{frame}{Graph setup used in the paper}
+  \SectionPill{Preliminaries}{PresThreePrelim}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.54\textwidth}
+      \begin{block}{Minimum notation}
+        \begin{tabular}{@{}p{0.22\linewidth}p{0.66\linewidth}@{}}
+          \(\mathbf{G=(V,E)}\) & graph with nodes and edges \\
+          \(\mathbf{A}\) & adjacency matrix, \(A\in\mathbb{R}^{N\times N}\) \\
+          \(\mathbf{X}\) & node-feature matrix, \(X\in\mathbb{R}^{N\times F}\) \\
+        \end{tabular}
+      \end{block}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \MiniCard{PresThreePrelim}{Default scope in this survey}{Unless stated otherwise, the paper works with simple graphs: undirected, unweighted, static, and homogeneous.}
+    \end{column}
+  \end{columns}
+  \vspace{0.45em}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.65em]{takeaway box}
+    {\color{PresThreeText}\bfseries Target instance}\quad
+    \(t\) can be a node, an edge, or a whole graph depending on the downstream task.
+  \end{beamercolorbox}
+  \SlideNote{2:00}{The important point is the modelling scope. Unless stated otherwise, the survey means simple graphs. That matters because several open problems are about moving beyond those assumptions.}
+\end{frame}
+
+\begin{frame}{Tasks and learning settings}
+  \SectionPill{Preliminaries}{PresThreePrelim}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.28em,ht=2.75cm,dp=0.15cm]{takeaway box}
+        \begin{minipage}[t][0.82cm][t]{\linewidth}
+          {\color{PresThreePrelim}\bfseries Node-level}\par
+          {\small node classification}
+        \end{minipage}\par\vspace{0.08em}
+        \centering
+        \begin{minipage}[c][1.35cm][c]{\linewidth}
+          \centering\ToyGraph[clean][0.43]
+        \end{minipage}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.28em,ht=2.75cm,dp=0.15cm]{takeaway box}
+        \begin{minipage}[t][0.82cm][t]{\linewidth}
+          {\color{PresThreePrelim}\bfseries Link-level}\par
+          {\small link prediction}
+        \end{minipage}\par\vspace{0.08em}
+        \centering
+        \begin{minipage}[c][1.35cm][c]{\linewidth}
+          \centering
+          \begin{tikzpicture}[scale=0.43,every node/.style={transform shape}]
+            \coordinate (a) at (0,1.5);
+            \coordinate (b) at (1.2,2.1);
+            \coordinate (c) at (1.0,0.6);
+            \coordinate (d) at (0.15,-0.8);
+            \coordinate (e) at (2.3,1.2);
+            \coordinate (t) at (2.45,-0.45);
+            \draw[graphedge] (a)--(b)--(c)--(a)--(d)--(c)--(e)--(b);
+            \draw[graphedge] (c)--(t);
+            \draw[PresThreeAttack,line width=2.2pt,densely dashed] (d)--(t)
+              node[midway,below,font=\tiny\bfseries,text=PresThreeAttack] {?};
+            \node[graphnode,fill=PresThreeBlue!18] at (a) {};
+            \node[graphnode,fill=PresThreeTeal!24] at (b) {};
+            \node[graphnode,fill=PresThreeRose!24] at (c) {};
+            \node[graphnode inf] at (d) {I};
+            \node[graphnode inf] at (e) {I};
+            \node[graphnode target] at (t) {T};
+          \end{tikzpicture}
+        \end{minipage}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.28em,ht=2.75cm,dp=0.15cm]{takeaway box}
+        \begin{minipage}[t][0.82cm][t]{\linewidth}
+          {\color{PresThreePrelim}\bfseries Graph-level}\par
+          {\small graph classification}
+        \end{minipage}\par\vspace{0.08em}
+        \centering
+        \begin{minipage}[c][1.35cm][c]{\linewidth}
+          \centering
+          \begin{tikzpicture}[scale=0.54,every node/.style={transform shape}]
+            \node[modelbox,inner sep=3pt] at (0,0.1) {\ToyGraph[clean][0.42]};
+            \node[fill=PresThreeTeal,draw=PresThreeTeal,rounded corners=2pt,
+              text=white,font=\tiny\bfseries\sffamily,inner xsep=4pt,inner ysep=2pt]
+              at (0,-1.15) {graph label};
+          \end{tikzpicture}
+        \end{minipage}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{0.25em}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.42em]{takeaway box}
+    {\color{PresThreePrelim}\bfseries Generic supervised objective}\quad
+    \(\displaystyle L=\frac{1}{|V_L|}\sum_{v_i\in V_L}\mathcal{L}\bigl(f_\theta(G,X),y_i\bigr)\)\par
+    \vspace{0.15em}
+    {\scriptsize
+      \(V_L\): labelled nodes \hfill
+      \(f_\theta(G,X)\): model output \hfill
+      \(y_i\): target label
+    }
+  \end{beamercolorbox}
+  \SlideNote{2:00}{The task split matters because attack and defense methods are not evenly distributed across node, link, and graph settings. For learning settings, transductive methods train and test on one graph, while inductive methods must generalise to unseen nodes or graphs. This distinction matters especially for poisoning.}
+\end{frame}
+
+\begin{frame}{The toy example to keep in mind}
+  \SectionPill{Running example}{PresThreePrelim}
+  \centering
+  \begin{tikzpicture}
+    \node[modelbox] (a) at (0,0) {\ToyGraph[clean][0.80]\\[-0.15em] clean prediction};
+    \node[modelbox] (b) at (4.3,0) {\ToyGraph[perturbed][0.80]\\[-0.15em] small perturbation};
+    \node[modelbox] (c) at (8.6,0) {\ToyGraph[defended][0.80]\\[-0.15em] defense intuition};
+    \draw[-Latex,line width=0.8pt,color=PresThreeAttack] (1.55,0.62)--(2.95,0.62);
+    \draw[-Latex,line width=0.8pt,color=PresThreeDefense] (5.85,0.62)--(7.25,0.62);
+  \end{tikzpicture}
+  \vspace{0.35em}
+
+  \MethodChip{PresThreeAttack}{topology change}
+  \MethodChip{PresThreeAttack}{feature change}
+  \MethodChip{PresThreePrelim}{budget \(\Delta\)}
+  \MethodChip{PresThreeMetric}{imperceptibility \(Q\)}
+  \SlideNote{2:00}{Keep returning to this target node. The rest of the talk asks who chooses perturbations, with what information, under which constraints, and how a defender tries to make the prediction stable again.}
+\end{frame}

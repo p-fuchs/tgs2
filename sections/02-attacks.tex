@@ -1,0 +1,245 @@
+\section{Attacks}
+
+\begin{frame}{A unified formulation of attack}
+  \SectionPill{Attack formulation}{PresThreeAttack}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.60\textwidth}
+      \FormulaCard{PresThreeAttack}{Outer maximisation, inner training}{
+        \small
+        {\scriptsize\color{PresThreeAttack}\bfseries Attack chooses a perturbation}\\[-0.6em]
+        \[
+        \max_{\hat G\in\Psi(G)}
+        \sum_{t_i\in T}\mathcal{L}\bigl(f_{\theta^*}(\hat G^{t_i},X,t_i),y_i\bigr)
+        \]
+        \vspace{-0.25em}
+        {\scriptsize\color{PresThreeAttack}\bfseries Model trains on the poisoned graph}\\[-0.6em]
+        \[
+        \theta^*=\arg\min_\theta
+        \sum_{v_j\in S_L}\mathcal{L}\bigl(f_\theta(\tilde G^{v_j},X,v_j),y_j\bigr)
+        \]
+      }
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \begin{alertblock}{Read the equation as}
+        \begin{itemize}
+          \item choose a perturbed graph \(\hat G\)
+          \item maximize target loss on \(T\)
+          \item account for retraining on \(\tilde G\)
+        \end{itemize}
+      \end{alertblock}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.95em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries Constraint}\par
+        \vspace{-0.8em}
+        \[
+          Q(\hat G,G)<\epsilon
+        \]
+        \vspace{-0.8em}
+        {\scriptsize stay close to the clean graph}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:30}{This is the paper's central attack equation. Conceptually it is bilevel: the outer level chooses a perturbed graph, while the inner level reminds us that model parameters come from training.}
+\end{frame}
+
+\begin{frame}{Attack taxonomy in one view}
+  \SectionPill{Attack taxonomy}{PresThreeAttack}
+  \centering
+  \begin{tikzpicture}[
+  node distance=0.32cm,
+  taxbox/.style={
+    modelbox,
+    draw=PresThreeAttack,
+    fill=PresThreeAttackSoft,
+    text width=2.25cm,
+    minimum height=1.02cm,
+    align=center
+  }
+]
+  \node[taxbox] (k) {\textbf{Knowledge}\\{\tiny white / grey / black}};
+  \node[taxbox,right=of k] (g) {\textbf{Goal}\\{\tiny availability / integrity}};
+  \node[taxbox,right=of g] (c) {\textbf{Capability}\\{\tiny poisoning / evasion}};
+  \node[taxbox,right=of c] (s) {\textbf{Strategy}\\{\tiny topology / feature}};
+
+  \node[taxbox,below=0.42cm of k,xshift=1.285cm] (m) {\textbf{Manipulation}\\{\tiny add / remove / rewire}};
+  \node[taxbox,right=of m] (a) {\textbf{Algorithm}\\{\tiny gradient / search / RL}};
+  \node[taxbox,right=of a] (t) {\textbf{Task}\\{\tiny node / link / graph}};
+    \end{tikzpicture}
+
+
+  \vspace{0.45cm}
+  {\small\color{PresThreeMuted}An attack is a combination of choices across axes.}\par
+  \vspace{0.22cm}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\color{PresThreeAttack}\bfseries Why this taxonomy matters}\par
+    A single method can be white-box, targeted, poisoning, topology-based, rewiring-based, gradient-driven, and node-classification focused.
+  \end{beamercolorbox}
+  \SlideNote{1:30}{This slide is a map, not a catalogue. It explains why graph adversarial learning can feel confusing: the survey is not using one taxonomy but several axes at once.}
+\end{frame}
+
+\begin{frame}{What attackers know and what they want}
+  \SectionPill{Knowledge and goals}{PresThreeAttack}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.45\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.50em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries Model knowledge}\par
+        {\small
+        \begin{itemize}
+          \item white-box: architecture, parameters, gradients
+          \item grey-box: partial model access or surrogate
+          \item black-box: limited queries or little model knowledge
+        \end{itemize}
+        }
+        \vspace{0.15em}
+        {\color{PresThreeAttack}\bfseries Data knowledge}\quad
+        {\small perfect \(\rightarrow\) moderate \(\rightarrow\) minimal}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.50em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries Goal distinctions}\par
+        \vspace{0.15em}
+        {\small
+        \begin{tabular}{@{}p{0.34\linewidth}p{0.58\linewidth}@{}}
+          \toprule
+          scope & availability vs integrity \\
+          target set & targeted vs general \\
+          error & specific label vs any wrong label \\
+          \bottomrule
+        \end{tabular}
+        }
+      \end{beamercolorbox}
+      \vspace{0.30em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.50em]{takeaway box}
+        {\color{PresThreeDefense}\bfseries Terminology caveat}\par
+        {\small In this survey, targeted means target range, not necessarily a specific target label.}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:30}{Linger briefly on the terminology note. In some adversarial ML literature, targeted means a specific wrong label. Here targeted is about attack range, while error specificity is separate.}
+\end{frame}
+
+\begin{frame}{Poisoning versus evasion}
+  \SectionPill{Attack capability}{PresThreeAttack}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      \centering
+      \begin{tikzpicture}[node distance=0.7cm]
+        \node[modelbox] (clean) at (0,1.48) {\ToyGraph[clean][0.50]\\ clean \(G\)};
+        \node[modelbox] (train) at (3.4,1.2) {train\\\(f_{\theta^*}\)};
+        \node[modelbox] (fixed) at (6.7,1.2) {fixed model\\clean training};
+        \node[modelbox] (pert) at (0,-1.68) {\ToyGraph[perturbed][0.50]\\ perturbed \(\hat G\)};
+        \node[modelbox] (retrain) at (3.4,-1.3) {re-train\\on \(\hat G\)};
+        \node[modelbox] (out) at (6.7,-1.3) {wrong\\prediction};
+        \draw[-Latex,line width=0.8pt] (clean)--(train)--(fixed);
+        \draw[-Latex,line width=0.8pt,color=PresThreeAttack] (clean)--(pert);
+        \node[font=\scriptsize\sffamily,text=PresThreeAttack,fill=white,inner sep=1pt] at (-0.9,-0.05) {attack};
+        \draw[-Latex,line width=0.8pt,color=PresThreeAttack] (pert)--node[below,font=\scriptsize\sffamily] {poisoning} (retrain)--(out);
+        \draw[-Latex,line width=0.8pt,color=PresThreeAttack] (fixed)--node[right,font=\scriptsize\sffamily] {evasion} (out);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \FormulaCard{PresThreeAttack}{Training line changes}{
+        \[
+          \text{poisoning: train on }\hat G
+        \]
+        \[
+          \text{evasion: train on }G
+        \]
+      }
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{Poisoning modifies what the model is trained on. Evasion leaves training fixed and attacks only at test time. The transductive graph setting makes poisoning especially natural.}
+\end{frame}
+
+\begin{frame}{What can be perturbed and how}
+  \SectionPill{Strategy and manipulation}{PresThreeAttack}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.48em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries What is changed?}\par
+        {\small topology \(\cdot\) feature \(\cdot\) hybrid}
+      \end{beamercolorbox}
+      \vspace{0.25em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.48em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries What operation is allowed?}\par
+        {\small add \(\cdot\) remove \(\cdot\) rewire}
+      \end{beamercolorbox}
+      \vspace{0.25em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.48em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries How is it found?}\par
+        {\footnotesize gradient \(\cdot\) genetic \(\cdot\) RL \(\cdot\) generative}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \begin{columns}[c,onlytextwidth]
+        \begin{column}{0.48\textwidth}
+          \centering
+          \ToyGraph[rewired][0.72]
+        \end{column}
+        \begin{column}{0.48\textwidth}
+          {\scriptsize
+            {\color{PresThreeAttack}\bfseries red edge} \(=\) added edge\par
+            \vspace{0.25em}
+            {\color{PresThreeAttack}\bfseries red dotted edge} \(=\) removed edge\par
+            \vspace{0.25em}
+            {\color{PresThreeAttack}\bfseries red [:]} \(=\) changed feature
+          }
+        \end{column}
+      \end{columns}
+      \vspace{0.20em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.48em]{takeaway box}
+        {\color{PresThreeAttack}\bfseries Budget \(\Delta\)}\par
+        \vspace{0.2em}
+        \begin{tabular}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+          {\scriptsize\bfseries Topology} &
+          \(\displaystyle \sum_{u<v}|A_{uv}-A'_{uv}|\le\Delta\) \\
+          {\scriptsize\bfseries Feature} &
+          \(\displaystyle \sum_{u,j}|X_{uj}-X'_{uj}|\le\Delta\)
+        \end{tabular}
+        \vspace{0.2em}
+        {\scriptsize\color{PresThreeMuted}\(\Delta\) limits how many graph entries the attacker may change.}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:30}{Present this as three orthogonal questions: what part of the graph is attacked, what operation is allowed, and how the attack is found. Rewiring is worth mentioning because it may preserve simple graph statistics better.}
+\end{frame}
+
+\begin{frame}{Representative attack methods}
+  \SectionPill{Attack methods}{PresThreeAttack}
+  \begin{block}{Representative anchors from the survey table}
+    \scriptsize
+    \begin{tabular}{@{}p{0.22\linewidth}p{0.70\linewidth}@{}}
+      \toprule
+      Method & Why it is on the slide \\
+      \midrule
+      \textbf{Nettack} & early node-classification attack; topology and feature perturbations \\
+      Meta-Self / PGD & optimisation-based poisoning and topology attacks \\
+      RL-S2V & reinforcement-learning attack for node and graph classification \\
+      IGA & link-prediction attack using graph auto-encoder gradients \\
+      ReWatt & graph-level rewiring attack; useful for stealth intuition \\
+      \bottomrule
+    \end{tabular}
+  \end{block}
+
+  {\footnotesize\color{PresThreeMuted}Representative examples only -- see the survey tables for the fuller comparison.}
+  \SlideNote{3:00}{Do not read the original table aloud. These rows are representative anchors that span node, link, and graph settings and several algorithmic styles.}
+\end{frame}
+
+\begin{frame}{What the attack literature still misses}
+  \SectionPill{Attack limitations}{PresThreeAttack}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeAttack}{Unnoticeability}{Low budget is not the same as low detectability.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeAttack}{Scalability}{Many methods remain tied to small benchmark graphs.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeAttack}{Knowledge assumptions}{Perfect graph and label knowledge is often unrealistic.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeAttack}{Physical realism}{Real systems are not simple, static, ideal graph inputs.}
+    \end{column}
+  \end{columns}
+  \vfill
+  {\small\color{PresThreeMuted}Transition: switch perspective from choosing perturbations to resisting them.}
+  \SlideNote{2:00}{The field got good at making attacks work in benchmark settings, but harder questions remain: stealth, scale, weak knowledge, and realism.}
+\end{frame}

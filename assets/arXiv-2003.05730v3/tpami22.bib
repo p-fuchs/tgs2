@@ -1,0 +1,961 @@
+
+% Journals
+
+% First the Full Name is given, then the abbreviation used in the AMS Math
+% Reviews, with an indication if it could not be found there.
+% Note the 2nd overwrites the 1st, so swap them if you want the full name.
+
+ %{AMS}
+ @String{AMSTrans = "American Mathematical Society Translations" }
+ @String{AMSTrans = "Amer. Math. Soc. Transl." }
+ @String{BullAMS = "Bulletin of the American Mathematical Society" }
+ @String{BullAMS = "Bull. Amer. Math. Soc." }
+ @String{ProcAMS = "Proceedings of the American Mathematical Society" }
+ @String{ProcAMS = "Proc. Amer. Math. Soc." }
+ @String{TransAMS = "Transactions of the American Mathematical Society" }
+ @String{TransAMS = "Trans. Amer. Math. Soc." }
+
+ %ACM
+ @String{CACM = "Communications of the {ACM}" }
+ @String{CACM = "Commun. {ACM}" }
+ @String{CompServ = "Comput. Surveys" }
+ @String{JACM = "J. ACM" }
+ @String{ACMMathSoft = "{ACM} Transactions on Mathematical Software" }
+ @String{ACMMathSoft = "{ACM} Trans. Math. Software" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newsletter" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newslett." }
+
+ @String{AmerSocio = "American Journal of Sociology" }
+ @String{AmerStatAssoc = "Journal of the American Statistical Association" }
+ @String{AmerStatAssoc = "J. Amer. Statist. Assoc." }
+ @String{ApplMathComp = "Applied Mathematics and Computation" }
+ @String{ApplMathComp = "Appl. Math. Comput." }
+ @String{AmerMathMonthly = "American Mathematical Monthly" }
+ @String{AmerMathMonthly = "Amer. Math. Monthly" }
+ @String{BIT = "{BIT}" }
+ @String{BritStatPsych = "British Journal of Mathematical and Statistical
+          Psychology" }
+ @String{BritStatPsych = "Brit. J. Math. Statist. Psych." }
+ @String{CanMathBull = "Canadian Mathematical Bulletin" }
+ @String{CanMathBull = "Canad. Math. Bull." }
+ @String{CompApplMath = "Journal of Computational and Applied Mathematics" }
+ @String{CompApplMath = "J. Comput. Appl. Math." }
+ @String{CompPhys = "Journal of Computational Physics" }
+ @String{CompPhys = "J. Comput. Phys." }
+ @String{CompStruct = "Computers and Structures" }
+ @String{CompStruct = "Comput. \& Structures" }
+ @String{CompJour = "The Computer Journal" }
+ @String{CompJour = "Comput. J." }
+ @String{CompSysSci = "Journal of Computer and System Sciences" }
+ @String{CompSysSci = "J. Comput. System Sci." }
+ @String{Computing = "Computing" }
+ @String{ContempMath = "Contemporary Mathematics" }
+ @String{ContempMath = "Contemp. Math." }
+ @String{Crelle = "Crelle's Journal" }
+ @String{GiornaleMath = "Giornale di Mathematiche" }
+ @String{GiornaleMath = "Giorn. Mat." } % didn't find in AMS MR., ibid.
+
+ %IEEE
+ @String{Computer = "{IEEE} Computer" }
+ @String{IEEETransComp = "{IEEE} Transactions on Computers" }
+ @String{IEEETransComp = "{IEEE} Trans. Comput." }
+ @String{IEEETransAC = "{IEEE} Transactions on Automatic Control" }
+ @String{IEEETransAC = "{IEEE} Trans. Automat. Control" }
+ @String{IEEESpec = "{IEEE} Spectrum" } % didn't find in AMS MR
+ @String{ProcIEEE = "Proceedings of the {IEEE}" }
+ @String{ProcIEEE = "Proc. {IEEE}" } % didn't find in AMS MR
+ @String{IEEETransAeroElec = "{IEEE} Transactions on Aerospace and Electronic
+     Systems" }
+ @String{IEEETransAeroElec = "{IEEE} Trans. Aerospace Electron. Systems" }
+
+ @String{IMANumerAna = "{IMA} Journal of Numerical Analysis" }
+ @String{IMANumerAna = "{IMA} J. Numer. Anal." }
+ @String{InfProcLet = "Information Processing Letters" }
+ @String{InfProcLet = "Inform. Process. Lett." }
+ @String{InstMathApp = "Journal of the Institute of Mathematics and
+     its Applications" }
+ @String{InstMathApp = "J. Inst. Math. Appl." }
+ @String{IntControl = "International Journal of Control" }
+ @String{IntControl = "Internat. J. Control" }
+ @String{IntNumerEng = "International Journal for Numerical Methods in
+     Engineering" }
+ @String{IntNumerEng = "Internat. J. Numer. Methods Engrg." }
+ @String{IntSuper = "International Journal of Supercomputing Applications" }
+ @String{IntSuper = "Internat. J. Supercomputing Applic." } % didn't find
+%% in AMS MR
+ @String{Kibernetika = "Kibernetika" }
+ @String{JResNatBurStand = "Journal of Research of the National Bureau
+     of Standards" }
+ @String{JResNatBurStand = "J. Res. Nat. Bur. Standards" }
+ @String{LinAlgApp = "Linear Algebra and its Applications" }
+ @String{LinAlgApp = "Linear Algebra Appl." }
+ @String{MathAnaAppl = "Journal of Mathematical Analysis and Applications" }
+ @String{MathAnaAppl = "J. Math. Anal. Appl." }
+ @String{MathAnnalen = "Mathematische Annalen" }
+ @String{MathAnnalen = "Math. Ann." }
+ @String{MathPhys = "Journal of Mathematical Physics" }
+ @String{MathPhys = "J. Math. Phys." }
+ @String{MathComp = "Mathematics of Computation" }
+ @String{MathComp = "Math. Comp." }
+ @String{MathScand = "Mathematica Scandinavica" }
+ @String{MathScand = "Math. Scand." }
+ @String{TablesAidsComp = "Mathematical Tables and Other Aids to Computation" }
+ @String{TablesAidsComp = "Math. Tables Aids Comput." }
+ @String{NumerMath = "Numerische Mathematik" }
+ @String{NumerMath = "Numer. Math." }
+ @String{PacificMath = "Pacific Journal of Mathematics" }
+ @String{PacificMath = "Pacific J. Math." }
+ @String{ParDistComp = "Journal of Parallel and Distributed Computing" }
+ @String{ParDistComp = "J. Parallel and Distrib. Comput." } % didn't find
+%% in AMS MR
+ @String{ParComputing = "Parallel Computing" }
+ @String{ParComputing = "Parallel Comput." }
+ @String{PhilMag = "Philosophical Magazine" }
+ @String{PhilMag = "Philos. Mag." }
+ @String{ProcNAS = "Proceedings of the National Academy of Sciences
+                    of the USA" }
+ @String{ProcNAS = "Proc. Nat. Acad. Sci. U. S. A." }
+ @String{Psychometrika = "Psychometrika" }
+ @String{QuartMath = "Quarterly Journal of Mathematics, Oxford, Series (2)" }
+ @String{QuartMath = "Quart. J. Math. Oxford Ser. (2)" }
+ @String{QuartApplMath = "Quarterly of Applied Mathematics" }
+ @String{QuartApplMath = "Quart. Appl. Math." }
+ @String{RevueInstStat = "Review of the International Statisical Institute" }
+ @String{RevueInstStat = "Rev. Inst. Internat. Statist." }
+
+ %SIAM
+ @String{JSIAM = "Journal of the Society for Industrial and Applied
+     Mathematics" }
+ @String{JSIAM = "J. Soc. Indust. Appl. Math." }
+ @String{JSIAMB = "Journal of the Society for Industrial and Applied
+     Mathematics, Series B, Numerical Analysis" }
+ @String{JSIAMB = "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." }
+ @String{SIAMAlgMeth = "{SIAM} Journal on Algebraic and Discrete Methods" }
+ @String{SIAMAlgMeth = "{SIAM} J. Algebraic Discrete Methods" }
+ @String{SIAMAppMath = "{SIAM} Journal on Applied Mathematics" }
+ @String{SIAMAppMath = "{SIAM} J. Appl. Math." }
+ @String{SIAMComp = "{SIAM} Journal on Computing" }
+ @String{SIAMComp = "{SIAM} J. Comput." }
+ @String{SIAMMatrix = "{SIAM} Journal on Matrix Analysis and Applications" }
+ @String{SIAMMatrix = "{SIAM} J. Matrix Anal. Appl." }
+ @String{SIAMNumAnal = "{SIAM} Journal on Numerical Analysis" }
+ @String{SIAMNumAnal = "{SIAM} J. Numer. Anal." }
+ @String{SIAMReview = "{SIAM} Review" }
+ @String{SIAMReview = "{SIAM} Rev." }
+ @String{SIAMSciStat = "{SIAM} Journal on Scientific and Statistical
+     Computing" }
+ @String{SIAMSciStat = "{SIAM} J. Sci. Statist. Comput." }
+
+ @String{SoftPracExp = "Software Practice and Experience" }
+ @String{SoftPracExp = "Software Prac. Experience" } % didn't find in AMS MR
+ @String{StatScience = "Statistical Science" }
+ @String{StatScience = "Statist. Sci." }
+ @String{Techno = "Technometrics" }
+ @String{USSRCompMathPhys = "{USSR} Computational Mathematics and Mathematical
+     Physics" }
+ @String{USSRCompMathPhys = "{U. S. S. R.} Comput. Math. and Math. Phys." }
+ @String{VLSICompSys = "Journal of {VLSI} and Computer Systems" }
+ @String{VLSICompSys = "J. {VLSI} Comput. Syst." }
+ @String{ZAngewMathMech = "Zeitschrift fur Angewandte Mathematik und
+     Mechanik" }
+ @String{ZAngewMathMech = "Z. Angew. Math. Mech." }
+ @String{ZAngewMathPhys = "Zeitschrift fur Angewandte Mathematik und Physik" }
+ @String{ZAngewMathPhys = "Z. Angew. Math. Phys." }
+
+% Publishers % ================================================= |
+
+ @String{Academic = "Academic Press" }
+ @String{ACMPress = "{ACM} Press" }
+ @String{AdamHilger = "Adam Hilger" }
+ @String{AddisonWesley = "Addison-Wesley" }
+ @String{AllynBacon = "Allyn and Bacon" }
+ @String{AMS = "American Mathematical Society" }
+ @String{Birkhauser = "Birkha{\"u}ser" }
+ @String{CambridgePress = "Cambridge University Press" }
+ @String{Chelsea = "Chelsea" }
+ @String{ClaredonPress = "Claredon Press" }
+ @String{DoverPub = "Dover Publications" }
+ @String{Eyolles = "Eyolles" }
+ @String{HoltRinehartWinston = "Holt, Rinehart and Winston" }
+ @String{Interscience = "Interscience" }
+ @String{JohnsHopkinsPress = "The Johns Hopkins University Press" }
+ @String{JohnWileySons = "John Wiley and Sons" }
+ @String{Macmillan = "Macmillan" }
+ @String{MathWorks = "The Math Works Inc." }
+ @String{McGrawHill = "McGraw-Hill" }
+ @String{NatBurStd = "National Bureau of Standards" }
+ @String{NorthHolland = "North-Holland" }
+ @String{OxfordPress = "Oxford University Press" }  %address Oxford or London?
+ @String{PergamonPress = "Pergamon Press" }
+ @String{PlenumPress = "Plenum Press" }
+ @String{PrenticeHall = "Prentice-Hall" }
+ @String{SIAMPub = "{SIAM} Publications" }
+ @String{Springer = "Springer-Verlag" }
+ @String{TexasPress = "University of Texas Press" }
+ @String{VanNostrand = "Van Nostrand" }
+ @String{WHFreeman = "W. H. Freeman and Co." }
+
+%Entries
+
+@book{chartrand1977introductory,
+  title={Introductory graph theory},
+  author={Chartrand, Gary},
+  year={1977},
+  publisher={Courier Corporation}
+}
+
+
+@misc{goodfellow2014generative,
+    title={Generative Adversarial Networks},
+    author={Ian J. Goodfellow and Jean Pouget-Abadie and Mehdi Mirza and Bing Xu and David Warde-Farley and Sherjil Ozair and Aaron Courville and Yoshua Bengio},
+    year={2014},
+    eprint={1406.2661},
+    archivePrefix={arXiv},
+    primaryClass={stat.ML}
+}
+
+
+@article{chen2019time,
+  title={Time-aware Gradient Attack on Dynamic Network Link Prediction},
+  author={Chen, Jinyin and Zhang, Jian and Chen, Zhi and Du, Min and Li, Feifei and Xuan, Qi},
+  journal={arXiv preprint arXiv:1911.10561},
+  year={2019}
+}
+% 1 new attack paper 12/16 
+
+@article{goyal2018graph,
+  title={Graph embedding techniques, applications, and performance: A survey},
+  author={Goyal, Palash and Ferrara, Emilio},
+  journal={Knowledge-Based Systems},
+  volume={151},
+  pages={78--94},
+  year={2018},
+  publisher={Elsevier}
+}
+% defense sumamry部分 一些基本概念的引用 开始
+@inproceedings{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  booktitle={Advances in neural information processing systems},
+  pages={5998--6008},
+  year={2017}
+}
+
+@article{goodfellow2014explaining,
+  title={Explaining and harnessing adversarial examples},
+  author={Goodfellow, Ian J and Shlens, Jonathon and Szegedy, Christian},
+  journal={arXiv preprint arXiv:1412.6572},
+  year={2014}
+}
+@article{kullback1951information,
+  title={On information and sufficiency},
+  author={Kullback, Solomon and Leibler, Richard A},
+  journal={The annals of mathematical statistics},
+  volume={22},
+  number={1},
+  pages={79--86},
+  year={1951},
+  publisher={JSTOR}
+}
+
+@book{von2010market,
+  title={Market structure and equilibrium},
+  author={Von Stackelberg, Heinrich},
+  year={2010},
+  publisher={Springer Science \& Business Media}
+}
+% defense sumamry部分 一些基本概念的引用 结束
+
+% 图分类中的引用 开始
+@inproceedings{liu2018heterogeneous,
+  title={Heterogeneous graph neural networks for malicious account detection},
+  author={Liu, Ziqi and Chen, Chaochao and Yang, Xinxing and Zhou, Jun and Li, Xiaolong and Song, Le},
+  booktitle={Proceedings of the 27th ACM International Conference on Information and Knowledge Management},
+  pages={2077--2085},
+  year={2018},
+  organization={ACM}
+}
+
+@inproceedings{ding2019deep,
+  title={Deep Anomaly Detection on Attributed Networks},
+  author={Ding, Kaize and Li, Jundong and Bhanushali, Rohit and Liu, Huan},
+  booktitle={Proceedings of the 2019 SIAM International Conference on Data Mining},
+  pages={594--602},
+  year={2019},
+  organization={SIAM}
+}
+
+@inproceedings{hussein2018meta,
+  title={Are Meta-Paths Necessary?: Revisiting Heterogeneous Graph Embeddings},
+  author={Hussein, Rana and Yang, Dingqi and Cudr{\'e}-Mauroux, Philippe},
+  booktitle={Proceedings of the 27th ACM International Conference on Information and Knowledge Management},
+  pages={437--446},
+  year={2018},
+  organization={ACM}
+}
+
+@article{manessi2020dynamic,
+  title={Dynamic graph convolutional networks},
+  author={Manessi, Franco and Rozza, Alessandro and Manzo, Mario},
+  journal={Pattern Recognition},
+  volume={97},
+  pages={107000},
+  year={2020},
+  publisher={Elsevier}
+}
+
+% 图分类中的引用 结束
+% add 5 new defense updated in 12.11 12:12 开始
+@article{ioannidis2019edge,
+  title={Edge Dithering for Robust Adaptive Graph Convolutional Networks},
+  author={Ioannidis, Vassilis N and Giannakis, Georgios B},
+  journal={arXiv preprint arXiv:1910.09590},
+  year={2019}
+}
+
+@article{ioannidis2019graphsac,
+  title={GraphSAC: Detecting anomalies in large-scale graphs},
+  author={Ioannidis, Vassilis N and Berberidis, Dimitris and Giannakis, Georgios B},
+  journal={arXiv preprint arXiv:1910.09589},
+  year={2019}
+}
+@inproceedings{bojchevski2019certifiable,
+  title={Certifiable Robustness to Graph Perturbations},
+  author={Bojchevski, Aleksandar and G{\"u}nnemann, Stephan},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={8317--8328},
+  year={2019}
+}
+% icdm 待添加
+@article{zhou2019adversarial,
+  title={Adversarial robustness of similarity-based link prediction},
+  author={Zhou, Kai and Michalak, Tomasz P and Vorobeychik, Yevgeniy},
+  journal={arXiv preprint arXiv:1909.01432},
+  year={2019}
+}
+
+% MLG 18 出处信息待添加（github上是kdd）
+@article{miller2019improving,
+  title={Improving Robustness to Attacks Against Vertex Classification},
+  author={Miller, Benjamin A and {\c{C}}amurcu, Mustafa and Gomez, Alexander J and Chan, Kevin and Eliassi-Rad, Tina},
+  year={2019}
+}
+
+% add 5 new defense updated in 12.11 12:12 结束
+@article{chen2019multiscale,
+  title={Multiscale Evolutionary Perturbation Attack on Community Detection},
+  author={Chen, Jinyin and Chen, Yixian and Chen, Lihong and Zhao, Minghao and Xuan, Qi},
+  journal={arXiv preprint arXiv:1910.09741},
+  year={2019}
+}
+
+
+@misc{chang2019restricted,
+  title={A Restricted Black-box Adversarial Framework Towards Attacking Graph Embedding Models},
+  author={Heng Chang and Yu Rong and Tingyang Xu and Wenbing Huang and Honglei Zhang and Peng Cui and Wenwu Zhu and Junzhou Huang},
+  year={2019},
+  eprint={1908.01297},
+  archivePrefix={arXiv},
+  primaryClass={cs.SI}
+}
+% add 2 new attack updated in 12.11 12:12
+
+
+
+
+@inproceedings{hou2019alphacyber,
+  title={$\alpha$Cyber: Enhancing Robustness of Android Malware Detection System against Adversarial Attacks on Heterogeneous Graph based Model},
+  author={Hou, Shifu and Fan, Yujie and Zhang, Yiming and Ye, Yanfang and Lei, Jingwei and Wan, Wenqiang and Wang, Jiabin and Xiong, Qi and Shao, Fudong},
+  booktitle={Proceedings of the 28th ACM International Conference on Information and Knowledge Management},
+  pages={609--618},
+  year={2019},
+  organization={ACM}
+}
+
+@misc{chen2019data,
+  title={Data Poisoning Attacks on Neighborhood-based Recommender Systems},
+  author={Liang Chen and Yangjun Xu and Fenfang Xie and Min Huang and Zibin Zheng},
+  year={2019},
+  eprint={1912.04109},
+  archivePrefix={arXiv},
+  primaryClass={cs.IR}
+}
+
+@article{christakopoulou2018adversarial,
+  title={Adversarial recommendation: Attack of the learned fake users},
+  author={Christakopoulou, Konstantina and Banerjee, Arindam},
+  journal={arXiv preprint arXiv:1809.08336},
+  year={2018}
+}
+
+@inproceedings{he2018adversarial,
+  title={Adversarial personalized ranking for recommendation},
+  author={He, Xiangnan and He, Zhankui and Du, Xiaoyu and Chua, Tat-Seng},
+  booktitle={The 41st International ACM SIGIR Conference on Research \& Development in Information Retrieval},
+  pages={355--364},
+  year={2018},
+  organization={ACM}
+}
+
+% updated in 12.10 11:12 4 papers
+
+
+
+@article{biggio2018wild,
+  title={Wild patterns: Ten years after the rise of adversarial machine learning},
+  author={Biggio, Battista and Roli, Fabio},
+  journal={Pattern Recognition},
+  volume={84},
+  pages={317--331},
+  year={2018},
+  publisher={Elsevier}
+}
+
+@inproceedings{boyd2013area,
+  title={Area under the precision-recall curve: point estimates and confidence intervals},
+  author={Boyd, Kendrick and Eng, Kevin H and Page, C David},
+  booktitle={Joint European conference on machine learning and knowledge discovery in databases},
+  pages={451--466},
+  year={2013},
+  organization={Springer}
+}
+
+
+@article{zugner2019adversarial,
+  title={Adversarial attacks on graph neural networks via meta learning},
+  author={Z{\"u}gner, Daniel and G{\"u}nnemann, Stephan},
+  journal={arXiv preprint arXiv:1902.08412},
+  year={2019}
+}
+
+
+@inproceedings{bojchevski2019adversarial,
+  title={Adversarial Attacks on Node Embeddings via Graph Poisoning},
+  author={Bojchevski, Aleksandar and G{\"u}nnemann, Stephan},
+  booktitle={International Conference on Machine Learning},
+  pages={695--704},
+  year={2019}
+}
+
+@article{ma2019attacking,
+  title={Attacking Graph Convolutional Networks via Rewiring},
+  author={Ma, Yao and Wang, Suhang and Wu, Lingfei and Tang, Jiliang},
+  journal={arXiv preprint arXiv:1906.03750},
+  year={2019}
+}
+
+% 谷歌学位未找到 IJCAI19 引用  待添加 
+@article{xu2019topology,
+  title={Topology Attack and Defense for Graph Neural Networks: An Optimization Perspective},
+  author={Xu, Kaidi and Chen, Hongge and Liu, Sijia and Chen, Pin-Yu and Weng, Tsui-Wei and Hong, Mingyi and Lin, Xue},
+  journal={arXiv preprint arXiv:1906.04214},
+  year={2019}
+}
+
+
+@article{xuan2019unsupervised,
+  title={Unsupervised Euclidean Distance Attack on Network Embedding},
+  author={Xuan, Qi and Zheng, Jun and Chen, Lihong and Yu, Shanqing and Chen, Jinyin and Zhang, Dan and Member, Qingpeng Zhang},
+  journal={arXiv preprint arXiv:1905.11015},
+  year={2019}
+}
+
+@article{bose2019generalizable,
+  title={Generalizable Adversarial Attacks Using Generative Models},
+  author={Bose, Avishek Joey and Cianflone, Andre and Hamiltion, William},
+  journal={arXiv preprint arXiv:1905.10864},
+  year={2019}
+}
+
+@inproceedings{zhang2019data,
+  title={Data poisoning attack against knowledge graph embedding},
+  author={Zhang, Hengtong and Zheng, Tianhang and Gao, Jing and Miao, Chenglin and Su, Lu and Li, Yaliang and Ren, Kui},
+  booktitle={Proceedings of the 28th International Joint Conference on Artificial Intelligence},
+  pages={4853--4859},
+  year={2019},
+  organization={AAAI Press}
+}
+
+@article{wang2019attacking,
+  title={Attacking Graph-based Classification via Manipulating the Graph Structure},
+  author={Wang, Binghui and Gong, Neil Zhenqiang},
+  journal={arXiv preprint arXiv:1903.00553},
+  year={2019}
+}
+
+@article{chen2019ga,
+  title={GA-Based Q-Attack on Community Detection},
+  author={Chen, Jinyin and Chen, Lihong and Chen, Yixian and Zhao, Minghao and Yu, Shanqing and Xuan, Qi and Yang, Xiaoniu},
+  journal={IEEE Transactions on Computational Social Systems},
+  volume={6},
+  number={3},
+  pages={491--503},
+  year={2019},
+  publisher={IEEE}
+}
+
+@article{wang2018attack,
+  title={Attack graph convolutional networks by adding fake nodes},
+  author={Wang, Xiaoyun and Eaton, Joe and Hsieh, Cho-Jui and Wu, Felix},
+  journal={arXiv preprint arXiv:1810.10751},
+  year={2018}
+}
+
+@article{waniek2018attack,
+  title={Attack Tolerance of Link Prediction Algorithms: How to Hide Your Relations in a Social Network},
+  author={Waniek, Marcin and Zhou, Kai and Vorobeychik, Yevgeniy and Moro, Esteban and Michalak, Tomasz P and Rahwan, Talal},
+  journal={arXiv preprint arXiv:1809.00152},
+  year={2018}
+}
+
+@article{chen2018link,
+  title={Link prediction adversarial attack},
+  author={Chen, Jinyin and Shi, Ziqiang and Wu, Yangyang and Xu, Xuanheng and Zheng, Haibin},
+  journal={arXiv preprint arXiv:1810.01110},
+  year={2018}
+}
+
+@article{dai2018adversarial,
+  title={Adversarial attack on graph structured data},
+  author={Dai, Hanjun and Li, Hui and Tian, Tian and Huang, Xin and Wang, Lin and Zhu, Jun and Song, Le},
+  journal={arXiv preprint arXiv:1806.02371},
+  year={2018}
+}
+
+@inproceedings{zugner2018adversarial,
+  title={Adversarial attacks on neural networks for graph data},
+  author={Z{\"u}gner, Daniel and Akbarnejad, Amir and G{\"u}nnemann, Stephan},
+  booktitle={Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  pages={2847--2856},
+  year={2018},
+  organization={ACM}
+}
+
+@article{chen2018fast,
+  title={Fast gradient attack on network embedding},
+  author={Chen, Jinyin and Wu, Yangyang and Xu, Xuanheng and Chen, Yixian and Zheng, Haibin and Xuan, Qi},
+  journal={arXiv preprint arXiv:1809.02797},
+  year={2018}
+}
+
+@article{sun2018data,
+  title={Data poisoning attack against unsupervised node embedding methods},
+  author={Sun, Mingjie and Tang, Jian and Li, Huichen and Li, Bo and Xiao, Chaowei and Chen, Yao and Song, Dawn},
+  journal={arXiv preprint arXiv:1810.12881},
+  year={2018}
+}
+
+@inproceedings{zhou2019attacking,
+  title={Attacking Similarity-Based Link Prediction in Social Networks},
+  author={Zhou, Kai and Michalak, Tomasz P and Waniek, Marcin and Rahwan, Talal and Vorobeychik, Yevgeniy},
+  booktitle={Proceedings of the 18th International Conference on Autonomous Agents and MultiAgent Systems},
+  pages={305--313},
+  year={2018},
+  organization={International Foundation for Autonomous Agents and Multiagent Systems}
+}
+
+@inproceedings{chen2017practical,
+  title={Practical attacks against graph-based clustering},
+  author={Chen, Yizheng and Nadji, Yacin and Kountouras, Athanasios and Monrose, Fabian and Perdisci, Roberto and Antonakakis, Manos and Vasiloglou, Nikolaos},
+  booktitle={Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security},
+  pages={1125--1142},
+  year={2017},
+  organization={ACM}
+}
+
+
+
+% === defense references ===
+@inproceedings{zugner2019certifiable,
+  title={Certifiable robustness and robust training for graph convolutional networks},
+  author={Z{\"u}gner, Daniel and G{\"u}nnemann, Stephan},
+  booktitle={Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  pages={246--256},
+  year={2019},
+  organization={ACM}
+}
+@article{jin2019power,
+  title={Power up! Robust Graph Convolutional Network against Evasion Attacks based on Graph Powering},
+  author={Jin, Ming and Chang, Heng and Zhu, Wenwu and Sojoudi, Somayeh},
+  journal={arXiv preprint arXiv:1905.10029},
+  year={2019}
+}
+@inproceedings{wu2019adversarial,
+  title={Adversarial examples for graph data: deep insights into attack and defense},
+  author={Wu, Huijun and Wang, Chen and Tyshetskiy, Yuriy and Docherty, Andrew and Lu, Kai and Zhu, Liming},
+  booktitle={Proceedings of the 28th International Joint Conference on Artificial Intelligence},
+  pages={4816--4823},
+  year={2019},
+  organization={AAAI Press}
+}
+@article{wang2019adversarial,
+  title={Adversarial Defense Framework for Graph Neural Network},
+  author={Wang, Shen and Chen, Zhengzhang and Ni, Jingchao and Yu, Xiao and Li, Zhichun and Chen, Haifeng and Yu, Philip S},
+  journal={arXiv preprint arXiv:1905.03679},
+  year={2019}
+}
+
+%%%% arxiv to NAACK  
+@inproceedings{pezeshkpour2019investigating,
+  title={Investigating Robustness and Interpretability of Link Prediction via Adversarial Modifications},
+  author={Pezeshkpour, Pouya and Irvine, CA and Tian, Yifan and Singh, Sameer},
+  booktitle={Proceedings of NAACL-HLT},
+  pages={3336--3347},
+  year={2019}
+}
+
+%% KDD19   谷歌学术未找到 KDD19 引用，待添加
+@article{zhu2019robust,
+  title={Robust Graph Convolutional Networks Against Adversarial Attacks},
+  author={Zhu, Dingyuan and Zhang, Ziwei and Cui, Peng and Zhu, Wenwu},
+  year={2019}
+}
+
+@article{chen2019can,
+  title={Can Adversarial Network Attack be Defended?},
+  author={Chen, Jinyin and Wu, Yangyang and Lin, Xiang and Xuan, Qi},
+  journal={arXiv preprint arXiv:1903.05994},
+  year={2019}
+}
+@inproceedings{sun2019virtual,
+  title={Virtual adversarial training on graph convolutional networks in node classification},
+  author={Sun, Ke and Lin, Zhouchen and Guo, Hantao and Zhu, Zhanxing},
+  booktitle={Chinese Conference on Pattern Recognition and Computer Vision (PRCV)},
+  pages={431--443},
+  year={2019},
+  organization={Springer}
+}
+@inproceedings{zhang2019comparing,
+  title={Comparing and detecting adversarial attacks for graph deep learning},
+  author={Zhang, Yingxue and Khan, S and Coates, Mark},
+  booktitle={Proc. Representation Learning on Graphs and Manifolds Workshop, Int. Conf. Learning Representations, New Orleans, LA, USA},
+  year={2019}
+}
+@article{feng2019graph,
+  title={Graph Adversarial Training: Dynamically Regularizing Based on Graph Structure},
+  author={Feng, Fuli and He, Xiangnan and Tang, Jie and Chua, Tat-Seng},
+  journal={arXiv preprint arXiv:1902.08226},
+  year={2019}
+}
+
+%   ICLR2019_openreview  待添加 
+@article{xu2018characterizing,
+  title={Characterizing Malicious Edges targeting on Graph Neural Networks},
+  author={Xu, Xiaojun and Yu, Yue and Li, Bo and Song, Le and Liu, Chengfeng and Gunter, Carl},
+  year={2018}
+}
+
+%% ICML19   谷歌学术未找到 ICML19 引用，待添加
+@article{deng2019batch,
+  title={Batch Virtual Adversarial Training for Graph Convolutional Networks},
+  author={Deng, Zhijie and Dong, Yinpeng and Zhu, Jun},
+  journal={arXiv preprint arXiv:1902.09192},
+  year={2019}
+}
+
+% 已改名为“”Transferring Robustness for Graph Neural Network Against Poisoning Attacks“， 待添加WSDM20 的出处  待添加 
+@article{tang2019robust,
+  title={Robust graph neural network against poisoning attacks via transfer learning},
+  author={Tang, Xianfeng and Li, Yandong and Sun, Yiwei and Yao, Huaxiu and Mitra, Prasenjit and Wang, Suhang},
+  journal={arXiv preprint arXiv:1908.07558},
+  year={2019}
+}
+@article{wang2019graphdefense,
+  title={GraphDefense: Towards Robust Graph Convolutional Networks},
+  author={Wang, Xiaoyun and Liu, Xuanqing and Hsieh, Cho-Jui},
+  journal={arXiv preprint arXiv:1911.04429},
+  year={2019}
+}
+% === defense references ===
+
+
+@inproceedings{perozzi2014deepwalk,
+  title={Deepwalk: Online learning of social representations},
+  author={Perozzi, Bryan and Al-Rfou, Rami and Skiena, Steven},
+  booktitle={KDD},
+  pages={701--710},
+  year={2014},
+  organization={ACM}
+}
+
+@inproceedings{kipf2017semi,
+  title={Semi-Supervised Classification with Graph Convolutional Networks},
+  author={Kipf, Thomas N. and Welling, Max},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2017}
+}
+
+% face recognition
+@inproceedings{parkhi2015deep,
+  title={Deep face recognition.},
+  author={Parkhi, Omkar M and Vedaldi, Andrea and Zisserman, Andrew and others},
+  booktitle={bmvc},
+  volume={1},
+  number={3},
+  pages={6},
+  year={2015}
+}
+
+% object detection
+@misc{krishnamurthy2018deep,
+  title={Deep-learning network architecture for object detection},
+  author={Krishnamurthy, Balaji and Sarkar, Mausoom},
+  year={2018},
+  month=dec # "~11",
+  publisher={Google Patents},
+  note={US Patent 10,152,655}
+}
+% speech and language processing
+@article{xiong2016achieving,
+  title={Achieving human parity in conversational speech recognition},
+  author={Xiong, Wayne and Droppo, Jasha and Huang, Xuedong and Seide, Frank and Seltzer, Mike and Stolcke, Andreas and Yu, Dong and Zweig, Geoffrey},
+  journal={arXiv preprint arXiv:1610.05256},
+  year={2016}
+}
+
+
+
+@article{collobert2011natural,
+  title={Natural language processing (almost) from scratch},
+  author={Collobert, Ronan and Weston, Jason and Bottou, L{\'e}on and Karlen, Michael and Kavukcuoglu, Koray and Kuksa, Pavel},
+  journal={Journal of machine learning research},
+  volume={12},
+  number={Aug},
+  pages={2493--2537},
+  year={2011}
+}
+
+@inproceedings{papernot2017practical,
+  title={Practical black-box attacks against machine learning},
+  author={Papernot, Nicolas and McDaniel, Patrick and Goodfellow, Ian and Jha, Somesh and Celik, Z Berkay and Swami, Ananthram},
+  booktitle={Proceedings of the 2017 ACM on Asia conference on computer and communications security},
+  pages={506--519},
+  year={2017},
+  organization={ACM}
+}
+
+@article{szegedy2013intriguing,
+  title={Intriguing properties of neural networks},
+  author={Szegedy, Christian and Zaremba, Wojciech and Sutskever, Ilya and Bruna, Joan and Erhan, Dumitru and Goodfellow, Ian and Fergus, Rob},
+  journal={arXiv preprint arXiv:1312.6199},
+  year={2013}
+}
+
+@inproceedings{pei2015nonnegative,
+  title={Nonnegative matrix tri-factorization with graph regularization for community detection in social networks},
+  author={Pei, Yulong and Chakraborty, Nilanjan and Sycara, Katia},
+  booktitle={Twenty-Fourth International Joint Conference on Artificial Intelligence},
+  year={2015}
+}
+
+@inproceedings{wang2018billion,
+  title={Billion-scale commodity embedding for e-commerce recommendation in alibaba},
+  author={Wang, Jizhe and Huang, Pipei and Zhao, Huan and Zhang, Zhibo and Zhao, Binqiang and Lee, Dik Lun},
+  booktitle={Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  pages={839--848},
+  year={2018},
+  organization={ACM}
+}
+@misc{errico2015collaborative,
+  title={Collaborative recommendation system},
+  author={Errico, James H and Sezan, M Ibrahim and Borden, George R and Feather, Gary A and Grover, Mick G},
+  year={2015},
+  month=feb # "~3",
+  publisher={Google Patents},
+  note={US Patent 8,949,899}
+}
+
+@article{sun2018adversarial,
+  title={Adversarial attack and defense on graph data: A survey},
+  author={Sun, Lichao and Wang, Ji and Yu, Philip S and Li, Bo},
+  journal={arXiv preprint arXiv:1812.10528},
+  year={2018}
+}
+
+% L-p norm
+@article{madry2017towards,
+  title={Towards deep learning models resistant to adversarial attacks},
+  author={Madry, Aleksander and Makelov, Aleksandar and Schmidt, Ludwig and Tsipras, Dimitris and Vladu, Adrian},
+  journal={arXiv preprint arXiv:1706.06083},
+  year={2017}
+}
+@article{tramer2017ensemble,
+  title={Ensemble adversarial training: Attacks and defenses},
+  author={Tram{\`e}r, Florian and Kurakin, Alexey and Papernot, Nicolas and Goodfellow, Ian and Boneh, Dan and McDaniel, Patrick},
+  journal={arXiv preprint arXiv:1705.07204},
+  year={2017}
+}
+
+@article{powers2011evaluation,
+  title={Evaluation: from precision, recall and F-measure to ROC, informedness, markedness and correlation},
+  author={Powers, David Martin},
+  year={2011},
+  publisher={Bioinfo Publications}
+}
+
+% 实验室三篇
+@inproceedings{chen2018heterogeneous,
+  title={Heterogeneous Neural Attentive Factorization Machine for Rating Prediction},
+  author={Chen, Liang and Liu, Yang and Zheng, Zibin and Yu, Philip},
+  booktitle={CIKM},
+  pages={833--842},
+  year={2018},
+  organization={ACM}
+}
+@inproceedings{DBLP:conf/ijcai/ChenL0GZ19,
+  author    = {Liang Chen and
+      Yang Liu and
+      Xiangnan He and
+      Lianli Gao and
+      Zibin Zheng},
+  title     = {Matching User with Item Set: Collaborative Bundle Recommendation with
+      Deep Attention Network},
+  booktitle = {IJCAI},
+  pages     = {2095--2101},
+  year      = {2019}
+}
+@inproceedings{xie2018factorization,
+  title={Factorization Machine Based Service Recommendation on Heterogeneous Information Networks},
+  author={Xie, Fenfang and Chen, Liang and Ye, Yongjian and Zheng, Zibin and Lin, Xiaola},
+  booktitle={ICWS},
+  pages={115--122},
+  year={2018},
+  organization={IEEE}
+}
+
+@article{lu2011link,
+  title={Link prediction in complex networks: A survey},
+  author={L{\"u}, Linyuan and Zhou, Tao},
+  journal={Physica A: statistical mechanics and its applications},
+  volume={390},
+  number={6},
+  pages={1150--1170},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{newman2004finding,
+  title={Finding and evaluating community structure in networks},
+  author={Newman, Mark EJ and Girvan, Michelle},
+  journal={Physical review E},
+  volume={69},
+  number={2},
+  pages={026113},
+  year={2004},
+  publisher={APS}
+}
+@article{newman2003mixing,
+  title={Mixing patterns in networks},
+  author={Newman, Mark EJ},
+  journal={Physical Review E},
+  volume={67},
+  number={2},
+  pages={026126},
+  year={2003},
+  publisher={APS}
+}
+@article{danon2005comparing,
+  title={Comparing community structure identification},
+  author={Danon, Leon and Diaz-Guilera, Albert and Duch, Jordi and Arenas, Alex},
+  journal={Journal of Statistical Mechanics: Theory and Experiment},
+  volume={2005},
+  number={09},
+  pages={P09008},
+  year={2005},
+  publisher={IOP Publishing}
+}
+
+%% 异构
+@article{sun2011pathsim,
+  title={Pathsim: Meta path-based top-k similarity search in heterogeneous information networks},
+  author={Sun, Yizhou and Han, Jiawei and Yan, Xifeng and Yu, Philip S and Wu, Tianyi},
+  journal={Proceedings of the VLDB Endowment},
+  volume={4},
+  number={11},
+  pages={992--1003},
+  year={2011},
+  publisher={Citeseer}
+}
+@inproceedings{rendle2009bpr,
+  title={BPR: Bayesian personalized ranking from implicit feedback},
+  author={Rendle, Steffen and Freudenthaler, Christoph and Gantner, Zeno and Schmidt-Thieme, Lars},
+  booktitle={Proceedings of the twenty-fifth conference on uncertainty in artificial intelligence},
+  pages={452--461},
+  year={2009},
+  organization={AUAI Press}
+}
+
+% ARI
+@inproceedings{santos2009use,
+  title={On the use of the adjusted rand index as a metric for evaluating supervised classification},
+  author={Santos, Jorge M and Embrechts, Mark},
+  booktitle={International conference on artificial neural networks},
+  pages={175--184},
+  year={2009},
+  organization={Springer}
+}
+
+
+% reinforcement Learning
+@book{sutton2018reinforcement,
+  title={Reinforcement learning: An introduction},
+  author={Sutton, Richard S and Barto, Andrew G},
+  year={2018},
+  publisher={MIT press}
+}
+% genetic algorithm
+@article{whitley1994genetic,
+  title={A genetic algorithm tutorial},
+  author={Whitley, Darrell},
+  journal={Statistics and computing},
+  volume={4},
+  number={2},
+  pages={65--85},
+  year={1994},
+  publisher={Springer}
+}
+
+@phdthesis{sharma2018gradient,
+  title={Gradient-based Adversarial Attacks to Deep Neural Networks in Limited Access Settings},
+  author={Sharma, Yash},
+  year={2018},
+  school={COOPER UNION}
+}
+
+
+%%cora-ml
+@article{mccallum2000automating,
+  title={Automating the construction of internet portals with machine learning},
+  author={McCallum, Andrew Kachites and Nigam, Kamal and Rennie, Jason and Seymore, Kristie},
+  journal={Information Retrieval},
+  volume={3},
+  number={2},
+  pages={127--163},
+  year={2000},
+  publisher={Springer}
+}
+%%citeseer
+@article{sen2008collective,
+  title={Collective classification in network data},
+  author={Sen, Prithviraj and Namata, Galileo and Bilgic, Mustafa and Getoor, Lise and Galligher, Brian and Eliassi-Rad, Tina},
+  journal={AI magazine},
+  volume={29},
+  number={3},
+  pages={93--93},
+  year={2008}
+}
+
+@inproceedings{zhu2016gemini,
+  title={Gemini: A computation-centric distributed graph processing system},
+  author={Zhu, Xiaowei and Chen, Wenguang and Zheng, Weimin and Ma, Xiaosong},
+  booktitle={12th $\{$USENIX$\}$ Symposium on Operating Systems Design and Implementation ($\{$OSDI$\}$ 16)},
+  pages={301--316},
+  year={2016}
+}
+
+@inproceedings{yang2019knightking,
+  title={KnightKing: a fast distributed graph random walk engine},
+  author={Yang, Ke and Zhang, MingXing and Chen, Kang and Ma, Xiaosong and Bai, Yang and Jiang, Yong},
+  booktitle={Proceedings of the 27th ACM Symposium on Operating Systems Principles},
+  pages={524--537},
+  year={2019}
+}

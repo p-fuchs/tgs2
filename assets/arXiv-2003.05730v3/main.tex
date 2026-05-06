@@ -1,0 +1,220 @@
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
+\usepackage{times}
+\renewcommand*\ttdefault{txtt}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newtheorem{definition}{Definition}
+\newcommand{\nosection}[1]{\vspace{2pt}\noindent\textbf{#1.}}
+\urlstyle{same}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of the IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 5.0 (2009-03-20) and later if using hyperref.sty.
+% The latest version can be obtained at:
+% http://www.ctan.org/pkg/cite
+% The documentation is contained in the cite.sty file itself.
+%
+% Note that some packages require special options to format as the Computer
+% Society requires. In particular, Computer Society  papers do not use
+% compressed citation ranges as is done in typical IEEE papers
+% (e.g., [1]-[4]). Instead, they list every citation separately in order
+% (e.g., [1], [2], [3], [4]). To get the latter we need to load the cite
+% package with the nocompress option which is supported by cite.sty v4.0
+% and later. Note also the use of a CLASSOPTION conditional provided by
+% IEEEtran.cls V1.7 and later.
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/pkg/graphicx
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/pkg/epslatex
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). The IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+
+\title{A Survey of Adversarial Learning on Graphs}
+
+\author{Liang Chen, Jintang Li, Jiaying Peng, Tao Xie, \\Zengxu Cao, Kun Xu, Xiangnan He, Zibin Zheng, Bingzhe Wu 
+\IEEEcompsocitemizethanks{
+\IEEEcompsocthanksitem Liang Chen, Jintang Li, Jiaying Peng, Tao Xie, Kun Xu, and Zibin Zheng are with Sun Yat-sen University. E-mail: \{chenliang6,zhzibin\} @mail.sysu.edu.cn, \{lijt55,pengjy36,xiet23\}@mail2.sysu.edu.cn
+\IEEEcompsocthanksitem Zengxu Cao is with Hangzhou Dianzi University of China. E-mail: czx@hdu.edu.cn
+\IEEEcompsocthanksitem Xiangnan He is with University of Science and Technology of China. E-mail: xiangnanhe@gmail.com
+\IEEEcompsocthanksitem Bingze Wu is with Tencent AI Lab.  E-mail: wubingzhe94@gmail.com}
+%<-this % stops an unwanted space
+% \author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
+%         John~Doe,~\IEEEmembership{Fellow,~OSA,}
+%         and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
+% \IEEEcompsocitemizethanks{\IEEEcompsocthanksitem M. Shell was with the Department
+% of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+% GA, 30332.\protect\\
+% % note need leading \protect in front of \\ to get a newline within \thanks as
+% % \\ is fragile and will error, could use \hfil\break instead.
+% E-mail: see http://www.michaelshell.org/contact.html
+% \IEEEcompsocthanksitem J. Doe and J. Doe are with Anonymous University.}% <-this % stops an unwanted space
+\thanks{Corresponding to Liang Chen and Zibin Zheng.}}
+
+
+% The paper headers
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+% {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+
+\markboth{Preprint: A Survey of Adversarial Learning on Graphs}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+
+\IEEEtitleabstractindextext{%
+\begin{abstract}
+	Deep learning models on graphs have achieved remarkable performance in various graph analysis tasks, e.g., node classification, link prediction, and graph clustering. However, they expose uncertainty and unreliability against the well-designed inputs, i.e., \emph{adversarial examples}.  Accordingly, a line of studies has emerged for both attack and defense addressed in different graph analysis tasks, leading to the arms race in graph adversarial learning. Despite the booming works, there still lacks a unified problem definition and a comprehensive review. To bridge this gap, we investigate and summarize the existing works on graph adversarial learning tasks systemically. Specifically, we survey and unify the existing works w.r.t. attack and defense in graph analysis tasks, and give appropriate definitions and taxonomies at the same time.  Besides, we emphasize the importance of related evaluation metrics, investigate and summarize them comprehensively. Hopefully, our works can provide a comprehensive overview and offer insights for the relevant researchers. Latest advances in graph adversarial learning are summarized in our GitHub repository \href{https://github.com/EdisonLeeeee/Graph-Adversarial-Learning}{https://github.com/EdisonLeeeee/Graph-Adversarial-Learning}.
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Adversarial Learning, Graph Neural Networks, Adversarial Attack and Defense, Adversarial Example
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+
+\IEEEdisplaynontitleabstractindextext
+% \IEEEdisplaynontitleabstractindextext has no effect when using
+% compsoc or transmag under a non-conference mode.
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\input{0_introduction}
+
+\input{1_attack}
+
+\input{2_defense}
+
+\input{3_metrics}
+
+\input{4_discussion}
+
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{tpami22}
+\end{document}
+
+

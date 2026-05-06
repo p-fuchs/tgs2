@@ -1,0 +1,88 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{theme/beamerthemepres3}[2026/05/03 Editorial Beamer theme for pres3]
+
+\mode<presentation>
+
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{professionalfonts}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+
+\setbeamercolor{normal text}{fg=PresThreeText,bg=PresThreeBackground}
+\setbeamercolor{structure}{fg=PresThreePrimary}
+\setbeamercolor{alerted text}{fg=PresThreeAttack}
+\setbeamercolor{title}{fg=PresThreeText}
+\setbeamercolor{subtitle}{fg=PresThreeMuted}
+\setbeamercolor{frametitle}{fg=PresThreeText}
+\setbeamercolor{titlelike}{fg=PresThreeText}
+\setbeamercolor{author}{fg=PresThreeMuted}
+\setbeamercolor{date}{fg=PresThreeMuted}
+\setbeamercolor{institute}{fg=PresThreeMuted}
+\setbeamercolor{block title}{fg=PresThreeBackground,bg=PresThreePrimary}
+\setbeamercolor{block body}{fg=PresThreeText,bg=PresThreeSurface}
+\setbeamercolor{exampleblock title}{fg=PresThreeBackground,bg=PresThreeDefense}
+\setbeamercolor{exampleblock body}{fg=PresThreeText,bg=PresThreeDefenseSoft}
+\setbeamercolor{alertblock title}{fg=PresThreeBackground,bg=PresThreeAttack}
+\setbeamercolor{alertblock body}{fg=PresThreeText,bg=PresThreeAttackSoft}
+\setbeamercolor{takeaway box}{fg=PresThreeText,bg=PresThreeSurface}
+
+\setbeamerfont{title}{family=\sffamily,size=\fontsize{23}{27}\selectfont,series=\bfseries}
+\setbeamerfont{subtitle}{family=\sffamily,size=\fontsize{13}{16}\selectfont}
+\setbeamerfont{frametitle}{family=\sffamily,size=\fontsize{17}{20}\selectfont,series=\bfseries}
+\setbeamerfont{author}{family=\sffamily,size=\fontsize{11}{14}\selectfont}
+\setbeamerfont{date}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{institute}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{caption}{family=\sffamily,size=\fontsize{8}{10}\selectfont}
+\setbeamerfont{footline}{family=\sffamily,size=\fontsize{8}{10}\selectfont}
+\setbeamerfont{block title}{family=\sffamily,size=\fontsize{10}{12}\selectfont,series=\bfseries}
+\setbeamerfont{block body}{family=\sffamily,size=\small}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.11cm}%
+  {\usebeamerfont{frametitle}\insertframetitle\par}%
+  \vspace{0.13cm}%
+  {\color{PresThreeRule}\rule{\linewidth}{0.35pt}\par}%
+}
+
+\defbeamertemplate*{title page}{pres3}{%
+  \vspace*{0.10\paperheight}
+  {\usebeamerfont{title}\inserttitle\par}
+  \vspace{0.28cm}
+  {\usebeamerfont{subtitle}\insertsubtitle\par}
+  \vspace{0.45cm}
+  {\color{PresThreeAttack}\rule{0.18\linewidth}{0.8pt}%
+   \color{PresThreeDefense}\rule{0.18\linewidth}{0.8pt}%
+   \color{PresThreeMetric}\rule{0.10\linewidth}{0.8pt}\par}
+  \vspace{0.50cm}
+  {\usebeamerfont{author}\insertauthor\par}
+  \vspace{0.12cm}
+  {\usebeamerfont{institute}\insertinstitute\par}
+  \vfill
+  {\usebeamerfont{date}\insertdate\par}
+}
+
+\setbeamertemplate{items}[circle]
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \vskip0.2ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.4ex,dp=1.5ex,sep=0pt]{normal text}%
+    \hspace*{10mm}%
+    \makebox[\dimexpr\paperwidth-20mm\relax][l]{%
+      \usebeamerfont{footline}\color{PresThreeMuted}%
+      \insertshorttitle\hfill\insertframenumber{} / \inserttotalframenumber%
+    }%
+  \end{beamercolorbox}%
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PresThreeDefense,
+  urlcolor=PresThreeDefense,
+  citecolor=PresThreeAttack
+}

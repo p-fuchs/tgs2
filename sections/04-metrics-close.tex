@@ -1,0 +1,143 @@
+\section{Metrics and Discussion}
+
+\begin{frame}{Why metrics deserve their own section}
+  \SectionPill{Evaluation}{PresThreeMetric}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \MiniCard{PresThreeMetric}{Effectiveness}{Does it work?\\[0.25em]{\scriptsize Acc \(\cdot\) F1 \(\cdot\) ASR \(\cdot\) CM \(\cdot\) ADR}}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \MiniCard{PresThreeMetric}{Efficiency}{What did it cost?\\[0.25em]{\scriptsize budget \(\Delta\) \(\cdot\) AML \(\cdot\) training cost}}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \MiniCard{PresThreeMetric}{Imperceptibility}{Is it noticeable?\\[0.25em]{\scriptsize similarity \(\cdot\) stats \(\cdot\) constraints}}
+    \end{column}
+  \end{columns}
+  \vspace{0.45em}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\color{PresThreeMetric}\bfseries Task \(\rightarrow\) metric map}\par
+    \vspace{0.15em}
+    \begin{tabular}{@{}p{0.34\linewidth}p{0.58\linewidth}@{}}
+      classification & Acc \(\cdot\) F1 \(\cdot\) FNR \(\cdot\) FPR \\
+      ranking / link prediction & AUC \(\cdot\) AP \(\cdot\) MRR \(\cdot\) Hits@K \\
+      clustering / communities & NMI \(\cdot\) ARI \(\cdot\) modularity
+    \end{tabular}
+  \end{beamercolorbox}
+  \SlideNote{2:00}{The paper treats metrics as more than bookkeeping. Metric choice shapes what robustness claims can mean, especially when effectiveness, efficiency, and imperceptibility point in different directions.}
+\end{frame}
+
+\begin{frame}{The few metrics worth remembering}
+  \SectionPill{Evaluation formulas}{PresThreeMetric}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.31\textwidth}
+      \FormulaCard{PresThreeMetric}{Attack Success Rate}{
+        \scriptsize
+        \[
+          ASR=\frac{\text{successful attacks}}{\text{attacks}}
+        \]
+      }
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \FormulaCard{PresThreeMetric}{Average Modified Links}{
+        \scriptsize
+        \[
+          AML=\frac{\text{modified links}}{\text{attacks}}
+        \]
+      }
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \FormulaCard{PresThreeMetric}{Average Defense Rate}{
+        \scriptsize
+        \[
+          ADR=\frac{ASR_{\text{with defense}}}{ASR_{\text{without defense}}}-1
+        \]
+      }
+    \end{column}
+  \end{columns}
+  \vspace{0.45em}
+  \begin{block}{Optional detail}
+    \(CM\): margin to the correct class. \(\Lambda\): statistical similarity between clean and attacked graphs.
+  \end{block}
+  \SlideNote{2:30}{Keep only a few formulas. ASR is attack effectiveness, AML is perturbation cost, and ADR is the defense-side summary metric mentioned by the survey.}
+\end{frame}
+
+\begin{frame}{Open problems for attacks}
+  \SectionPill{Discussion}{PresThreeAttack}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeAttack}{Unnoticeable attacks}{Effective perturbations should also preserve important graph properties.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeAttack}{Scalable attacks}{Large graphs make full-gradient or full-candidate methods expensive.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresThreeAttack}{Weaker knowledge}{Practical attacks should need less graph, label, and model access.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeAttack}{Real-world graphs}{Move beyond simple, static, undistorted graph inputs.}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{Phrase the frontier as the gap between benchmark attacks and realistic attacks. The difficult part is remaining effective while hidden, scalable, and practical.}
+\end{frame}
+
+\begin{frame}{Open problems for defenses and evaluation}
+  \SectionPill{Discussion}{PresThreeMetric}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Defense}
+        \begin{itemize}
+          \item defense beyond node classification
+          \item efficient defense at scale
+          \item certification of robustness
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Evaluation}
+        \begin{itemize}
+          \item better cost metrics
+          \item better imperceptibility metrics
+          \item better metric selection by scenario
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.35em}
+  {\small\color{PresThreeMuted}Counting modified edges is often too crude: adding and removing an edge may have different real costs.}
+  \SlideNote{2:00}{A useful message for a technical class is that evaluation itself remains underdeveloped. Graph imperceptibility is harder to define than an \(l_p\) constraint in images.}
+\end{frame}
+
+\begin{frame}{What the paper leaves us with}
+  \SectionPill{Conclusion}{PresThreePrimary}
+  \begin{block}{This survey's main contribution is structure}
+    \begin{enumerate}
+      \item Attacks are constrained perturbation problems on graphs.
+      \item Defenses intervene at the data, model, objective, training, or monitoring level.
+      \item Metrics and assumptions matter as much as raw performance.
+    \end{enumerate}
+  \end{block}
+  \vspace{0.45em}
+  \centering
+  \begin{tikzpicture}
+    \node[modelbox,draw=PresThreeAttack,fill=PresThreeAttackSoft,text width=3.2cm] (a) {unified attack};
+    \node[font=\large\bfseries,right=0.8cm of a] (arrow) {\(\leftrightarrow\)};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=3.2cm,right=0.8cm of arrow] (d) {unified defense};
+  \end{tikzpicture}
+  \SlideNote{1:45}{The main contribution is not one best attack or one best defense. It is a structured language for thinking about graph adversarial learning.}
+\end{frame}
+
+\begin{frame}[plain]
+  \vspace{0.75cm}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      {\fontsize{24}{28}\selectfont\bfseries A Survey of Adversarial Learning on Graphs\par}
+      \vspace{0.35cm}
+      {\fontsize{13}{16}\selectfont\color{PresThreeMuted}Reliable graph learning needs better models and better threat models.\par}
+      \vspace{0.45cm}
+      {\small Krzysztof Czerwionka and Przemysław Fuchs}
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \centering
+      \ClosingGraph[1.05]
+    \end{column}
+  \end{columns}
+  \SlideNote{0:45}{Clean landing slide. Leave it up for questions or for the natural end of the talk.}
+\end{frame}

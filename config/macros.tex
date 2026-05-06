@@ -1,0 +1,152 @@
+\NewDocumentCommand{\SlideNote}{m m}{%
+  \note{\textbf{Time: #1}\par #2}%
+}
+
+\NewDocumentCommand{\SectionPill}{m m}{}
+
+\NewDocumentCommand{\ProgressRibbon}{m}{%
+  \vspace{0.15em}
+  {\scriptsize\color{PresThreeMuted}
+  Intro \(\rightarrow\) Setup \(\rightarrow\)
+  \textcolor{PresThreeAttack}{Attacks} \(\rightarrow\)
+  \textcolor{PresThreeDefense}{Defenses} \(\rightarrow\)
+  \textcolor{PresThreeMetric}{Metrics} \(\rightarrow\)
+  Discussion \(\rightarrow\) Conclusion
+  \hfill\textbf{#1}}\par
+}
+
+\NewDocumentCommand{\MiniCard}{m m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\color{#1}\bfseries #2}\par
+    \vspace{0.15em}
+    {\small #3\par}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\FormulaCard}{m m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.75em]{takeaway box}
+    {\color{#1}\bfseries\sffamily #2}\par
+    \vspace{-0.1em}
+    {\setlength{\abovedisplayskip}{0.35em}\setlength{\belowdisplayskip}{0.35em}#3}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\MethodChip}{m m}{%
+  \tikz[baseline=(c.base)]\node[
+    draw=#1,
+    fill=#1!12,
+    rounded corners=2pt,
+    inner xsep=4pt,
+    inner ysep=1.6pt,
+    minimum height=0.38cm,
+    font=\scriptsize\sffamily
+  ] (c) {#2};%
+}
+
+\NewDocumentCommand{\FixedChip}{m m m}{%
+  \tikz[baseline=(c.base)]\node[
+    draw=#1,
+    fill=#1!10,
+    rounded corners=2pt,
+    inner xsep=4pt,
+    inner ysep=1.5pt,
+    minimum height=0.38cm,
+    text width=#2,
+    align=center,
+    font=\scriptsize\sffamily
+  ] (c) {#3};%
+}
+
+\NewDocumentCommand{\TaxonomyCard}{m m m}{%
+  \begin{tikzpicture}
+    \node[
+      draw=#1,
+      fill=#1!10,
+      rounded corners=3pt,
+      inner sep=5pt,
+      text width=0.118\linewidth,
+      align=center,
+      minimum height=1.05cm,
+      font=\scriptsize\sffamily
+    ] {\textbf{#2}\\[-0.05em]{\tiny #3}};
+  \end{tikzpicture}%
+}
+
+\tikzset{
+  graphnode/.style={circle,draw=PresThreeRule,line width=0.55pt,fill=white,minimum size=5.2mm,inner sep=0pt},
+  graphnode target/.style={circle,draw=PresThreeText,line width=1.3pt,fill=PresThreeRose!20,minimum size=6.1mm,inner sep=0pt,font=\scriptsize\bfseries},
+  graphnode inf/.style={circle,draw=PresThreeText,line width=0.7pt,fill=PresThreePrelim!32,minimum size=5.6mm,inner sep=0pt,font=\scriptsize\bfseries},
+  graphedge/.style={draw=PresThreeText,line width=0.55pt},
+  attackedge/.style={draw=PresThreeAttack,line width=1.2pt},
+  defenseedge/.style={draw=PresThreeDefense,line width=1.2pt},
+  fadededge/.style={draw=PresThreeMuted!35,line width=0.55pt,densely dotted},
+  modelbox/.style={draw=PresThreeRule,fill=PresThreeSurface,rounded corners=3pt,inner sep=5pt,align=center,font=\scriptsize\sffamily}
+}
+
+\NewDocumentCommand{\FeatureBadge}{m m}{%
+  \node[font=\tiny\ttfamily,anchor=center,text=#2] at #1 {[:]};
+}
+
+\NewDocumentCommand{\ToyGraph}{O{clean} O{1.0}}{%
+  \begin{tikzpicture}[scale=#2,every node/.style={transform shape}]
+    \coordinate (a) at (0,1.5);
+    \coordinate (b) at (1.2,2.1);
+    \coordinate (c) at (1.0,0.6);
+    \coordinate (d) at (0.15,-0.8);
+    \coordinate (e) at (2.3,1.2);
+    \coordinate (t) at (2.45,-0.45);
+    \draw[graphedge] (a)--(b)--(c)--(a)--(d)--(c)--(e)--(b);
+    \draw[graphedge] (c)--(t);
+    \IfEqCase{#1}{%
+      {perturbed}{\draw[attackedge] (d)--(t) node[midway,below,font=\tiny\bfseries] {+};\draw[attackedge] (e)--(t) node[midway,right,font=\tiny\bfseries] {+};}%
+      {rewired}{\draw[fadededge] (c)--(t);\draw[attackedge] (d)--(t) node[midway,below,font=\tiny\bfseries] {+};\draw[PresThreeAttack,line width=0.9pt] ($(c)!0.44!(t)+(-0.10,0.10)$)--($(c)!0.56!(t)+(0.10,-0.10)$);\draw[PresThreeAttack,line width=0.9pt] ($(c)!0.44!(t)+(0.10,-0.10)$)--($(c)!0.56!(t)+(-0.10,0.10)$);}%
+      {defended}{\draw[fadededge] (d)--(t);\draw[defenseedge] (e)--(t);\node[draw=PresThreeDefense,fill=PresThreeDefenseSoft,rounded corners=2pt,font=\tiny,inner sep=1.5pt] at (1.65,-0.95) {shield};}%
+    }[\relax]
+    \node[graphnode,fill=PresThreeBlue!18] at (a) {};
+    \node[graphnode,fill=PresThreeTeal!24] at (b) {};
+    \node[graphnode,fill=PresThreeRose!24] at (c) {};
+    \node[graphnode inf] at (d) {I};
+    \node[graphnode inf] at (e) {I};
+    \node[graphnode target] at (t) {T};
+    \FeatureBadge{(-0.35,1.88)}{PresThreeMuted}
+    \FeatureBadge{(1.05,2.55)}{PresThreeMuted}
+    \FeatureBadge{(2.88,1.60)}{PresThreeMuted}
+    \IfEqCase{#1}{%
+      {perturbed}{\FeatureBadge{(2.88,-0.05)}{PresThreeAttack}}%
+      {rewired}{\FeatureBadge{(2.88,-0.05)}{PresThreeAttack}}%
+      {defended}{\FeatureBadge{(2.88,-0.05)}{PresThreeDefense}}%
+    }[\FeatureBadge{(2.88,-0.05)}{PresThreeMuted}]
+  \end{tikzpicture}%
+}
+
+\NewDocumentCommand{\PredictionFlow}{m}{%
+  \begin{tikzpicture}[node distance=0.7cm]
+    \node[modelbox] (g1) {\ToyGraph[clean][0.55]\\[-0.2em] clean graph};
+    \node[font=\large\bfseries,right=0.6cm of g1] (arr) {\(\rightarrow\)};
+    \node[modelbox,right=0.6cm of arr] (g2) {\ToyGraph[perturbed][0.55]\\[-0.2em] perturbed graph};
+    \node[below=0.1cm of g1,font=\scriptsize\sffamily,text=PresThreeDefense] {correct prediction};
+    \node[below=0.1cm of g2,font=\scriptsize\sffamily,text=PresThreeAttack] {wrong prediction};
+    \node[above=0.08cm of arr,font=\scriptsize\sffamily,text=PresThreeAttack] {#1};
+  \end{tikzpicture}%
+}
+
+\NewDocumentCommand{\PipelineNode}{m m}{%
+  \node[modelbox,text width=1.7cm,minimum height=0.72cm] (#1) {#2};
+}
+
+\NewDocumentCommand{\SmallMatrix}{m}{%
+  \begin{tikzpicture}[scale=0.34,every node/.style={transform shape}]
+    \foreach \x in {0,1,2,3} {
+      \foreach \y in {0,1,2} {
+        \fill[PresThreeSurface] (\x,\y) rectangle +(0.82,0.82);
+        \draw[PresThreeBackground,line width=0.8pt] (\x,\y) rectangle +(0.82,0.82);
+      }
+    }
+    \fill[#1] (1,1) rectangle +(0.82,0.82);
+    \fill[#1!55] (3,0) rectangle +(0.82,0.82);
+  \end{tikzpicture}%
+}
+
+\NewDocumentCommand{\ClosingGraph}{O{0.85}}{%
+  \ToyGraph[defended][#1]
+}

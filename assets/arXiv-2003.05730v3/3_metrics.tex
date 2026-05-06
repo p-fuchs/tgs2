@@ -1,0 +1,112 @@
+
+\section{Metrics}
+\label{metrics}
+In this section, we first introduce the metrics that are common in graph analysis tasks, which are used in attack and defense scenarios as well. Next, we introduce some new metrics proposed in attack and defense works from three perspectives: effectiveness, efficiency, and imperceptibility.
+\subsection{Common Metrics}
+\begin{itemize}
+	\item \textbf{FNR} and \textbf{FPR}. In the classification or clustering tasks, here is a category of metrics based on False Positive (\textit{FP}), False Negative (\textit{FN}), True Positive (\textit{TP}) and True Negative (\textit{TN}). In attack and defense scenarios, commonly used to quantify are False Negative Rate (\textit{FNR}) and False Positive Rate (\textit{FPR}). Specifically, \textit{FNR} is equal to \textit{FN} over (\textit{TP} + \textit{FN}), and \textit{FPR} is equal to \textit{FP} over (\textit{FP} + \textit{TN}). For all negative samples, the former describes the proportion of false positive samples detected, while the latter describes the proportion of false negative samples detected. In other words, for negative samples, the former is the error rate, and the latter is the miss rate.
+	\item \textbf{Accuracy (Acc).} The Accuracy is one of the most commonly used evaluation metrics, which measures the quality of results based on the percentage of correct predictions over total instances.
+	\item \textbf{F1-score.} The F1 score \cite{bojchevski2019adversarial} can be regarded as a harmonic average of model Precision and Recall score \cite{powers2011evaluation}, with a maximum value of 1 and a minimum value of 0.
+	      % \item \emph{False Positive Rate(${FP}$).}
+	      % \item \emph{False Negative Rate (${FN}$).}
+	\item \textbf{Area Under Curve (AUC).} The AUC is the area under the Receiver Operating Characteristic (ROC) curve \cite{zhang2019comparing}. Different models corresponding to different ROC curves, and it is difficult to compare which one is better if there is a crossover between the curves, thus comparison based on the AUC score is more reasonable. In general, AUC indicates the probability that the predicted positive examples rank in front of the negative examples.
+
+	\item \textbf{Average Precision (AP).} As the area under the Precision-Recall curve, AP is described as one of the most robust metrics \cite{boyd2013area}. Precision-Recall curve depicts the relationships between Precision and Recall. A good model should improve the Recall while preserving the Precision a relatively high score. In contrast, weaker models may lose more Precision in order to improve Recall. Comparing with the Precision-Recall curve, AP can show the performance of the model  more intuitively.
+
+	\item \textbf{Mean Reciprocal Rank (MRR).} The MRR is a commonly used metric to measure a rank model. For a target query, if the first correct item is ranked $n_{th}$, then the MRR score is $1 / n$, and once there is no match, the score is 0. The MRR of the model is the sum of the scores of all queries.
+
+	      % Follow the work \cite{waniek2018attack}, we define $s$ a similarity index, $E$ the training set, $Q$ the probe set. Such
+	\item \textbf{Hits@K.} By calculating the rank (e.g., MRR) of all the ground-truth triples, Hits@K is the proportion of correct entities ranked in top K.
+
+	\item \textbf{Modularity.} The Modularity is an important measure based on the assortative mixing \cite{newman2003mixing},  which usually used to assess the quality of different division for a particular network, especially the community structure is unknown \cite{newman2004finding}.
+
+	\item \textbf{Normalized Mutual Information (NMI).} The NMI is another commonly used evaluation to measure the quality of clustering results, so as to analyze the network community structure \cite{danon2005comparing}. NMI further indicates the similarity between two partitions with mutual information and information entropy, while a larger value means a higher similarity.
+
+	\item \textbf{Adjusted Rand Index (ARI).} The ARI is a measure of the similarity between two data clusterings: one given by the clustering process and the other defined by external criteria \cite{santos2009use}. Such a correction establishes a baseline by using the expected similarity of all pair-wise comparisons between clusterings specified by a random model. ARI measures the relation between pairs of dataset elements without labels' information, which can cooperate with conventional performance measures to detect classification algorithm. In addition, ARI can also use labels information for feature selection \cite{santos2009use}.
+
+
+\end{itemize}
+
+\subsection{Specific Metrics for Attack and Defense}
+In order to measure the performance, a number of specific metrics for attack and defense appear in literature. Next, we will organize these metrics from three perspectives: effectiveness, efficiency, and imperceptibility.
+
+\subsubsection{Effectiveness-relevant Metrics}
+Both attack and defense require metrics to measure the performance of the target model before and after the attack. Therefore, we have summarized some metrics for measuring effectiveness and list them below:
+
+\begin{itemize}
+	\item \textbf{Attack Success Rate (ASR)}. ASR is the ratio of targets which will be successfully attacked within a given fixed budget \cite{chen2018link}. Correspondingly, we can conclude the formulation of ASR:
+	      \begin{equation}
+		      \text{ASR}=\frac{\text {Number  of  successful  attacks }}{\text {Number  of  attacks }}
+	      \end{equation}
+
+	\item \textbf{Classification Margin (CM)}. CM is only designed for the classification task. Under this scenario, attackers aim to perturbe a graph that misclassifies the target node and has maximal ``distance'' (in terms of log-probabilities/logits) to the correct class \cite{zugner2018adversarial}. Based on this, CM is well formulated as:
+	      \begin{equation}
+		      \text{CM}=\max_{y'_t \neq y_t} Z_{t,y'_t}-Z_{t,y_t}
+	      \end{equation}
+	      where $Z_t$ is the output of the target model with respect to node $t$, and $y_t \in \mathcal{C}$ is the \emph{correct} class label of $v_t$ while $y'_t$ is the \emph{wrong} one.
+
+	\item \textbf{Averaged Worst-case Margin (AWM)}. Worst-case Margin (WM) is the minimum of the Classification Margin (CM) \cite{zugner2019certifiable}, and the average of WM is dynamically calculated over a mini-batch of nodes during training. The $B_s$ in the following equation denotes batch size.
+	      \begin{equation}
+		      \text{AWM} = \frac{1}{B_s} \sum^{i=B_s}_{i=1} \text{CM}_{\text{worst}_i}
+	      \end{equation}
+
+	\item \textbf{Robustness Merit (RM)}. It evaluates the robustness of the model by calculating the difference between the post-attack accuracy and pre-attack accuracy on GNNs \cite{jin2019power}. And $\mathcal{V^\text{attacked}}$ denotes the set of nodes theoretically affected by the attack.
+	      \begin{equation}
+		      \text{RM}=\text{Acc}_{V^{\text{attacked}}}^{\text{post-attacked}}-\text{Acc}^{\text{pre-attacked}}_{V^{\text{attacked}}}
+	      \end{equation}
+
+	\item \textbf{Attack Deterioration (AD)}. It evaluates the attack effect of the model prediction. Note that any added/dropped edges can only affect the nodes within the spatial scope in the origin network \cite{jin2019power}, due to the spatial scope limitaions of the GNNs.
+	      \begin{equation}
+		      \text{AD}=1-\frac{\text{Acc}^{\text{post-attacked}}_{\mathcal{V}^{\text{attacked}}}}{\text{Acc}^{\text{pre-attacked}}_{\mathcal{V}^{\text{attacked}}}}
+	      \end{equation}
+
+	\item \textbf{Average Defense Rate (ADR)}. ADR is the ratio of the difference between the ASR of attack on GNNs with and without defense, versus the ASR of attack on GNNs without defense \cite{chen2019can}. The higher ADR the better defense performance.
+	      \begin{equation}
+		      \text{ADR}=\frac{\text{ASR}^{\text{with-defense}}_{\mathcal{V}^{\text{attacked}}}}{\text{ASR}^{\text{without-defense}}_{\mathcal{V}^{\text{attacked}}}}-1
+	      \end{equation}
+
+	\item \textbf{Average Confidence Different (ACD)}. ACD is the average confidence different of nodes in $N_s$ before and after attack \cite{chen2019can}, where $N_s$ is the set of nodes which are classified correctly before attack in test set. Note that Confidence Different (CD) is equivalent to Classification Margin (CM).
+	      \begin{equation}
+		      \text{ACD}=\frac{1}{N_s}\sum_{v_{i}\in N_{s}} \text{CD}_{i}(\hat{A}_{v_{i}})-\text{CD}_{i}(A)
+	      \end{equation}
+
+	\item \textbf{Damage Prevention Ratio (DPR)}. Damage prevention is defined to measure the amount of damage that can be prevented by defense \cite{zhou2019adversarial}. Let $L_0$ be the defender's loss without attack, $L_A$ be the defender's loss under a certain attack strategy, $A$ and $L_D$ be the defender's loss with a certain defense strategy $D$. A better defense strategy leads to a larger DPR.
+	      \begin{equation}
+		      \text{DPR}_A^D=\frac{L_A-L_D}{L_A-L_0}
+	      \end{equation}
+\end{itemize}
+
+\subsubsection{Efficiency-relevant Metrics}
+Here we introduce some efficiency metrics which measure the cost of the attack and defense. For example, the metric of quantifying how much perturbations are required for the same effect.
+
+\begin{itemize}
+	\item \textbf{Average Modified Links (AML)}. AML is designed for the topology attack, which indicates the average perturbation size leading to a successful attack \cite{chen2018link}. Assume that attackers have limited budgets to attack a target model, the modified links (added or removed) are accumulated until attackers achieve their goal or run out of the budgets. Based on this, we can conclude the formulation of AML:
+	      \begin{equation}
+		      \text{AML}=\frac{\text {Number  of  modified  links }}{\text {Number  of  attacks }}
+	      \end{equation}
+
+
+
+	      % \item \textbf{Attack Difference}. Attack Difference \cite{u} is a measure of  the magnitude of attacks, which denotes the difference of the adversarial loss before and after attacks. In other words, this metric shows the decrease of the adversarial loss.
+\end{itemize}
+
+\subsubsection{Imperceptibility-relevant Metrics}
+Several metrics are proposed to measure the scale of the manipulations caused by attack and defense, which are summarized as follows:
+\begin{itemize}
+	\item \textbf{Similarity Score}. Generally speaking, Similarity Score is a measure to infer the likelihoods of the existence of links, which usually applied in the link-level task \cite{lu2011link,zhou2019attacking}. Specifically, suppose we want to figure out whether a particular link $(u,v)$ exists in a network, Similarity Score can be used to quantify the topology properties of node $u$ and $v$ (e.g., common neighbors, degrees), and a higher Similarity Score indicates a greater likelihood of connection between this pair. Usually, Similarity Score could be measured by the cosine similarity matrix \cite{sun2018data}.
+
+	\item \textbf{Test Statistic $\Lambda$.} $\Lambda$ takes advantage of the distribution of node degrees to measure the similarity between graphs. Specifically,  Z\"ugner et al. \cite{zugner2018adversarial} state that multiset of node degrees $\mathit{d}_{G}$ in the graph $G$ follow the power-law like distribution, and they provide a method to approximate the main parameter $\alpha_{G}$ of the distribution. Through $\alpha_{G}$ and $\mathit{d}_{G}$, we can calculate $G$'s log-likelihood score $l(\mathit{d}_{G}, \alpha_{G})$. For the pre-attack graph $G_{pr}$ and post-attack graph $G_{po}$, we get ($\mathit{d}_{G_{pr}},\alpha_{G_{pr}}$) and ($\mathit{d}_{G_{po}}, \alpha_{G_{po}}$), respectively. Similarly, we can then define $\mathit{d}_{G_{q}} = \mathit{d}_{G_{pr}}  \cap \  \mathit{d}_{G_{po}}$ and estimate $\alpha_{G_{q}}$. The final test statistic of graphs can be formulated as:
+	      \begin{equation}
+		      \begin{aligned}
+			      \Lambda(G_{pr}, G_{po}) & = 2 \cdot (-l(\mathit{d}_{G_{q}}, \alpha_{G_{q}}) \\
+			                              & + l(\mathit{d}_{G_{po}}, \alpha_{G_{po}})
+			      + l(\mathit{d}_{G_{pr}}, \alpha_{G_{pr}}))
+		      \end{aligned}
+	      \end{equation}
+	      Finally, when the statistic $\Lambda$ satisfies a specified constraint, the model considers the perturbations are unnoticeable.
+
+	\item \textbf{Attack Budget $\Delta$}. To ensure unnoticeable perturbations in the attack, previous work \cite{zugner2018adversarial} measures the perturbations in terms of the budget $\Delta$ and the test statistics $\Lambda$ w.r.t. log-likelihood score. More precisely, they accumulate the changes in node feature and the adjacency matrix, and limit it to a budge $\Delta$ to constrain perturbations. However, it is not suitable to deal with complicated situations \cite{zugner2018adversarial}.
+
+	\item \textbf{Attack Effect.} Generally, the attack effect evaluates the impacts in the community detection task.  Given a confusion matrix $J$, where each element $J_{i,j}$ represents the number of shared nodes between original community and a perturbed one, the attack effect is simply defined as the accumulation of normalized entropy \cite{chen2019multiscale}. Suppose all the communities keep exactly the same after the attack, the attack effect will be equal to $0$.
+
+\end{itemize}

@@ -1,0 +1,160 @@
+\section{Defenses}
+
+\begin{frame}{A unified formulation of defense}
+  \SectionPill{Defense formulation}{PresThreeDefense}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      \FormulaCard{PresThreeDefense}{Defender minimises robust loss}{
+        \scriptsize
+        \[
+          \min_{\substack{\tilde G\in\Psi(G)\cup G\\[-0.15em]\text{\tiny clean or perturbed}}}
+          \sum_{t_i\in T}\tilde{\mathcal{L}}\bigl(
+            \underbrace{\tilde f_{\theta^*}}_{\text{\tiny defended model}}
+            (\tilde G^{t_i},X,t_i),y_i
+          \bigr)
+        \]
+        \vspace{-0.35em}
+        {\scriptsize\color{PresThreeDefense}\bfseries Training objective}\\[-0.7em]
+        \[
+          \theta^*=\arg\min_\theta
+          \sum_{v_j\in S_L}\tilde{\mathcal{L}}\bigl(\tilde f_\theta(\tilde G^{v_j},X,v_j),y_j\bigr)
+        \]
+        \vspace{-0.5em}
+        {\scriptsize\color{PresThreeMuted}Goal: low loss on clean or perturbed graphs.}
+      }
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \MiniCard{PresThreeAttack}{Attack}{Choose perturbations to maximise loss.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeDefense}{Defense}{Train a model to minimise loss under perturbations.}
+      \vspace{0.25em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.45em]{takeaway box}
+        {\footnotesize\color{PresThreeMuted}Same graph setting. Opposite optimisation direction.}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{Present this as the mirror image of the attack formulation. The notation is a unified survey-level abstraction: the defender is not making a bad graph good by magic, but designing or training a model so that whether the input is clean or perturbed, the loss remains small.}
+\end{frame}
+
+\begin{frame}{Defense taxonomy in one view}
+  \SectionPill{Defense taxonomy}{PresThreeDefense}
+  \centering
+  \begin{tikzpicture}[node distance=0.40cm]
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm] (a) {Preprocessing\\{\tiny clean data first}};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm,right=of a] (b) {Structure\\{\tiny robust aggregation}};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm,right=of b] (c) {Adversarial\\{\tiny train against attacks}};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm,below=of a] (d) {Objective\\{\tiny loss / regularisation}};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm,right=of d] (e) {Detection\\{\tiny monitor / certify}};
+    \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,text width=2.35cm,right=of e] (f) {Hybrid\\{\tiny combine families}};
+  \end{tikzpicture}
+  \vspace{0.45em}
+
+  \begin{block}{Intervention question}
+    Where does the defense act: before learning, inside the model, during training, in the objective, or after deployment?
+  \end{block}
+  \SlideNote{1:30}{Attacks were organised across several axes. Defenses are simpler here: they are mostly categorised by where or how they intervene.}
+\end{frame}
+
+\begin{frame}{Clean the graph or change the model}
+  \SectionPill{Preprocessing and structure}{PresThreeDefense}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Preprocessing-based defense}
+        Remove suspicious edges before training.
+      \end{exampleblock}
+      \centering
+      \ToyGraph[perturbed][0.70]
+      \(\quad\rightarrow\quad\)
+      \ToyGraph[defended][0.70]
+      \vspace{0.2em}
+
+      \MethodChip{PresThreeDefense}{drop edges}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Structure-based defense}
+        Redesign aggregation or convolution so perturbed messages matter less.
+      \end{block}
+      \centering
+      \begin{tikzpicture}[node distance=0.55cm]
+        \node[modelbox] (n1) {neighbors};
+        \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,right=of n1] (agg) {robust\\aggregation};
+        \node[modelbox,right=of agg] (emb) {stable\\embedding};
+        \draw[-Latex,line width=0.8pt] (n1)--(agg)--(emb);
+      \end{tikzpicture}
+      \vspace{0.25em}
+
+      \MethodChip{PresThreeDefense}{RGCN}
+      \MethodChip{PresThreeDefense}{AGCN}
+      \MethodChip{PresThreeDefense}{PA-GNN}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{These two families defend at different stages. Preprocessing tries to stop bad structure from reaching the model. Structure-based defense changes the architecture to make message passing less brittle.}
+\end{frame}
+
+\begin{frame}{Train against attacks or change the objective}
+  \SectionPill{Training and objective}{PresThreeDefense}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Adversarial-based defense}
+        Train with adversarial goals or adversarial examples.
+      \end{exampleblock}
+      \centering
+      \begin{tikzpicture}[node distance=0.55cm]
+        \node[modelbox] (data) {graph data};
+        \node[modelbox,draw=PresThreeAttack,fill=PresThreeAttackSoft,right=of data] (adv) {adversarial\\sample};
+        \node[modelbox,draw=PresThreeDefense,fill=PresThreeDefenseSoft,right=of adv] (train) {robust\\training};
+        \draw[-Latex,line width=0.8pt] (data)--(adv)--(train);
+      \end{tikzpicture}
+      \vspace{0.2em}
+
+      \MethodChip{PresThreeDefense}{VAT/BVAT}
+      \MethodChip{PresThreeDefense}{GraphDefense}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Objective-based defense}
+        Redesign the loss or regularisation for robustness.
+      \end{block}
+      \FormulaCard{PresThreeDefense}{Objective sketch}{
+        \[
+          \mathcal{L}_{robust}=\mathcal{L}_{task}+\lambda\,\mathcal{R}_{smooth}
+        \]
+      }
+      \MethodChip{PresThreeDefense}{r-GCN/VPN}
+      \MethodChip{PresThreeDefense}{SCEL/SD}
+    \end{column}
+  \end{columns}
+  \vspace{0.2em}
+  {\footnotesize\color{PresThreeMuted}The survey notes that adversarial- and objective-based categories partially overlap.}
+  \SlideNote{2:00}{Mention the overlap verbally. Some defenses gain robustness through adversarial training; others through what the model is encouraged to optimise. The taxonomy is useful but not absolute.}
+\end{frame}
+
+\begin{frame}{Detect, certify, and combine}
+  \SectionPill{Detection and hybrid defense}{PresThreeDefense}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.36\textwidth}
+      \MiniCard{PresThreeDefense}{Detection / certification}{Monitor attacks or certify robustness under a perturbation space.}
+      \vspace{0.35em}
+      \MiniCard{PresThreeDefense}{Hybrid}{Combine preprocessing, structure, adversarial training, objective changes, or detection.}
+    \end{column}
+    \begin{column}{0.60\textwidth}
+      \begin{block}{Representative methods}
+        \scriptsize
+        \begin{tabular}{@{}p{0.25\linewidth}p{0.65\linewidth}@{}}
+          \toprule
+          Family & Examples and main idea \\
+          \midrule
+          Preprocess & Drop suspicious low-similarity links \\
+          Structure & RGCN / AGCN: robust aggregation or edge dithering \\
+          Adversarial & VAT / BVAT: train against perturbations \\
+          Certification & Bound worst-case node robustness \\
+          Hybrid & DefNet / Global-AT: combine model and training changes \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+      \vspace{0.45em}
+
+      {\footnotesize\color{PresThreeMuted}Most defense work still centres on node classification.}
+    \end{column}
+  \end{columns}
+  \SlideNote{3:00}{This slide closes the defense taxonomy and compresses the defense table. Certification is worth highlighting because it offers a more formal notion of robustness than an accuracy comparison.}
+\end{frame}
