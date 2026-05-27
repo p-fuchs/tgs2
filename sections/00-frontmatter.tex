@@ -1,0 +1,35 @@
+\section{Title}
+
+\begin{frame}[plain]
+  \vspace*{0.20cm}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      {\fontsize{22}{25}\selectfont\bfseries Adversarial Perturbations\\[0.18em] in Social Networks\par}
+      \vspace{0.30cm}
+      {\fontsize{12}{14}\selectfont\bfseries How small graph edits can change perceived power and influence\par}
+      \vspace{0.42cm}
+      {\color{PresFourAdversary}\rule{0.10\linewidth}{0.7pt}%
+       \color{PresFourFake}\rule{0.10\linewidth}{0.7pt}%
+       \color{PresFourDecrease}\rule{0.10\linewidth}{0.7pt}\par}
+      \vspace{0.42cm}
+      {\small Krzysztof Czerwionka\hspace{0.65cm}Przemysław Fuchs\par}
+      \vspace{0.16cm}
+      {\small TGS, MIM UW\par}
+      \vspace{0.18cm}
+      {\footnotesize\color{PresFourMuted}Paper: Avram, Mishra, Parulian, Diesner (ASONAM 2019)\par}
+      \vspace{0.04cm}
+      {\footnotesize\color{PresFourMuted}Class: game-theoretic approach to social network analysis\par}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \node[modelbox,inner sep=8pt] {\TinyGraph[fake][1.05]};
+      \end{tikzpicture}
+      \vspace{0.20cm}
+
+      {\scriptsize\color{PresFourMuted}red = adversary \quad purple = fake node\\[0.1em]dashed red = added/removed tie}
+    \end{column}
+  \end{columns}
+  \vfill
+  \SlideNote{1:00}{Open with the idea that the paper treats social network metrics as something that can be attacked, not just measured.}
+\end{frame}

@@ -1,0 +1,224 @@
+\section{Experiments}
+
+% ---------- Slide 15 ----------
+\begin{frame}{The experiment grid}
+  \SectionPill{Setup}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \small
+      \begin{tabular}{@{}p{0.30\linewidth}p{0.65\linewidth}@{}}
+        \toprule
+        \textbf{Dimension} & \textbf{Values} \\
+        \midrule
+        Networks      & random, scale-free, small-world, cellular \\
+        \addlinespace[2pt]
+        Centralities  & degree, closeness, betweenness, eigenvector \\
+        \addlinespace[2pt]
+        Direction     & increase or decrease \\
+        \addlinespace[2pt]
+        Reach         & local or global \\
+        \bottomrule
+      \end{tabular}
+      \vspace{0.6em}
+
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+        {\color{PresFourAccent}\bfseries Main question}\quad
+        Is one cheap move enough to flip the rank?
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \centering
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.95em]{takeaway box}
+        {\color{PresFourAdversary}\bfseries 100}\par
+        {\small networks per topology}\par
+        \vspace{0.30em}
+        {\scriptsize\color{PresFourMuted}20-node graphs; cellular = 100 nodes built from five random clusters.}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:30}{Make the design feel systematic. Mostly 20-node graphs, except cellular networks with 100 nodes.}
+\end{frame}
+
+% ---------- Slide 16 ----------
+\begin{frame}{They test four common network topologies}
+  \SectionPill{Topologies}{PresFourAccent}
+  \vspace{0.30em}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.235\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=4.30cm,dp=0.0cm]{takeaway box}
+        \centering
+        {\large\color{PresFourText}\bfseries Random}\par
+        \vspace{0.30em}
+        \begin{tikzpicture}[scale=0.55]
+          \node[gnode] (n0) at (-1.10, 1.25) {};
+          \node[gnode] (n1) at ( 0.90, 1.45) {};
+          \node[gnode] (n2) at ( 1.40, 0.10) {};
+          \node[gnode] (n3) at ( 0.30,-1.30) {};
+          \node[gnode] (n4) at (-1.30,-0.95) {};
+          \node[gnode] (n5) at (-1.55, 0.20) {};
+          \node[gnode] (n6) at ( 0.20, 0.45) {};
+          \node[gnode] (n7) at ( 1.10,-0.95) {};
+          \draw[gedge] (n0)--(n6); \draw[gedge] (n1)--(n2);
+          \draw[gedge] (n2)--(n6); \draw[gedge] (n3)--(n7);
+          \draw[gedge] (n4)--(n5); \draw[gedge] (n5)--(n0);
+          \draw[gedge] (n6)--(n3); \draw[gedge] (n1)--(n6);
+          \draw[gedge] (n4)--(n3);
+        \end{tikzpicture}\par
+        \vspace{0.35em}
+        {\footnotesize\color{PresFourMuted}edge prob.\ $p=0.2$}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.235\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=4.30cm,dp=0.0cm]{takeaway box}
+        \centering
+        {\large\color{PresFourText}\bfseries Scale-free}\par
+        \vspace{0.30em}
+        \begin{tikzpicture}[scale=0.55]
+          \node[circle,draw=PresFourAccent,fill=PresFourAccentSoft,line width=0.9pt,
+                minimum size=6.5mm,inner sep=0pt] (h) at (0,0) {};
+          \foreach \i in {0,...,6}{
+            \pgfmathsetmacro{\ang}{(360/7)*\i + 20}
+            \node[gnode] (n\i) at (\ang:1.45) {};
+            \draw[gedge] (h)--(n\i);
+          }
+          \node[gnode] (l1) at (1.85, 1.55) {};
+          \node[gnode] (l2) at (-1.95,-1.40) {};
+          \draw[gedge] (n0)--(l1); \draw[gedge] (n4)--(l2);
+        \end{tikzpicture}\par
+        \vspace{0.35em}
+        {\footnotesize\color{PresFourMuted}hub structure}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.235\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=4.30cm,dp=0.0cm]{takeaway box}
+        \centering
+        {\large\color{PresFourText}\bfseries Small-world}\par
+        \vspace{0.30em}
+        \begin{tikzpicture}[scale=0.55]
+          \foreach \i in {0,...,9}{
+            \pgfmathsetmacro{\ang}{36*\i}
+            \node[gnode] (n\i) at (\ang:1.45) {};
+          }
+          \foreach \i in {0,...,9}{
+            \pgfmathtruncatemacro{\j}{mod(\i+1,10)}
+            \draw[gedge] (n\i)--(n\j);
+          }
+          \draw[gedge,color=PresFourAccent,line width=0.9pt] (n0)--(n5);
+          \draw[gedge,color=PresFourAccent,line width=0.9pt] (n2)--(n7);
+        \end{tikzpicture}\par
+        \vspace{0.35em}
+        {\footnotesize\color{PresFourMuted}ring + shortcuts}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.235\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=4.30cm,dp=0.0cm]{takeaway box}
+        \centering
+        {\large\color{PresFourText}\bfseries Cellular}\par
+        \vspace{0.30em}
+        \begin{tikzpicture}[scale=0.48]
+          \foreach \k/\cx/\cy in {A/-1.9/1.2, B/1.9/1.2, C/-1.9/-1.2, D/1.9/-1.2, E/0/0}{
+            \foreach \i in {0,1,2}{
+              \pgfmathsetmacro{\ang}{120*\i+30}
+              \node[gnode,minimum size=2.4mm] (n\k\i) at ($(\cx,\cy) + (\ang:0.60)$) {};
+            }
+            \draw[gedge] (n\k0)--(n\k1)--(n\k2)--(n\k0);
+          }
+          \draw[gedge,color=PresFourAccent,line width=0.7pt] (nE0)--(nA0);
+          \draw[gedge,color=PresFourAccent,line width=0.7pt] (nE0)--(nB0);
+          \draw[gedge,color=PresFourAccent,line width=0.7pt] (nE1)--(nC0);
+          \draw[gedge,color=PresFourAccent,line width=0.7pt] (nE2)--(nD0);
+        \end{tikzpicture}\par
+        \vspace{0.35em}
+        {\footnotesize\color{PresFourMuted}5 clusters + bridges}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{0.55em}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.65em]{takeaway box}
+    \centering
+    {\normalsize\color{PresFourAccent}\bfseries Same attack, different topology --- different optimal move.}
+  \end{beamercolorbox}
+  \SlideNote{2:30}{Topology matters: hub networks, clustered networks, and random networks respond differently.}
+\end{frame}
+
+% ---------- Slide 13 ----------
+\begin{frame}{Success means jumping between extremes}
+  \SectionPill{Target tier}{PresFourAdversary}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.40\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \fill[PresFourSurface,rounded corners=3pt] (-0.55,-3.2) rectangle (0.55,3.2);
+        \fill[PresFourIncreaseSoft] (-0.55,2.55) rectangle (0.55,3.2);
+        \fill[PresFourDecreaseSoft] (-0.55,-3.2) rectangle (0.55,-2.55);
+        \node[font=\tiny\sffamily,text=PresFourIncrease,anchor=west] at (0.65,2.88) {top 10\%};
+        \node[font=\tiny\sffamily,text=PresFourDecrease,anchor=west] at (0.65,-2.88) {bottom 10\%};
+        \node[font=\tiny\sffamily,text=PresFourMuted,anchor=east] at (-0.65,3.05) {100\%};
+        \node[font=\tiny\sffamily,text=PresFourMuted,anchor=east] at (-0.65,0) {50\%};
+        \node[font=\tiny\sffamily,text=PresFourMuted,anchor=east] at (-0.65,-3.05) {0\%};
+        \node[gadv] (a) at (0,-2.0) {};
+        \draw[-Latex,line width=1.0pt,color=PresFourIncrease] (a) -- (0,2.7);
+        \draw[-Latex,line width=1.0pt,color=PresFourDecrease,dashed] (0,2.0) -- (0,-2.7);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.56\textwidth}
+      \MiniCard{PresFourIncrease}{Increase attack}{bottom 10\%\ $\rightarrow$\ top 10\%}
+      \vspace{0.30em}
+      \MiniCard{PresFourDecrease}{Decrease attack}{top 10\%\ $\rightarrow$\ bottom 10\%}
+      \vspace{0.30em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+        {\color{PresFourAccent}\bfseries Not a small score nudge}\par
+        The paper measures whether a single move causes a \emph{drastic rank movement} between extremes.
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{Drastic rank movement, not just small score changes.}
+\end{frame}
+
+% ---------- Slide 14 ----------
+\begin{frame}{Before results: how to read Figures 3--7}
+  \SectionPill{Reading guide}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85]
+        \node[font=\scriptsize\sffamily\bfseries] at (3.2,3.0) {closeness (one column)};
+        \draw[gedge] (1.4,0)--(1.4,2.5);
+        \draw[gedge] (1.4,0)--(5.4,0);
+        \node[font=\tiny\sffamily,rotate=90] at (-0.30,1.25) {optimal move};
+        \node[font=\tiny\sffamily] at (3.4,-0.35) {count};
+        \fill[PresFourDecrease] (1.4,2.10) rectangle (4.5,2.30);
+        \fill[PresFourDecreaseLocal] (1.4,1.80) rectangle (4.2,2.00);
+        \fill[PresFourIncrease] (1.4,1.30) rectangle (3.7,1.50);
+        \fill[PresFourIncreaseLocal] (1.4,1.00) rectangle (4.8,1.20);
+        \fill[PresFourDecrease] (1.4,0.45) rectangle (2.7,0.65);
+        \fill[PresFourIncrease] (1.4,0.15) rectangle (1.8,0.35);
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,2.20) {self\_rm};
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,1.90) {rm\_node};
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,1.40) {self\_add};
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,1.10) {add\_node};
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,0.55) {foaf};
+        \node[font=\tiny\sffamily,anchor=east] at (1.30,0.25) {any};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \scriptsize
+      \textbf{Color legend}\par
+      \vspace{0.15em}
+      \tikz\fill[PresFourDecrease] (0,0) rectangle (0.35,0.18);\ \ decrease\_global\par
+      \tikz\fill[PresFourDecreaseLocal] (0,0) rectangle (0.35,0.18);\ \ decrease\_local\par
+      \tikz\fill[PresFourIncrease] (0,0) rectangle (0.35,0.18);\ \ increase\_global\par
+      \tikz\fill[PresFourIncreaseLocal] (0,0) rectangle (0.35,0.18);\ \ increase\_local\par
+      \vspace{0.6em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.50em]{takeaway box}
+        {\color{PresFourAccent}\bfseries Reading the plot}\par
+        \begin{itemize}\setlength\itemsep{0.1em}
+          \item longer bar = move chosen more often
+          \item columns = different centralities
+          \item figures (3--6) = different topologies
+        \end{itemize}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{Tell the audience what to look for before they see the dense result figures.}
+\end{frame}

@@ -1,0 +1,275 @@
+\section{Motivation}
+
+% ---------- Slide 2 ----------
+\begin{frame}{We rarely analyze the real social network}
+  \SectionPill{Motivation}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \node[modelbox,minimum width=3.4cm,minimum height=3.0cm,inner sep=4pt] (under)
+          {\TinyGraph[plain][0.75]\\[-0.1em]{\scriptsize\color{PresFourMuted}\textbf{Underlying network}}};
+        \node[modelbox,minimum width=3.4cm,minimum height=3.0cm,inner sep=4pt,right=2.2cm of under] (obs)
+          {\TinyGraph[fake][0.75]\\[-0.1em]{\scriptsize\color{PresFourMuted}\textbf{Observed network}}};
+        \draw[-Latex,line width=0.9pt,color=PresFourAccent] (under) -- (obs);
+        \node[font=\scriptsize\sffamily,text=PresFourAccent,align=center,
+              fill=PresFourBackground,inner sep=1pt]
+          at ($(under)!0.5!(obs) + (0,1.85)$)
+          {measurement / platform /\\preprocessing};
+      \end{tikzpicture}\\[0.15em]
+      {\scriptsize\color{PresFourFake}$\bullet$\,new/fake node \quad
+       \color{PresFourAdversary}$\bullet$\,adversary}
+    \end{column}
+    \hspace{0.04\textwidth}
+    \begin{column}{0.34\textwidth}
+      \MiniCard{PresFourAccent}{Observed $\neq$ underlying}{Real ties may be hidden, missing, or distorted.}
+      \vspace{0.30em}
+      \MiniCard{PresFourAdversary}{Where the attack hides}{Centrality runs on the observed graph --- manipulating observation manipulates the ranking.}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{If the observed graph is only a representation, changing that representation can change conclusions drawn from centrality.}
+\end{frame}
+
+% ---------- Slide 3 ----------
+\begin{frame}{Can a node manipulate how influential it appears?}
+  \SectionPill{Problem}{PresFourAdversary}
+  \centering
+  \begin{tikzpicture}[
+      box/.style={modelbox,text width=1.7cm,minimum height=1.05cm,inner sep=2pt},
+      adv/.style={-Latex,line width=0.9pt,color=PresFourAdversary},
+      ana/.style={-Latex,line width=0.9pt,color=PresFourText!70},
+      node distance=0.20cm
+    ]
+    \node[box] (g) {Observed\\graph $G$};
+    \node[box,right=0.55cm of g,fill=PresFourAdversarySoft,draw=PresFourAdversary,text width=1.9cm]
+      (p) {\textbf{small}\\\textbf{perturbation}};
+    \node[box,right=0.55cm of p] (gp) {Modified\\graph $G'$};
+    \node[box,right=0.55cm of gp,text width=1.9cm] (re) {recompute\\centrality};
+    \node[box,right=0.55cm of re,fill=PresFourAccentSoft,draw=PresFourAccent] (rk) {new\\ranking};
+    \draw[adv] (g)--(p);
+    \draw[adv] (p)--(gp);
+    \draw[ana] (gp)--(re);
+    \draw[ana] (re)--(rk);
+    \node[font=\tiny\sffamily,text=PresFourAdversary,above=0pt of p.north] {attacker};
+    \node[font=\tiny\sffamily,text=PresFourMuted,above=0pt of re.north] {analyst};
+    \node[font=\tiny\sffamily,text=PresFourAdversary,below=2pt of p.south]
+      {$+$edge\,/\,$-$edge\,/\,$+$node};
+  \end{tikzpicture}
+
+  \vspace{0.55cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+        {\color{PresFourIncrease}\bfseries Boost me}\par
+        bottom 10\%\ \,$\rightarrow$\,\ top 10\%\par
+        {\scriptsize\color{PresFourMuted}look more influential than I am}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+        {\color{PresFourDecrease}\bfseries Hide me}\par
+        top 10\%\ \,$\rightarrow$\,\ bottom 10\%\par
+        {\scriptsize\color{PresFourMuted}stay out of the spotlight}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\color{PresFourAdversary}\bfseries Goal}\quad
+    Not to change reality --- to change \emph{perceived} power and influence.
+  \end{beamercolorbox}
+  \SlideNote{2:00}{Make the attack objective intuitive before introducing technical details.}
+\end{frame}
+
+% ---------- Slide 4a ----------
+\begin{frame}{What does ``influential'' mean? --- local view}
+  \SectionPill{Centrality (1/2)}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em]{takeaway box}
+        {\color{PresFourText}\bfseries Degree}\par
+        \vspace{0.40em}
+        \centering
+        \begin{tikzpicture}[scale=0.85]
+          \node[gadv] (a) at (0,0) {};
+          \foreach \i in {0,...,5}{
+            \pgfmathsetmacro{\ang}{60*\i+30}
+            \node[gnode] (n\i) at (\ang:1.20) {};
+            \draw[gedge] (a)--(n\i);
+          }
+        \end{tikzpicture}
+        \vspace{0.30em}
+
+        {\small How many direct connections?}
+      \end{beamercolorbox}
+    \end{column}
+    \hspace{0.04\textwidth}
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em]{takeaway box}
+        {\color{PresFourText}\bfseries Closeness}\par
+        \vspace{0.40em}
+        \centering
+        \begin{tikzpicture}[scale=0.75]
+          \node[gadv] (a) at (0,0) {};
+          \foreach \k/\ang in {A/30,B/150,C/270}{
+            \node[gnode] (\k1) at (\ang:1.10) {};
+            \node[gnode] (\k2) at ($(\ang:1.10) + (\ang:0.95)$) {};
+            \node[gnode] (\k3) at ($(\ang:1.10) + (\ang+45:0.95)$) {};
+            \node[gnode] (\k4) at ($(\ang:1.10) + (\ang-45:0.95)$) {};
+            \draw[gedge] (a)--(\k1);
+            \draw[gedge] (\k1)--(\k2);
+            \draw[gedge] (\k1)--(\k3);
+            \draw[gedge] (\k1)--(\k4);
+          }
+        \end{tikzpicture}
+        \vspace{0.30em}
+
+        {\small How short are paths to everyone else?}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vfill
+  {\small\color{PresFourMuted}Both look at the focal node and its neighborhood.}
+  \SlideNote{1:30}{First two centrality measures. Both are about the node's own connections / reachability.}
+\end{frame}
+
+% ---------- Slide 4b ----------
+\begin{frame}{What does ``influential'' mean? --- structural view}
+  \SectionPill{Centrality (2/2)}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em]{takeaway box}
+        {\color{PresFourText}\bfseries Betweenness}\par
+        \vspace{0.40em}
+        \centering
+        \begin{tikzpicture}[scale=0.80]
+          \node[gadv] (a) at (0,0) {};
+          \node[gnode] (l1) at (-1.3,0.6) {};
+          \node[gnode] (l2) at (-1.3,-0.6) {};
+          \node[gnode] (l3) at (-2.1,0.0) {};
+          \node[gnode] (r1) at (1.3,0.6) {};
+          \node[gnode] (r2) at (1.3,-0.6) {};
+          \node[gnode] (r3) at (2.1,0.0) {};
+          \draw[gedge] (l1)--(a)--(r1); \draw[gedge] (l2)--(a)--(r2);
+          \draw[gedge] (l1)--(l2); \draw[gedge] (l1)--(l3); \draw[gedge] (l2)--(l3);
+          \draw[gedge] (r1)--(r2); \draw[gedge] (r1)--(r3); \draw[gedge] (r2)--(r3);
+        \end{tikzpicture}
+        \vspace{0.30em}
+
+        {\small How often is it on shortest paths?}
+      \end{beamercolorbox}
+    \end{column}
+    \hspace{0.04\textwidth}
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em]{takeaway box}
+        {\color{PresFourText}\bfseries Eigenvector}\par
+        \vspace{0.40em}
+        \centering
+        \begin{tikzpicture}[scale=0.80]
+          \node[gadv] (a) at (0,0) {};
+          \node[gnode,fill=PresFourAccent] (h1) at (-1.20,0.55) {};
+          \node[gnode,fill=PresFourAccent] (h2) at (1.20,0.55) {};
+          \node[gnode,fill=PresFourAccent] (h3) at (0,-1.15) {};
+          \draw[gedge] (a)--(h1); \draw[gedge] (a)--(h2); \draw[gedge] (a)--(h3);
+          \node[gnode] (s1) at (-2.00,1.10) {};
+          \node[gnode] (s2) at (2.00,1.10) {};
+          \node[gnode] (s3) at (-0.80,-1.95) {};
+          \draw[gedge] (h1)--(s1); \draw[gedge] (h2)--(s2); \draw[gedge] (h3)--(s3);
+        \end{tikzpicture}
+        \vspace{0.10em}
+
+        {\small Is it connected to influential nodes?}\par
+        {\tiny\color{PresFourAccent}orange = already influential}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vfill
+  {\small\color{PresFourMuted}Both depend on the node's position in the wider graph.}
+  \SlideNote{1:30}{Second two centrality measures. The same edit can move these very differently from degree/closeness.}
+\end{frame}
+
+% ---------- Slide 5 ----------
+\begin{frame}{The paper borrows the logic of adversarial attacks}
+  \SectionPill{Analogy}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      \small
+      \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}p{0.36\linewidth}>{\raggedright\arraybackslash}p{0.38\linewidth}@{}}
+        \toprule
+        \textbf{Domain} & \textbf{Small change} & \textbf{Wrong outcome} \\
+        \midrule
+        Image      & pixel noise / sticker          & classifier flips label \\
+        \addlinespace[3pt]
+        Text/audio & small wording or signal change & model changes prediction \\
+        \addlinespace[3pt]
+        \textbf{Network} & add/remove nodes or edges & \textbf{centrality rank changes} \\
+        \bottomrule
+      \end{tabular}
+      \vspace{0.8em}
+
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Same idea}\quad
+        tiny input change $\;\rightarrow\;$ large output change.\par
+        \vspace{0.15em}
+        {\small Here: graph edits $\;\rightarrow\;$ changed centrality ranking.}
+      \end{beamercolorbox}
+    \end{column}
+    \hspace{0.03\textwidth}
+    \begin{column}{0.30\textwidth}
+      \centering
+      \begin{tikzpicture}[
+          row/.style={modelbox,minimum width=3.0cm,minimum height=1.05cm,inner sep=3pt},
+        ]
+        \node[row] (im) at (0,1.85) {\textbf{image}\\{\scriptsize pixels}};
+        \node[row] (tx) at (0,0.30) {\textbf{text / audio}\\{\scriptsize tokens / signal}};
+        \node[row,draw=PresFourAdversary,fill=PresFourAdversarySoft]
+              (gr) at (0,-1.40) {\textbf{network}\\{\scriptsize nodes / edges}};
+        \draw[-Latex,line width=0.7pt,color=PresFourAdversary] (im) -- (gr);
+        \draw[-Latex,line width=0.7pt,color=PresFourAdversary] (tx) -- (gr);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:00}{The paper explicitly connects adversarial ML and social network perturbations. Mention verbally: this is not ``GANs on graphs'' --- it is the broader adversarial framing applied to SNA.}
+\end{frame}
+
+% ---------- Slide 6 ----------
+\begin{frame}{What exactly do Avram et al. study?}
+  \SectionPill{Contribution}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em,ht=1.55cm]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Goal}\par
+        \vspace{0.20em}
+        Change one node's centrality rank.
+      \end{beamercolorbox}
+      \vspace{0.45em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em,ht=1.55cm]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Constraint}\par
+        \vspace{0.20em}
+        A single cheap move, cost $= 1$.
+      \end{beamercolorbox}
+    \end{column}
+    \hspace{0.04\textwidth}
+    \begin{column}{0.46\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em,ht=1.55cm]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Moves}\par
+        \vspace{0.20em}
+        Add/remove nodes or edges --- locally or globally.
+      \end{beamercolorbox}
+      \vspace{0.45em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.70em,ht=1.55cm]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Evaluation}\par
+        \vspace{0.20em}
+        Can the rank jump between bottom and top 10\%?
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{0.55cm}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\footnotesize {\color{PresFourText}\bfseries Setup}\quad
+    \textbf{four topologies $\times$ four centrality measures} ---
+    controlled simulation of \textbf{which moves work}, \textbf{not a real-platform attack}.}
+  \end{beamercolorbox}
+  \vspace*{0.45cm}
+  \SlideNote{2:00}{Make the experiment scope very clear.}
+\end{frame}

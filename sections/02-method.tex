@@ -1,0 +1,192 @@
+\section{Method}
+
+% ---------- Slide 8 ----------
+\begin{frame}{Example: manipulating the observed network}
+  \SectionPill{Paper example}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.64\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig1_example.png}\\[0.05em]
+      {\tiny\color{PresFourMuted}Avram et al.\ (2019), Figure 1: underlying vs.\ observed network.}
+    \end{column}
+    \hspace{0.02\textwidth}
+    \begin{column}{0.32\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=1.40cm]{takeaway box}
+        {\color{PresFourFake}\bfseries Add fake node}\par
+        \vspace{0.10em}
+        {\small Create an account not present in the real network.}
+      \end{beamercolorbox}
+      \vspace{0.25em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=1.40cm]{takeaway box}
+        {\color{PresFourAdversary}\bfseries Hide / remove tie}\par
+        \vspace{0.10em}
+        {\small Make an existing edge invisible.}
+      \end{beamercolorbox}
+      \vspace{0.25em}
+      \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em,ht=1.40cm]{takeaway box}
+        {\color{PresFourAccent}\bfseries Prevent observation}\par
+        \vspace{0.10em}
+        {\small Keep nodes or ties out of the dataset.}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{0.20em}
+  {\small\color{PresFourMuted}The attacker is not breaking the algorithm; they are editing its input.}
+  \SlideNote{2:30}{First aha moment: the attacker is not hacking the algorithm directly; they modify the graph input.}
+\end{frame}
+
+% ---------- Slide 9 ----------
+\begin{frame}{Earlier work focused mostly on hiding influence}
+  \SectionPill{Related work}{PresFourAccent}
+  \vspace{0.4em}
+  \centering
+  \small
+  \begin{tabular}{@{}p{0.14\linewidth}p{0.38\linewidth}p{0.42\linewidth}@{}}
+    \toprule
+    \textbf{Aspect} & \textbf{Waniek, Michalak et al.\ (2018)} & \textbf{This paper} \\
+    \midrule
+    Goal     & hide node / community              & hide \emph{or} boost a node \\
+    \addlinespace[4pt]
+    Changes  & local edge changes                 & local + global; nodes + edges \\
+    \addlinespace[4pt]
+    Success  & ranking decreases                  & top $\leftrightarrow$ bottom 10\% \\
+    \addlinespace[4pt]
+    Search   & multi-round heuristic              & exhaustive cheap-move search \\
+    \bottomrule
+  \end{tabular}
+  \vspace{0.8em}
+
+  \begin{flushleft}
+  {\small\color{PresFourMuted}Avram et al.\ extend prior \emph{node hiding} into a two-sided framework: hide \emph{or} boost.}
+  \end{flushleft}
+  \SlideNote{1:30}{Acknowledge Michalak (course tutor) as co-author. The next slide shows the two regimes side-by-side.}
+\end{frame}
+
+% ---------- Slide 10 ----------
+\begin{frame}{Two regimes side-by-side}
+  \SectionPill{Related work}{PresFourAccent}
+  \centering
+  \begin{tikzpicture}
+    \node[modelbox,minimum width=5.6cm,minimum height=3.4cm,inner sep=6pt] (w) at (-3.4,0) {
+      \begin{tikzpicture}[scale=0.75]
+        \node[gadv,opacity=0.35] (a) at (0,0) {};
+        \foreach \i in {0,...,4}{
+          \pgfmathsetmacro{\ang}{72*\i}
+          \node[gnode] (n\i) at (\ang:1.2) {};
+        }
+        \draw[gedge] (n0)--(n1)--(n2)--(n3)--(n4)--(n0);
+        \draw[faintedge] (a)--(n0); \draw[faintedge] (a)--(n2);
+      \end{tikzpicture}\\[0.10em]
+      {\small\textbf{Waniek, Michalak et al.\ (2018)}}\\[-0.10em]
+      {\scriptsize red node fades out}
+    };
+    \node[modelbox,minimum width=5.6cm,minimum height=3.4cm,inner sep=6pt] (t) at (3.4,0) {
+      \begin{tikzpicture}[scale=0.75]
+        \node[gadv] (a) at (0,0) {};
+        \draw[-Latex,line width=1.0pt,color=PresFourIncrease] (a)++(-0.7,0.65) -- ++(0,0.95);
+        \draw[-Latex,line width=1.0pt,color=PresFourDecrease] (a)++(0.7,-0.65) -- ++(0,-0.95);
+        \foreach \i in {0,...,4}{
+          \pgfmathsetmacro{\ang}{72*\i+18}
+          \node[gnode] (n\i) at (\ang:1.3) {};
+          \draw[gedge] (a)--(n\i);
+        }
+      \end{tikzpicture}\\[0.10em]
+      {\small\textbf{This paper (Avram et al.\ 2019)}}\\[-0.10em]
+      {\scriptsize red node can hide \emph{or} become prominent}
+    };
+  \end{tikzpicture}
+
+  \vspace{0.8em}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresFourMuted}{Hiding only}{Adversary wants to disappear from the top of the ranking.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \MiniCard{PresFourAdversary}{Hide \emph{or} boost}{Adversary can move \emph{either} direction --- down out of the top, or up from the bottom.}
+    \end{column}
+  \end{columns}
+  \SlideNote{1:30}{Visual contrast: one-directional hiding vs.\ bidirectional manipulation. The arrows on the right encode both regimes.}
+\end{frame}
+
+% ---------- Slide 11 ----------
+\begin{frame}{Local adversarial moves: edits in the ego network}
+  \SectionPill{Move set}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig2_local.png}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      \includegraphics[width=0.65\linewidth]{fig2_legend.png}
+    \end{column}
+  \end{columns}
+  \SlideNote{1:30}{Local = the adversary edits its own ego network: add or remove nodes/edges touching itself.}
+\end{frame}
+
+% ---------- Slide 12 ----------
+\begin{frame}{Global adversarial moves: edits anywhere in the graph (1/2)}
+  \SectionPill{Move set}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig2_global_a.png}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      \includegraphics[width=0.65\linewidth]{fig2_legend.png}
+    \end{column}
+  \end{columns}
+  \SlideNote{1:00}{Global moves can touch any pair of nodes in the graph --- not just those adjacent to the adversary.}
+\end{frame}
+
+% ---------- Slide 13 ----------
+\begin{frame}{Global adversarial moves: edits anywhere in the graph (2/2)}
+  \SectionPill{Move set}{PresFourAdversary}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig2_global_b.png}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      \includegraphics[width=0.65\linewidth]{fig2_legend.png}
+    \end{column}
+  \end{columns}
+  \SlideNote{1:00}{Remaining global moves. Cost is simplified to one move per edit.}
+\end{frame}
+
+% ---------- Slide 10 ----------
+\begin{frame}{Experimental loop: try a move, recompute, check success}
+  \SectionPill{Method overview}{PresFourAdversary}
+  \centering
+  \begin{tikzpicture}[node distance=0.55cm]
+    \node[modelbox,text width=2.0cm,minimum height=1.2cm] (s1) {\textbf{1.} generate\\network};
+    \node[modelbox,text width=2.2cm,minimum height=1.2cm,right=0.35cm of s1] (s2) {\textbf{2.} pick\\adversarial node};
+    \node[modelbox,text width=2.1cm,minimum height=1.2cm,right=0.35cm of s2,
+          fill=PresFourAdversarySoft,draw=PresFourAdversary] (s3) {\textbf{3.} apply one\\allowed move};
+    \node[modelbox,text width=2.1cm,minimum height=1.2cm,right=0.35cm of s3] (s4) {\textbf{4.} recompute\\centrality};
+    \node[modelbox,text width=2.0cm,minimum height=1.2cm,right=0.35cm of s4,
+          fill=PresFourAccentSoft,draw=PresFourAccent] (s5) {\textbf{5.} check\\rank target};
+    \foreach \a/\b in {s1/s2,s2/s3,s3/s4,s4/s5}{%
+      \draw[-Latex,line width=0.6pt] (\a)--(\b);
+    }
+    \node[below=0.10cm of s2,font=\scriptsize\sffamily,text=PresFourMuted,align=center]
+      {top or bottom\\10\%};
+    \node[below=0.10cm of s4,font=\scriptsize\sffamily,text=PresFourMuted,align=center]
+      {4 centrality\\measures};
+    \node[below=0.10cm of s5,font=\scriptsize\sffamily,text=PresFourMuted,align=center]
+      {success or\\no success};
+  \end{tikzpicture}
+
+  \vspace{0.55cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      \MiniCard{PresFourAdversary}{Greedy exhaustive search}{Try \emph{all} allowed single moves. Keep the move that best optimizes the target.}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \MiniCard{PresFourAccent}{Handoff to Speaker B}{Which networks did they test, and which moves actually worked?}
+    \end{column}
+  \end{columns}
+  \SlideNote{3:00}{Finish Speaker A exactly where the paper transitions into experimental setup.}
+\end{frame}

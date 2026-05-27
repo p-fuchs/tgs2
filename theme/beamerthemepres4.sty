@@ -1,0 +1,88 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{theme/beamerthemepres4}[2026/05/25 Editorial Beamer theme for pres4]
+
+\mode<presentation>
+
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{professionalfonts}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+
+\setbeamercolor{normal text}{fg=PresFourText,bg=PresFourBackground}
+\setbeamercolor{structure}{fg=PresFourPrimary}
+\setbeamercolor{alerted text}{fg=PresFourAdversary}
+\setbeamercolor{title}{fg=PresFourText}
+\setbeamercolor{subtitle}{fg=PresFourMuted}
+\setbeamercolor{frametitle}{fg=PresFourText}
+\setbeamercolor{titlelike}{fg=PresFourText}
+\setbeamercolor{author}{fg=PresFourMuted}
+\setbeamercolor{date}{fg=PresFourMuted}
+\setbeamercolor{institute}{fg=PresFourMuted}
+\setbeamercolor{block title}{fg=PresFourBackground,bg=PresFourPrimary}
+\setbeamercolor{block body}{fg=PresFourText,bg=PresFourSurface}
+\setbeamercolor{exampleblock title}{fg=PresFourBackground,bg=PresFourDecrease}
+\setbeamercolor{exampleblock body}{fg=PresFourText,bg=PresFourDecreaseSoft}
+\setbeamercolor{alertblock title}{fg=PresFourBackground,bg=PresFourAdversary}
+\setbeamercolor{alertblock body}{fg=PresFourText,bg=PresFourAdversarySoft}
+\setbeamercolor{takeaway box}{fg=PresFourText,bg=PresFourSurface}
+
+\setbeamerfont{title}{family=\sffamily,size=\fontsize{23}{27}\selectfont,series=\bfseries}
+\setbeamerfont{subtitle}{family=\sffamily,size=\fontsize{13}{16}\selectfont}
+\setbeamerfont{frametitle}{family=\sffamily,size=\fontsize{17}{20}\selectfont,series=\bfseries}
+\setbeamerfont{author}{family=\sffamily,size=\fontsize{11}{14}\selectfont}
+\setbeamerfont{date}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{institute}{family=\sffamily,size=\fontsize{10}{12}\selectfont}
+\setbeamerfont{caption}{family=\sffamily,size=\fontsize{8}{10}\selectfont}
+\setbeamerfont{footline}{family=\sffamily,size=\fontsize{8}{10}\selectfont}
+\setbeamerfont{block title}{family=\sffamily,size=\fontsize{10}{12}\selectfont,series=\bfseries}
+\setbeamerfont{block body}{family=\sffamily,size=\small}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.11cm}%
+  {\usebeamerfont{frametitle}\insertframetitle\par}%
+  \vspace{0.13cm}%
+  {\color{PresFourRule}\rule{\linewidth}{0.35pt}\par}%
+}
+
+\defbeamertemplate*{title page}{pres4}{%
+  \vspace*{0.10\paperheight}
+  {\usebeamerfont{title}\inserttitle\par}
+  \vspace{0.28cm}
+  {\usebeamerfont{subtitle}\insertsubtitle\par}
+  \vspace{0.45cm}
+  {\color{PresFourAdversary}\rule{0.18\linewidth}{0.8pt}%
+   \color{PresFourFake}\rule{0.18\linewidth}{0.8pt}%
+   \color{PresFourDecrease}\rule{0.10\linewidth}{0.8pt}\par}
+  \vspace{0.50cm}
+  {\usebeamerfont{author}\insertauthor\par}
+  \vspace{0.12cm}
+  {\usebeamerfont{institute}\insertinstitute\par}
+  \vfill
+  {\usebeamerfont{date}\insertdate\par}
+}
+
+\setbeamertemplate{items}[circle]
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \vskip0.2ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.4ex,dp=1.5ex,sep=0pt]{normal text}%
+    \hspace*{10mm}%
+    \makebox[\dimexpr\paperwidth-20mm\relax][l]{%
+      \usebeamerfont{footline}\color{PresFourMuted}%
+      \insertshorttitle\hfill\insertframenumber{} / \inserttotalframenumber%
+    }%
+  \end{beamercolorbox}%
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PresFourDecrease,
+  urlcolor=PresFourDecrease,
+  citecolor=PresFourAdversary
+}

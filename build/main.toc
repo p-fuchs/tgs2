@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Title}{1}{0}{1}
+\beamer@sectionintoc {2}{Motivation}{2}{0}{2}
+\beamer@sectionintoc {3}{Method}{8}{0}{3}
+\beamer@sectionintoc {4}{Experiments}{15}{0}{4}
+\beamer@sectionintoc {5}{Results}{19}{0}{5}
+\beamer@sectionintoc {6}{Closing}{22}{0}{6}

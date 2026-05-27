@@ -1,0 +1,88 @@
+\section{Results}
+
+% ---------- Slide 15 ----------
+\begin{frame}{To hide, the adversary mostly cuts itself off}
+  \SectionPill{Result 1: decrease}{PresFourDecrease}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.50\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \node[modelbox,minimum width=4.2cm,minimum height=1.7cm,inner sep=3pt] (m1) at (0,1.0) {
+          \begin{tikzpicture}[scale=0.45]
+            \node[gadv] (a) at (0,0) {};
+            \node[gnew] (n) at (1.4,0) {};
+            \draw[cutedge] (a)--(n);
+            \node[gnode] (f1) at (-1.1,0.8) {};
+            \node[gnode] (f2) at (-1.1,-0.8) {};
+            \draw[gedge] (a)--(f1); \draw[gedge] (a)--(f2);
+          \end{tikzpicture}\\[-0.15em]
+          {\scriptsize\textbf{remove\_node\_to\_self}}
+        };
+        \node[modelbox,minimum width=4.2cm,minimum height=1.7cm,inner sep=3pt] (m2) at (0,-1.1) {
+          \begin{tikzpicture}[scale=0.45]
+            \node[gadv] (a) at (0,0) {};
+            \node[gnode] (f) at (1.4,0) {};
+            \draw[cutedge] (a)--(f);
+            \node[gnode] (f1) at (-1.1,0.8) {};
+            \node[gnode] (f2) at (-1.1,-0.8) {};
+            \draw[gedge] (a)--(f1); \draw[gedge] (a)--(f2);
+          \end{tikzpicture}\\[-0.15em]
+          {\scriptsize\textbf{self\_remove\_edge\_friend}}
+        };
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig3_random.png}\\[0.10em]
+      {\scriptsize\color{PresFourMuted}Fig. 3 --- random networks. \textcolor{PresFourDecrease}{Blue} / \textcolor{PresFourDecreaseLocal}{teal} bars are decrease attacks; note the long bars on \texttt{self\_remove\_edge\_friend}.}
+    \end{column}
+  \end{columns}
+  \vspace{0.05em}
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.40em]{takeaway box}
+    {\color{PresFourDecrease}\bfseries Hiding has a simple recipe}\quad
+    Drop the most informative tie or neighbor; same two moves dominate across topologies and centralities. Local moves are often enough.
+  \end{beamercolorbox}
+  \SlideNote{3:00}{Main finding: decreasing centrality uses a smaller, more consistent set of moves than increasing.}
+\end{frame}
+
+% ---------- Slide 16 ----------
+\begin{frame}{To look more powerful, the best move depends on context}
+  \SectionPill{Result 2: increase}{PresFourIncrease}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig6_cellular.png}\\[0.10em]
+      {\scriptsize\color{PresFourMuted}Fig. 6 --- cellular networks. \textcolor{PresFourIncrease}{Red} / \textcolor{PresFourIncreaseLocal}{pink} bars spread across many moves; the best one shifts per centrality.}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \MiniCard{PresFourIncrease}{add\_edge\_anywhere}{Reach beyond the ego network.}
+      \vspace{0.15em}
+      \MiniCard{PresFourIncrease}{self\_add\_edge\_foaf}{Connect to a friend-of-friend.}
+      \vspace{0.15em}
+      \MiniCard{PresFourIncrease}{add\_node\_to\_self}{Attach a brand-new node.}
+    \end{column}
+  \end{columns}
+  \vspace{0.10em}
+  {\small\color{PresFourMuted}Boosting is varied; hiding is concentrated. Global reach matters more for boosting.}
+  \SlideNote{2:30}{Hiding has a simple strategy; boosting is context-dependent.}
+\end{frame}
+
+% ---------- Slide 17 ----------
+\begin{frame}{Global moves matter more for boosting than hiding}
+  \SectionPill{Result 3: magnitude}{PresFourAccent}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig7_distribution.png}\\[0.10em]
+      {\scriptsize\color{PresFourMuted}Fig. 7 --- distribution of centrality change. Left of 0 = decrease, right of 0 = increase.}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \MiniCard{PresFourDecrease}{Decrease}{Local and global overlap --- one cut is often enough.}
+      \vspace{0.15em}
+      \MiniCard{PresFourIncrease}{Increase}{Global moves create \emph{larger} gains for closeness.}
+      \vspace{0.15em}
+      \MiniCard{PresFourAccent}{Degree omitted}{Changes are $\pm 1$ --- trivial distribution.}
+    \end{column}
+  \end{columns}
+  \SlideNote{2:30}{Move from `which move was optimal?' to `how large was the effect?'. Figure 7 shows the score distribution.}
+\end{frame}

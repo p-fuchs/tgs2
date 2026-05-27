@@ -1,0 +1,86 @@
+\NewDocumentCommand{\SlideNote}{m m}{%
+  \note{\textbf{Time: #1}\par #2}%
+}
+
+\NewDocumentCommand{\SectionPill}{m m}{}
+
+\NewDocumentCommand{\MiniCard}{m m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.55em]{takeaway box}
+    {\color{#1}\bfseries #2}\par
+    \vspace{0.15em}
+    {\small #3\par}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\FormulaCard}{m m m}{%
+  \begin{beamercolorbox}[wd=\linewidth,rounded=true,sep=0.75em]{takeaway box}
+    {\color{#1}\bfseries\sffamily #2}\par
+    \vspace{-0.1em}
+    {\setlength{\abovedisplayskip}{0.35em}\setlength{\belowdisplayskip}{0.35em}#3}
+  \end{beamercolorbox}
+}
+
+\NewDocumentCommand{\MethodChip}{m m}{%
+  \tikz[baseline=(c.base)]\node[
+    draw=#1,
+    fill=#1!12,
+    rounded corners=2pt,
+    inner xsep=4pt,
+    inner ysep=1.6pt,
+    minimum height=0.38cm,
+    font=\scriptsize\sffamily
+  ] (c) {#2};%
+}
+
+\tikzset{
+  gnode/.style={circle,draw=PresFourRule,line width=0.55pt,fill=PresFourGray,minimum size=5.2mm,inner sep=0pt},
+  gadv/.style={circle,draw=PresFourAdversary,line width=0.8pt,fill=PresFourAdversary,minimum size=5.6mm,inner sep=0pt},
+  gfake/.style={circle,draw=PresFourFake,line width=0.8pt,fill=PresFourFake,minimum size=5.4mm,inner sep=0pt},
+  gnew/.style={circle,draw=PresFourAdversary,line width=0.7pt,densely dashed,fill=PresFourBackground,minimum size=5.2mm,inner sep=0pt},
+  gedge/.style={draw=PresFourText,line width=0.6pt},
+  faintedge/.style={draw=PresFourMuted!40,line width=0.45pt,densely dotted},
+  addedge/.style={draw=PresFourAdversary,line width=1.1pt},
+  cutedge/.style={draw=PresFourAdversary,line width=0.9pt,densely dashed},
+  modelbox/.style={draw=PresFourRule,fill=PresFourSurface,rounded corners=3pt,inner sep=5pt,align=center,font=\scriptsize\sffamily}
+}
+
+\NewDocumentCommand{\TinyGraph}{O{plain} O{1.0}}{%
+  \begin{tikzpicture}[scale=#2,every node/.style={transform shape}]
+    \coordinate (a) at (-1.2,0.9);
+    \coordinate (b) at (-0.2,1.4);
+    \coordinate (c) at (0.9,1.0);
+    \coordinate (d) at (1.6,0.0);
+    \coordinate (e) at (0.6,-0.6);
+    \coordinate (f) at (-0.6,-0.5);
+    \coordinate (adv) at (-1.2,-0.1);
+    \draw[gedge] (a)--(b)--(c)--(d)--(e)--(f)--(adv)--(a);
+    \draw[gedge] (b)--(e); \draw[gedge] (c)--(f);
+    \IfEqCase{#1}{%
+      {plain}{}%
+      {addedge}{\draw[addedge] (adv)--(d);}%
+      {cutedge}{\draw[cutedge] (adv)--(a);}%
+      {fake}{\node[gfake] (fk) at (-0.1,0.1) {};\draw[addedge] (adv)--(fk);}%
+    }[\relax]
+    \node[gnode] at (a) {};
+    \node[gnode] at (b) {};
+    \node[gnode] at (c) {};
+    \node[gnode] at (d) {};
+    \node[gnode] at (e) {};
+    \node[gnode] at (f) {};
+    \node[gadv] at (adv) {};
+  \end{tikzpicture}%
+}
+
+\NewDocumentCommand{\CornerMotif}{O{0.55}}{%
+  \begin{tikzpicture}[scale=#1,every node/.style={transform shape}]
+    \coordinate (a) at (0,0);
+    \coordinate (b) at (0.9,0.4);
+    \coordinate (c) at (1.4,-0.3);
+    \coordinate (d) at (0.6,-0.9);
+    \draw[gedge] (a)--(b)--(c)--(d)--(a)--(c);
+    \node[gnode] at (b) {};
+    \node[gnode] at (c) {};
+    \node[gnode] at (d) {};
+    \node[gadv] at (a) {};
+  \end{tikzpicture}%
+}
